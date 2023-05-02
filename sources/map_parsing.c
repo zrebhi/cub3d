@@ -1,14 +1,14 @@
 # include "../includes/cub3d.h"
 
 
-int	get_to_the_map(t_cub *data)
+int	get_to_the_map(t_cub *data, int *fd)
 {
 	char	*str;
 
-	data->fd = open(data->file, O_RDONLY);
+	*fd = open(data->file, O_RDONLY);
 	while (1)
 	{
-		str = get_next_line(data->fd);
+		str = get_next_line(*fd);
 		if (!str)
 			return (1);
 		if (!ft_strncmp(str, "C", 1))
@@ -16,7 +16,7 @@ int	get_to_the_map(t_cub *data)
 	}
 	while (1)
 	{
-		str = get_next_line(data->fd);
+		str = get_next_line(*fd);
 		if (!str)
 			return (1);
 		if (ft_strcmp(str, "\n"))
@@ -25,35 +25,36 @@ int	get_to_the_map(t_cub *data)
 	return (0);
 }
 
-void	get_map_height(t_cub *data)
+void	get_map_height(t_cub *data, int *fd)
 {
 	char	*str;
 
-	get_to_the_map(data);
+	get_to_the_map(data, fd);
 	data->map_height = 0;
 	while (1)
 	{
-		str = get_next_line(data->fd);
+		str = get_next_line(*fd);
 		if (!str || !ft_strcmp("\n", str))
 			break ;
 		data->map_height++;
 	}
-	close(data->fd);
+	close(*fd);
 }
 
 void	parse_map(t_cub *data)
 {
 	int		i;
+	int 	fd;
 
-	get_map_height(data);
-	get_to_the_map(data);
+	get_map_height(data, &fd);
+	get_to_the_map(data, &fd);
 	data->map = ft_calloc(sizeof(char *), data->map_height);
 	if (!data->map)
 		exit (1);
 	i = -1;
 	while (++i < data->map_height)
 	{
-		data->map[i] = get_next_line(data->fd);
+		data->map[i] = get_next_line(fd);
 		if (!data->map[i])
 			exit(1);
 	}
