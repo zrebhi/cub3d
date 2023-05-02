@@ -76,7 +76,7 @@ SRC			:= 	checker/ft_isalpha.c \
  			   	lst/ft_lstmap.c \
 				lst/ft_lstsort.c
 
-OBJ_DIR		:=	build/
+OBJ_DIR		:=	.build/
 OBJ			:=	$(SRC:%.c=$(OBJ_DIR)%.o)
 
 # Compiler options
