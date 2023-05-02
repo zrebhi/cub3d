@@ -6,7 +6,7 @@ HEADERS_FILES	:=	cub3d.h
 HEADERS			:= $(addprefix $(HEADERS_DIR)/, $(HEADERS_FILES))
 
 SRC_DIR			:=	sources
-SRC_FILES		:=	ray_casting/test.c \
+SRC_FILES		:=	map_parsing.c \
 					utils/window_utils.c
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
@@ -29,7 +29,7 @@ CCDEPS			:=	NAME=\"$(NAME)\"
 
 # Compiler options
 CC				:=	cc
-DEBUG_FLAG		:=	-g3 #-fsanitize=address
+DEBUG_FLAG		:=	#-fsanitize=address
 CC_FLAGS		:=	-Wextra -Werror -Wall -O3 $(DEBUG_FLAG)
 CC_DEPS_FLAGS	:=	-MP -MMD
 CC_DEFS_FLAGS	:=	$(foreach def,$(CCDEPS),-D $(def))
