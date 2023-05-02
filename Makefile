@@ -6,7 +6,8 @@ HEADERS_FILES	:=	cub3d.h
 HEADERS			:= $(addprefix $(HEADERS_DIR)/, $(HEADERS_FILES))
 
 SRC_DIR			:=	sources
-SRC_FILES		:=	map_parsing.c
+SRC_FILES		:=	ray_casting/test.c \
+					utils/window_utils.c
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
@@ -16,12 +17,12 @@ LIB_LD			=	$(foreach lib,$(LIB_NAMES),-L$(lib))
 LIB_PATHS		=	$(foreach lib,$(LIB_NAMES),$(lib)/$(notdir $(lib)).a)
 LIB_HEADERS		=	$(foreach lib,$(LIB_NAMES),-I$(lib)/inc/)
 
-LIB_PATHS		+=	lib/minilibx-linux/libmlx_Linux.a
-LIB_HEADERS		+= -Ilib/minilibx-linux
-LIBS			+= -lmlx_Linux -lX11 -lXext -lz -lmlx -lm
-LIB_LD			+= -Llib/minilibx-linux
+LIB_PATHS		+=	lib/minilibx_opengl_20191021/libmlx_Linux.a
+LIB_HEADERS		+= -Ilib/minilibx_opengl_20191021
+LIBS			+= -framework OpenGL -framework AppKit -g -lmlx -Llib/minilibx_opengl_20191021
+LIB_LD			+= -Llib/minilibx_opengl_20191021
 
-BUILD_DIR		:=	build
+BUILD_DIR		:=	.build
 OBJS			:=	$(SRC_FILES:%.c=$(BUILD_DIR)/%.o)
 DEPS			:=	$(SRC_FILES:%.c=$(BUILD_DIR)/%.d)
 CCDEPS			:=	NAME=\"$(NAME)\"
@@ -43,7 +44,7 @@ all: $(NAME)
 
 $(LIB_PATHS): force
 	$(MAKE) lib/libft
-	$(MAKE) lib/minilibx-linux
+	$(MAKE) lib/minilibx_opengl_20191021
 
 $(NAME): $(OBJS)
 	$(CC) -g3 $(CC_FLAGS) $(OBJS) $(LIB_LD) $(LIBS) -o $@
@@ -56,7 +57,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c $(LIB_PATHS) Makefile
 
 clean:
 	$(MAKE) lib/libft clean
-	$(MAKE) lib/minilibx-linux clean
+	$(MAKE) lib/minilibx_opengl_20191021 clean
 	@rm -rf $(BUILD_DIR)
 	@rm -rf $(BUILD_DIR_B)
 
