@@ -29,20 +29,17 @@ void	get_map_height(t_cub *data, char *filename, int *fd)
 	char	*str;
 
 	get_to_the_map(filename, fd);
-	data->map_height = 0;
-	data->map_mwidth = 0;
+	data->m_height = 0;
+	data->m_mwidth = 0;
 	while (1)
 	{
 		str = get_next_line(*fd);
 		if (!str || !ft_strcmp("\n", str))
 			break ;
-		data->map_height++;
-		printf("str %zu %d: %s", ft_strlen(str), (int) ft_strlen(str), str);
-		if ((int)ft_strlen(str) > data->map_mwidth)
+		data->m_height++;
+		if ((int)ft_strlen(str) > data->m_mwidth)
 		{
-			printf("old: %d", data->map_mwidth);
-			data->map_mwidth = (int) ft_strlen(str);
-			printf(" new: %d\n", data->map_mwidth);
+			data->m_mwidth = (int) ft_strlen(str);
 		}
 	}
 	close(*fd);
@@ -55,11 +52,11 @@ void	parse_map(t_cub *data, char *filename)
 
 	get_map_height(data, filename, &fd);
 	get_to_the_map(filename, &fd);
-	data->map = ft_calloc(sizeof(char *), data->map_height + 1);
+	data->map = ft_calloc(sizeof(char *), data->m_height + 1);
 	if (!data->map)
 		exit (1);
 	i = -1;
-	while (++i < data->map_height)
+	while (++i < data->m_height)
 	{
 		data->map[i] = get_next_line(fd);
 		if (!data->map[i])
@@ -85,7 +82,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (ft_putstr_fd("Invalid number of arguments.\n", 2), 1);
 	ft_data_init(&data, argv);
-	printf("\nheight: %d\nmax width: %d\n", data.map_height, data.map_mwidth);
+	printf("\nheight: %d\nmax width: %d\n", data.m_height, data.m_mwidth);
 	while(data.map[++i])
 		printf("%s", data.map[i]);
 	create_window(&data);

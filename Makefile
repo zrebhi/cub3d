@@ -17,10 +17,10 @@ LIB_LD			=	$(foreach lib,$(LIB_NAMES),-L$(lib))
 LIB_PATHS		=	$(foreach lib,$(LIB_NAMES),$(lib)/$(notdir $(lib)).a)
 LIB_HEADERS		=	$(foreach lib,$(LIB_NAMES),-I$(lib)/inc/)
 
-LIB_PATHS		+=	lib/minilibx_opengl_20191021/libmlx_Linux.a
-LIB_HEADERS		+= -Ilib/minilibx_opengl_20191021
-LIBS			+= -framework OpenGL -framework AppKit -g -lmlx -Llib/minilibx_opengl_20191021
-LIB_LD			+= -Llib/minilibx_opengl_20191021
+LIB_PATHS		+=	lib/minilibx-linux/libmlx_Linux.a
+LIB_HEADERS		+= -Ilib/minilibx-linux
+LIBS			+= -lmlx_Linux -lX11 -lXext -lz -lmlx -lm
+LIB_LD			+= -Llib/minilibx-linux
 
 BUILD_DIR		:=	.build
 OBJS			:=	$(SRC_FILES:%.c=$(BUILD_DIR)/%.o)
@@ -44,7 +44,7 @@ all: $(NAME)
 
 $(LIB_PATHS): force
 	$(MAKE) lib/libft
-	$(MAKE) lib/minilibx_opengl_20191021
+	$(MAKE) lib/minilibx-linux
 
 $(NAME): $(OBJS)
 	$(CC) -g3 $(CC_FLAGS) $(OBJS) $(LIB_LD) $(LIBS) -o $@
@@ -57,7 +57,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c $(LIB_PATHS) Makefile
 
 clean:
 	$(MAKE) lib/libft clean
-	$(MAKE) lib/minilibx_opengl_20191021 clean
+	$(MAKE) lib/minilibx-linux clean
 	@rm -rf $(BUILD_DIR)
 	@rm -rf $(BUILD_DIR_B)
 

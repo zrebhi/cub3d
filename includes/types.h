@@ -16,8 +16,8 @@
 typedef struct s_cub
 {
 	char	**map;
-	int		map_height;
-	int		map_mwidth;
+	int		m_height;
+	int		m_mwidth;
 }	t_cub;
 
 typedef struct s_data {
