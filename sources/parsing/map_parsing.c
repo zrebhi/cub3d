@@ -6,13 +6,13 @@
 /*   By: zrebhi <zrebhi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:32:06 by zrebhi            #+#    #+#             */
-/*   Updated: 2023/05/02 16:32:06 by zrebhi           ###   ########.fr       */
+/*   Updated: 2023/05/03 13:59:59 by zrebhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	get_to_the_map(t_parsing *data, int *fd)
+char	*get_to_the_map(t_parsing *data, int *fd)
 {
 	char	*str;
 
@@ -21,7 +21,7 @@ int	get_to_the_map(t_parsing *data, int *fd)
 	{
 		str = get_next_line(*fd);
 		if (!str)
-			return (1);
+			return (0);
 		if (!ft_strncmp(str, "C", 1))
 			break ;
 	}
@@ -29,11 +29,11 @@ int	get_to_the_map(t_parsing *data, int *fd)
 	{
 		str = get_next_line(*fd);
 		if (!str)
-			return (1);
+			return (0);
 		if (ft_strcmp(str, "\n"))
 			break ;
 	}
-	return (0);
+	return (str);
 }
 
 void	get_map_height(t_parsing *data, int *fd)
@@ -41,7 +41,7 @@ void	get_map_height(t_parsing *data, int *fd)
 	char	*str;
 
 	get_to_the_map(data, fd);
-	data->map_height = 0;
+	data->map_height = 1;
 	while (1)
 	{
 		str = get_next_line(*fd);
@@ -52,17 +52,28 @@ void	get_map_height(t_parsing *data, int *fd)
 	close(*fd);
 }
 
+void	get_map_width(t_parsing *data)
+{
+	int y;
+
+	data->map_width = 0;
+	y = -1;
+	while (data->map[++y])
+		if ((int)ft_strlen(data->map[y]) > data->map_width)
+			data->map_width = ft_strlen(data->map[y]);
+}
+
 void	parse_map(t_parsing *data)
 {
 	int		i;
 	int		fd;
 
 	get_map_height(data, &fd);
-	get_to_the_map(data, &fd);
-	data->map = ft_calloc(sizeof(char *), data->map_height);
+	data->map = ft_calloc(sizeof(char *), data->map_height + 1);
 	if (!data->map)
 		exit (1);
-	i = -1;
+	data->map[0] = get_to_the_map(data, &fd);
+	i = 0;
 	while (++i < data->map_height)
 	{
 		data->map[i] = get_next_line(fd);
@@ -70,23 +81,37 @@ void	parse_map(t_parsing *data)
 			exit(1);
 	}
 	data->map[i] = 0;
+	close (fd);
 }
 
-void	ft_data_init(t_parsing *data, char **argv)
+char	*string_filler(t_parsing *data, char *string)
 {
-	data->file = argv[1];
-	parse_map(data);
+	char	*filled_string;
+	int		i;
+
+	filled_string = ft_calloc(sizeof(char), data->map_width + 1);
+	if (!filled_string)
+		exit (1);
+	i = 0;
+	while(string[i] && string[i] != '\n')
+	{
+		filled_string[i] = string[i];
+		i++;
+	}
+	while (i < data->map_width - 1)
+	{
+		filled_string[i] = '1';
+		i++;
+	}
+	return (filled_string);
 }
 
-int	main(int argc, char **argv)
+void	fill_map(t_parsing *data)
 {
-	t_parsing	data;
+	int y;
 
-	if (argc != 2)
-		return (ft_putstr_fd("Invalid number of arguments.\n", 2), 1);
-	ft_data_init(&data, argv);
-	if (check_forbidden_char(&data))
-		return (ft_putstr_fd("Invalid map (forbidden char).\n", 2), 2);
-	if (check_player_count(&data))
-		return (ft_putstr_fd("Invalid map (player count).\n", 2), 3);
+	get_map_width(data);
+	y = -1;
+	while (data->map[++y])
+		data->map[y] = string_filler(data, data->map[y]);
 }

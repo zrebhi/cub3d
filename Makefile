@@ -6,7 +6,8 @@ HEADERS_FILES	:=	cub3d.h
 HEADERS			:= $(addprefix $(HEADERS_DIR)/, $(HEADERS_FILES))
 
 SRC_DIR			:=	sources
-SRC_FILES		:=	parsing/map_parsing.c parsing/map_check.c
+SRC_FILES		:=	main.c \
+					parsing/map_parsing.c parsing/map_check.c parsing/map_borders_check.c \
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
