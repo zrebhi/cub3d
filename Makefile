@@ -7,7 +7,9 @@ HEADERS			:= $(addprefix $(HEADERS_DIR)/, $(HEADERS_FILES))
 
 SRC_DIR			:=	sources
 SRC_FILES		:=	map_parsing.c \
-					utils/window_utils.c
+					utils/window_utils.c \
+					main.c	\
+					utils/utils.c
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 

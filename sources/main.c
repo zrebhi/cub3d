@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   window_utils.h                                     :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marobert <marobert@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/03 18:56:35 by mg                #+#    #+#             */
-/*   Updated: 2023/05/03 21:03:29 by marobert         ###   ########.fr       */
+/*   Created: 2023/05/03 16:11:03 by marobert          #+#    #+#             */
+/*   Updated: 2023/05/03 19:36:51 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WINDOW_UTILS_H
-# define WINDOW_UTILS_H
-
-# include "libft.h"
-# include "mlx.h"
 # include "cub3d.h"
-# include "utils.h"
 
-# define TITLE "Cub3D"
-# define W_HEIGHT 650
-# define W_WIDTH 1700
+int	main(int argc, char **argv)
+{
+	t_map	data;
+	int		i;
+	t_game	*game;
 
-int	create_window(t_map *cub);
-
-#endif //WINDOW_UTILS_H
+	i = -1;
+	if (argc != 2)
+		return (ft_putstr_fd("Invalid number of arguments.\n", 2), 1);
+	ft_data_init(&data, argv);
+	printf("\nheight: %d\nmax width: %d\n", data.height, data.width);
+	while(data.map[++i])
+		printf("%s", data.map[i]);
+	game = init_game(&data);
+	game_loop(game);
+}
