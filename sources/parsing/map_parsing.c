@@ -12,11 +12,11 @@
 
 #include "../../includes/cub3d.h"
 
-char	*get_to_the_map(t_map *parse_data, int *fd)
+char	*get_to_the_map(t_map *map_data, int *fd)
 {
 	char	*str;
 
-	*fd = open(parse_data->file, O_RDONLY);
+	*fd = open(map_data->file, O_RDONLY);
 	while (1)
 	{
 		str = get_next_line(*fd);
@@ -36,59 +36,59 @@ char	*get_to_the_map(t_map *parse_data, int *fd)
 	return (str);
 }
 
-void	get_map_height(t_map *parse_data, int *fd)
+void	get_map_height(t_map *map_data, int *fd)
 {
 	char	*str;
 
-	get_to_the_map(parse_data, fd);
-	parse_data->map_height = 1;
+	get_to_the_map(map_data, fd);
+	map_data->map_height = 1;
 	while (1)
 	{
 		str = get_next_line(*fd);
 		if (!str || !ft_strcmp("\n", str))
 			break ;
-		parse_data->map_height++;
+		map_data->map_height++;
 	}
 	close(*fd);
 }
 
-void	get_map(t_map *parse_data)
+void	get_map(t_map *map_data)
 {
 	int		i;
 	int		fd;
 
-	get_map_height(parse_data, &fd);
-	parse_data->map = ft_calloc(sizeof(char *), parse_data->map_height + 1);
-	if (!parse_data->map)
+	get_map_height(map_data, &fd);
+	map_data->map = ft_calloc(sizeof(char *), map_data->map_height + 1);
+	if (!map_data->map)
 		exit (1);
-	parse_data->map[0] = get_to_the_map(parse_data, &fd);
+	map_data->map[0] = get_to_the_map(map_data, &fd);
 	i = 0;
-	while (++i < parse_data->map_height)
+	while (++i < map_data->map_height)
 	{
-		parse_data->map[i] = get_next_line(fd);
-		if (!parse_data->map[i])
+		map_data->map[i] = get_next_line(fd);
+		if (!map_data->map[i])
 			exit(1);
 	}
-	parse_data->map[i] = 0;
+	map_data->map[i] = 0;
 	close (fd);
 }
 
-void	ft_parse_data_init(t_map *parse_data, char **argv)
+void	ft_map_data_init(t_map *map_data, char **argv)
 {
-	parse_data->file = argv[1];
-	get_map(parse_data);
-	fill_map(parse_data);
+	map_data->file = argv[1];
+	get_map(map_data);
+	fill_map(map_data);
 }
 
-int	parse_map(char **argv, t_map *parse_data)
+int	parse_map(char **argv, t_map *map_data)
 {
-	ft_parse_data_init(parse_data, argv);
-	if (check_forbidden_char(parse_data))
+	ft_map_data_init(map_data, argv);
+	if (check_forbidden_char(map_data))
 		return (ft_putstr_fd("Invalid map (forbidden char).\n", 2), 1);
-	if (check_player_count(parse_data))
+	if (check_player_count(map_data))
 		return (ft_putstr_fd("Invalid map (player count).\n", 2), 1);
-	if (check_closed_map(parse_data))
+	if (check_closed_map(map_data))
 		return (ft_putstr_fd("Invalid map (not closed).\n", 2), 1);
-	replace_map_spaces(parse_data);
+	replace_map_spaces(map_data);
 	return (0);
 }
