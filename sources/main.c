@@ -12,24 +12,12 @@
 
 #include "../includes/cub3d.h"
 
-void	ft_data_init(t_parsing *data, char **argv)
-{
-	data->file = argv[1];
-	parse_map(data);
-	fill_map(data);
-}
-
 int	main(int argc, char **argv)
 {
-	t_parsing	data;
+	t_map	parse_data;
 
 	if (argc != 2)
 		return (ft_putstr_fd("Invalid number of arguments.\n", 2), 1);
-	ft_data_init(&data, argv);
-	if (check_forbidden_char(&data))
-		return (ft_putstr_fd("Invalid map (forbidden char).\n", 2), 2);
-	if (check_player_count(&data))
-		return (ft_putstr_fd("Invalid map (player count).\n", 2), 3);
-	if (check_closed_map(&data))
-		return (ft_putstr_fd("Invalid map (not closed).\n", 2), 4);
+	if (parse_map(argv, &parse_data))
+		return (1);
 }

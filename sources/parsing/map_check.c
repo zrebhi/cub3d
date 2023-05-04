@@ -27,17 +27,17 @@ int	is_forbidden_char(char c)
 	return (1);
 }
 
-int	check_forbidden_char(t_parsing *data)
+int	check_forbidden_char(t_map *parse_data)
 {
 	int	x;
 	int	y;
 
 	y = -1;
-	while (data->map[++y])
+	while (parse_data->map[++y])
 	{
 		x = -1;
-		while (data->map[y][++x])
-			if (is_forbidden_char(data->map[y][x]))
+		while (parse_data->map[y][++x])
+			if (is_forbidden_char(parse_data->map[y][x]))
 				return (1);
 	}
 	return (0);
@@ -50,7 +50,7 @@ int	is_player(char c)
 	return (0);
 }
 
-int	check_player_count(t_parsing *data)
+int	check_player_count(t_map *parse_data)
 {
 	int	x;
 	int	y;
@@ -58,12 +58,12 @@ int	check_player_count(t_parsing *data)
 
 	player_count = 0;
 	y = -1;
-	while (data->map[++y])
+	while (parse_data->map[++y])
 	{
 		x = -1;
-		while (data->map[y][++x])
+		while (parse_data->map[y][++x])
 		{
-			if (is_player(data->map[y][x]))
+			if (is_player(parse_data->map[y][x]))
 				player_count++;
 			if (player_count > 1)
 				return (1);

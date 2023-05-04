@@ -21,12 +21,14 @@ typedef struct s_parsing
 	char	*file;
 	int		map_height;
 	int 	map_width;
-}			t_parsing;
+}			t_map;
 
-void	parse_map(t_parsing *data);
-void	fill_map(t_parsing *data);
-int		check_forbidden_char(t_parsing *data);
-int		check_player_count(t_parsing *data);
-int		check_closed_map(t_parsing *data);
+int		parse_map(char **argv, t_map *parse_data);
+void	get_map(t_map *data);
+void	fill_map(t_map *data);
+int		check_forbidden_char(t_map *data);
+int		check_player_count(t_map *data);
+int		check_closed_map(t_map *data);
+void	replace_map_spaces(t_map *data);
 
 #endif

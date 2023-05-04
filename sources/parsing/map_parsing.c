@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../../includes/cub3d.h"
 
-char	*get_to_the_map(t_parsing *data, int *fd)
+char	*get_to_the_map(t_map *parse_data, int *fd)
 {
 	char	*str;
 
-	*fd = open(data->file, O_RDONLY);
+	*fd = open(parse_data->file, O_RDONLY);
 	while (1)
 	{
 		str = get_next_line(*fd);
@@ -36,82 +36,59 @@ char	*get_to_the_map(t_parsing *data, int *fd)
 	return (str);
 }
 
-void	get_map_height(t_parsing *data, int *fd)
+void	get_map_height(t_map *parse_data, int *fd)
 {
 	char	*str;
 
-	get_to_the_map(data, fd);
-	data->map_height = 1;
+	get_to_the_map(parse_data, fd);
+	parse_data->map_height = 1;
 	while (1)
 	{
 		str = get_next_line(*fd);
 		if (!str || !ft_strcmp("\n", str))
 			break ;
-		data->map_height++;
+		parse_data->map_height++;
 	}
 	close(*fd);
 }
 
-void	get_map_width(t_parsing *data)
-{
-	int y;
-
-	data->map_width = 0;
-	y = -1;
-	while (data->map[++y])
-		if ((int)ft_strlen(data->map[y]) > data->map_width)
-			data->map_width = ft_strlen(data->map[y]);
-}
-
-void	parse_map(t_parsing *data)
+void	get_map(t_map *parse_data)
 {
 	int		i;
 	int		fd;
 
-	get_map_height(data, &fd);
-	data->map = ft_calloc(sizeof(char *), data->map_height + 1);
-	if (!data->map)
+	get_map_height(parse_data, &fd);
+	parse_data->map = ft_calloc(sizeof(char *), parse_data->map_height + 1);
+	if (!parse_data->map)
 		exit (1);
-	data->map[0] = get_to_the_map(data, &fd);
+	parse_data->map[0] = get_to_the_map(parse_data, &fd);
 	i = 0;
-	while (++i < data->map_height)
+	while (++i < parse_data->map_height)
 	{
-		data->map[i] = get_next_line(fd);
-		if (!data->map[i])
+		parse_data->map[i] = get_next_line(fd);
+		if (!parse_data->map[i])
 			exit(1);
 	}
-	data->map[i] = 0;
+	parse_data->map[i] = 0;
 	close (fd);
 }
 
-char	*string_filler(t_parsing *data, char *string)
+void	ft_parse_data_init(t_map *parse_data, char **argv)
 {
-	char	*filled_string;
-	int		i;
-
-	filled_string = ft_calloc(sizeof(char), data->map_width + 1);
-	if (!filled_string)
-		exit (1);
-	i = 0;
-	while(string[i] && string[i] != '\n')
-	{
-		filled_string[i] = string[i];
-		i++;
-	}
-	while (i < data->map_width - 1)
-	{
-		filled_string[i] = '1';
-		i++;
-	}
-	return (filled_string);
+	parse_data->file = argv[1];
+	get_map(parse_data);
+	fill_map(parse_data);
 }
 
-void	fill_map(t_parsing *data)
+int	parse_map(char **argv, t_map *parse_data)
 {
-	int y;
-
-	get_map_width(data);
-	y = -1;
-	while (data->map[++y])
-		data->map[y] = string_filler(data, data->map[y]);
+	ft_parse_data_init(parse_data, argv);
+	if (check_forbidden_char(parse_data))
+		return (ft_putstr_fd("Invalid map (forbidden char).\n", 2), 1);
+	if (check_player_count(parse_data))
+		return (ft_putstr_fd("Invalid map (player count).\n", 2), 1);
+	if (check_closed_map(parse_data))
+		return (ft_putstr_fd("Invalid map (not closed).\n", 2), 1);
+	replace_map_spaces(parse_data);
+	return (0);
 }
