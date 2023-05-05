@@ -1,4 +1,6 @@
 .idea/
-lib/libft/.build
-lib/libft/libft.a
+**/.build
 cub3D
+**/*.o
+**/*.a
+**/*.d
