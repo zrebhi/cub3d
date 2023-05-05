@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   window_utils.h                                     :+:      :+:    :+:   */
+/*   player_utils.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marobert <marobert@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/03 18:56:35 by mg                #+#    #+#             */
-/*   Updated: 2023/05/04 14:06:37 by marobert         ###   ########.fr       */
+/*   Created: 2023/05/04 13:59:29 by marobert          #+#    #+#             */
+/*   Updated: 2023/05/04 14:25:32 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WINDOW_UTILS_H
-# define WINDOW_UTILS_H
+#ifndef PLAYER_UTILS_H
+# define PLAYER_UTILS_H
 
-# include "libft.h"
-# include "mlx.h"
-# include "cub3d.h"
-# include "utils.h"
-# include "player_utils.h"
+# include <math.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include "types.h"
+# include "window_utils.h"
 
-# define TITLE "Cub3D"
-# define W_HEIGHT 650
-# define W_WIDTH 1700
+# define ROTATE 0.2
+# define SPEED 3
 
-# define COL_PLAYER 0x00FF00BB
-# define COL_WALL 0x0
-# define COL_EMPTY 0x00FFFFFF
+void		rotate_left(t_player *player);
+void		rotate_right(t_player *player);
+void		forward(t_player *player);
+void		backward(t_player *player);
+t_player	*init_player(t_map *map);
 
-int	create_window(t_map *cub);
-
-#endif //WINDOW_UTILS_H
+#endif //PLAYER_UTILS_H

@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marobert <marobert@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 17:13:31 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/03 19:32:07 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:22:23 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPES_H
 # define TYPES_H
 
+//# include "window_utils.h"
 /*typedef struct s_cub
 {
 	char	**map;
@@ -38,16 +39,15 @@ typedef struct s_window
 
 typedef struct s_vector
 {
-	double	len_x;
-	double	len_y;
+	double	x;
+	double	y;
 }	t_vector;
 
 typedef struct s_player
 {
-	double	pos_x;
-	double	pos_y;
-	double	dir_x;
-	double	dir_y;
+	t_vector	pos;
+	t_vector	dir;
+//	t_vector	vectors[W_WIDTH];
 }	t_player;
 
 enum e_dir

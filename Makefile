@@ -9,7 +9,8 @@ SRC_DIR			:=	sources
 SRC_FILES		:=	map_parsing.c \
 					utils/window_utils.c \
 					main.c	\
-					utils/utils.c
+					utils/utils.c \
+					utils/player_utils.c
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
