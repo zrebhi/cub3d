@@ -14,10 +14,10 @@
 
 int	main(int argc, char **argv)
 {
-	t_map	parse_data;
+	t_parsing	parse_data;
 
-	if (argc != 2)
-		return (ft_putstr_fd("Invalid number of arguments.\n", 2), 1);
-	if (parse_map(argv, &parse_data))
+	if (parsing(argc, argv, &parse_data))
 		return (1);
+	return (ft_free(parse_data.m_free), \
+	close_fds(&parse_data.colors_data, 4), 0);
 }
