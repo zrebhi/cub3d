@@ -10,7 +10,8 @@ SRC_FILES		:=	map_parsing.c \
 					utils/window_utils.c \
 					main.c	\
 					utils/utils.c \
-					utils/player_utils.c
+					utils/player_utils.c \
+					raycasting/draw_lines.c
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
@@ -33,7 +34,8 @@ CCDEPS			:=	NAME=\"$(NAME)\"
 # Compiler options
 CC				:=	cc
 DEBUG_FLAG		:=	#-fsanitize=address
-CC_FLAGS		:=	-Wextra -Werror -Wall -O3 $(DEBUG_FLAG)
+#CC_FLAGS		:=	-Wextra -Werror -Wall -O3 $(DEBUG_FLAG)
+CC_FLAGS		:=	-O3 $(DEBUG_FLAG)
 CC_DEPS_FLAGS	:=	-MP -MMD
 CC_DEFS_FLAGS	:=	$(foreach def,$(CCDEPS),-D $(def))
 

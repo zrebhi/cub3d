@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 15:08:18 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/09 15:27:43 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/09 17:18:37 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	key_handler(int key, t_game *game)
 		rotate_right(game->player);
 	else
 		printf("%c\n", key);
-	fill_window(game->win, game->map, game->player);
+	draw_lines(game, game->win, game->player, game->map);
+//	fill_window(game->win, game->map, game->player);
 	return (1);
 }
 
@@ -56,14 +57,11 @@ static void	draw_vector(t_window *win, t_vector position, t_vector direction)
 
 	direction.x = position.x + (direction.x * 10);
 	direction.y = position.y + (direction.y * 10);
-	printf("pos : %f %f\n", position.x, position.y);
-	printf("dir : %f %f\n", direction.x, direction.y);
 	diff.x = direction.x - position.x;
 	diff.y = direction.y - position.y;
 	steps = fmax(fabs(diff.x), fabs(diff.y));
 	step.x = diff.x / steps;
 	step.y = diff.y / steps;
-	printf("steps: %f\n", steps);
 	while (steps >= 0)
 	{
 		if ((int)(position.x + (step.x * steps)) < W_WIDTH && \
@@ -73,7 +71,6 @@ static void	draw_vector(t_window *win, t_vector position, t_vector direction)
 		steps--;
 	}
 }
-
 
 static int	fill_window(t_window *win, t_map *map, t_player *player)
 {
@@ -129,10 +126,12 @@ t_game	*init_game(t_map *map)
 	window->win_ptr = mlx_new_window(window->mlx_ptr, W_WIDTH, W_HEIGHT, TITLE);
 	game->player = init_player(map);
 	game->map = map;
+	game->map->floor = 0x00FF0000;
+	game->map->ceil = 0x0000FF00;
 	game->win = window;
 	init_img(window);
-	fill_window(game->win, game->map, game->player);
-	mlx_do_key_autorepeaton(window->mlx_ptr);
+//	fill_window(game->win, game->map, game->player);
+	draw_lines(game, window, game->player, game->map);
 //	mlx_hook(window->win_ptr, 02, 1L << 1, key_handler, &window); //TODO utiliser un tableau de bool pour avec un event keypress et keyrelease
 	mlx_key_hook(window->win_ptr, key_handler, game);
 	mlx_hook(window->win_ptr, 17, 1L << 2, exit_window, &window);

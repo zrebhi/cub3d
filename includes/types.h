@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 17:13:31 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/05 16:22:23 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/09 16:34:12 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_player
 {
 	t_vector	pos;
 	t_vector	dir;
-//	t_vector	vectors[W_WIDTH];
+	t_vector	cam;
 }	t_player;
 
 enum e_dir
