@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 15:08:18 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/05 18:03:41 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/09 15:27:43 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,49 +48,32 @@ void	put_pxl_img(t_img *img, int x, int y, int color)
 	*(unsigned int *) dst = color;
 }
 
-static void	draw_vector(t_window *win, t_vector start, t_vector end)
+static void	draw_vector(t_window *win, t_vector position, t_vector direction)
 {
-	double	dx;
-	double	dy;
-	double	d;
-	double	y;
-	double	swap;
+	t_vector	diff;
+	t_vector	step;
+	double		steps;
 
-	printf("pos : %f %f\n", start.x, start.y);
-	printf("dir : %f %f\n", end.x, end.y);
-	end.x *= 10;
-	end.y *= -10;
-	end.x += start.x;
-	end.y += start.y;
-	if (end.x > start.x)
+	direction.x = position.x + (direction.x * 10);
+	direction.y = position.y + (direction.y * 10);
+	printf("pos : %f %f\n", position.x, position.y);
+	printf("dir : %f %f\n", direction.x, direction.y);
+	diff.x = direction.x - position.x;
+	diff.y = direction.y - position.y;
+	steps = fmax(fabs(diff.x), fabs(diff.y));
+	step.x = diff.x / steps;
+	step.y = diff.y / steps;
+	printf("steps: %f\n", steps);
+	while (steps >= 0)
 	{
-		swap = end.x;
-		end.x = start.x;
-		start.x = swap;
-	}
-	if (end.y > start.y)
-	{
-		swap = end.y;
-		end.y = start.y;
-		start.y = swap;
-	}
-	printf("end : %f %f\n\n", end.x, end.y);
-	dx = end.x - start.x;
-	dy = end.y - start.y;
-	d = (2 * dy) - dx;
-	y = start.y;
-	for (double x = end.x; x < start.x; ++x)
-	{
-		if (x < W_WIDTH && y < W_HEIGHT)
-			put_pxl_img(&win->img, (int)x, (int)y, 0x000000FF);
-		if (d > 0)
-		{
-			y++;
-			d -= 2 * dx;
-		}
-		d += 2 * dy;
+		if ((int)(position.x + (step.x * steps)) < W_WIDTH && \
+			(int)(position.y + (step.y * steps)) < W_HEIGHT)
+			put_pxl_img(&win->img, (int)position.x + (int)(step.x * steps), \
+				(int)position.y + (int)(step.y * steps), 0x00FF0000);
+		steps--;
 	}
 }
+
 
 static int	fill_window(t_window *win, t_map *map, t_player *player)
 {
