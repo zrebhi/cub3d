@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:59:58 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/09 18:28:30 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/10 12:54:14 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ void	rotate_left(t_player *player)
 
 void	forward(t_player *player)
 {
-	player->pos.x = player->pos.x - player->dir.x;
-	player->pos.y = player->pos.y - player->dir.y;
+	player->pos.x = player->pos.x - (player->dir.x / 10);
+	player->pos.y = player->pos.y - (player->dir.y / 10);
 }
 
 void	backward(t_player *player)
 {
-	player->pos.x = player->pos.x + player->dir.x;
-	player->pos.y = player->pos.y + player->dir.y;
+	player->pos.x = player->pos.x + (player->dir.x / 10);
+	player->pos.y = player->pos.y + (player->dir.y / 10);
 }
 
 t_player	*init_player(t_map *map)
@@ -59,37 +59,35 @@ t_player	*init_player(t_map *map)
 	t_player	*player;
 	int			x;
 	int			y;
-	int			line_len;
 
-	printf("init player\n");
+	printf("\ninit player\n");
 	player = malloc(sizeof(t_player));
 	if (!player)
 		exit(1);
 	y = 0;
 	while (y < map->height)
 	{
-		line_len = (int)ft_strlen(map->map[y]);
 		x = 0;
 		while (x < map->width)
 		{
-			if (x < line_len && ft_isalpha(map->map[y][x]))
+			if (x < ft_strlen(map->map[y]) && ft_isalpha(map->map[y][x]))
 			{
 				printf("\nmap: %d %d", x, y);
-				player->pos.x = ((double)(x * W_WIDTH) / (double)map->width);
-				player->pos.y = ((double)(y * W_HEIGHT) / (double)map->height);
+				player->pos.x = x + .5;
+				player->pos.y = y + .5;
 				printf("\nplayer : %f %f\n", player->pos.x, player->pos.y);
 				if (map->map[y][x] == 'N')
 				{
 					player->dir.x = 0;
 					player->dir.y = SPEED;
-					player->cam.x = SPEED;
+					player->cam.x = -0.66;
 					player->cam.y = 0;
 				}
 				else if (map->map[y][x] == 'S')
 				{
 					player->dir.x = 0;
 					player->dir.y = -SPEED;
-					player->cam.x = -SPEED;
+					player->cam.x = 0.66;
 					player->cam.y = 0;
 				}
 				else if (map->map[y][x] == 'E')
@@ -97,14 +95,14 @@ t_player	*init_player(t_map *map)
 					player->dir.x = SPEED;
 					player->dir.y = 0;
 					player->cam.x = 0;
-					player->cam.y = -SPEED;
+					player->cam.y = -0.66;
 				}
 				else if (map->map[y][x] == 'W')
 				{
 					player->dir.x = -SPEED;
 					player->dir.y = 0;
 					player->cam.x = 0;
-					player->cam.y = SPEED;
+					player->cam.y = 0.66;
 				}
 			}
 			x++;
