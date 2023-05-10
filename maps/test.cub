@@ -6,7 +6,7 @@ EA textures/west_texture
 
 WE textures/east_texture
 
-F 255,255,256
+F 255,255,255
 C 225,30,0
 
 1111111111111111111111111

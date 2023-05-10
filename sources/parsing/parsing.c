@@ -62,6 +62,19 @@ void	close_fds(t_colors *colors_data, int mode)
 	}
 }
 
+int	space_digits_only(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (!ft_isdigit(str[i]) && str[i] != ' ' && str[i] != '\n')
+			return (0);
+	}
+	return (1);
+}
+
 int	parsing(int argc, char **argv, t_parsing *parse_data)
 {
 	if (argc != 2)
