@@ -2,5 +2,9 @@
 lib/libft/.build
 lib/libft/libft.a
 lib/minilibx-linux/
+**/.build
 cub3D
 build/
+**/*.o
+**/*.a
+**/*.d

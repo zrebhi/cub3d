@@ -7,8 +7,15 @@ HEADERS			:= $(addprefix $(HEADERS_DIR)/, $(HEADERS_FILES))
 
 SRC_DIR			:=	sources
 SRC_FILES		:=	main.c \
-					parsing/map_parsing.c parsing/map_check.c parsing/map_borders_check.c \
+					parsing/map_parsing.c \
+					parsing/map_check.c \
+					parsing/map_borders_check.c \
 					parsing/map_fillers.c
+					utils/window_utils.c \
+					utils/utils.c \
+					utils/player_utils.c \
+					raycasting/draw_lines.c \
+					raycasting/map.c
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
@@ -23,14 +30,14 @@ LIB_HEADERS		+= -Ilib/minilibx-linux
 LIBS			+= -lmlx_Linux -lX11 -lXext -lz -lmlx -lm
 LIB_LD			+= -Llib/minilibx-linux
 
-BUILD_DIR		:=	build
+BUILD_DIR		:=	.build
 OBJS			:=	$(SRC_FILES:%.c=$(BUILD_DIR)/%.o)
 DEPS			:=	$(SRC_FILES:%.c=$(BUILD_DIR)/%.d)
 CCDEPS			:=	NAME=\"$(NAME)\"
 
 # Compiler options
 CC				:=	cc
-DEBUG_FLAG		:=	-g3 #-fsanitize=address
+DEBUG_FLAG		:=	#-fsanitize=address
 CC_FLAGS		:=	-Wextra -Werror -Wall -O3 $(DEBUG_FLAG)
 CC_DEPS_FLAGS	:=	-MP -MMD
 CC_DEFS_FLAGS	:=	$(foreach def,$(CCDEPS),-D $(def))
