@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 16:19:50 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/11 14:30:58 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:32:47 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ static double	get_height(t_dda *dda, t_game *game)
 	dda->step.x = get_ray_x(game->player, dda);
 	dda->step.y = get_ray_y(game->player, dda);
 	dda->side = 0;
-	while (in_range(dda->box_map.x, 1, game->map->width) && \
-		in_range(dda->box_map.y, 1, game->map->height) && \
+	while (in_range(dda->box_map.x, 0, game->map->width) && \
+		in_range(dda->box_map.y, 0, game->map->height) && \
 		game->map->map[dda->box_map.y][dda->box_map.x] != '1')
 	{
 		if (dda->side_dist.x < dda->side_dist.y)

@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 10:31:19 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/11 14:42:12 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/11 15:34:06 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static void	draw_vector(t_window *win, t_vectord position, t_vectord direction)
 	step.y = diff.y / steps;
 	while (steps >= 0)
 	{
-		if ((int)(position.x + (step.x * steps)) < W_WIDTH && \
-			(int)(position.y + (step.y * steps)) < W_HEIGHT)
+		if (in_range((int)(position.x + (step.x * steps)), 0, W_WIDTH) && \
+			in_range((int)(position.y + (step.y * steps)), 0, W_HEIGHT))
 			put_pxl_img(&win->img, (int)position.x + (int)(step.x * steps), \
 				(int)position.y + (int)(step.y * steps), 0x00FF0000);
 		steps--;
