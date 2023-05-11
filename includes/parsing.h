@@ -19,6 +19,7 @@ int		parse_map(char **argv, t_map *parse_data);
 void	get_map(t_map *data);
 void	fill_map(t_map *data);
 int		check_forbidden_char(t_map *data);
+int		is_player(char c);
 int		check_player_count(t_map *data);
 int		check_closed_map(t_map *data);
 void	replace_map_spaces(t_map *data);
