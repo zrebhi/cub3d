@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:59:29 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/10 12:18:49 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/11 15:22:54 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 void		rotate_left(t_player *player);
 void		rotate_right(t_player *player);
-void		forward(t_player *player, int dir);
+void		forward(t_player *player, int dir, t_map *map);
 t_player	*init_player(t_map *map);
 
 #endif //PLAYER_UTILS_H

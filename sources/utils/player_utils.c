@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:59:58 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/11 11:15:59 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/11 15:32:56 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,16 @@ void	rotate_left(t_player *player)
  * @param player a pointer to a player struct
  * @param dir -1 to move backward, 1 to move forward
  */
-void	forward(t_player *player, int dir)
+void	forward(t_player *player, int dir, t_map *map)
 {
-	player->pos.x = player->pos.x + ((player->dir.x / 10) * dir);
-	player->pos.y = player->pos.y + ((player->dir.y / 10) * dir);
+	double	tmp;
+
+	tmp = player->pos.x + ((player->dir.x / 10) * dir);
+	if (map->map[(int)player->pos.y][(int)tmp] != '1')
+		player->pos.x = tmp;
+	tmp = player->pos.y + ((player->dir.y / 10) * dir);
+	if (map->map[(int)tmp][(int)player->pos.x] != '1')
+		player->pos.y = tmp;
 }
 
 static void	set_dir(t_player *player, char pos)

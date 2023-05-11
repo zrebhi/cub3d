@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 15:08:18 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/11 15:12:25 by zrebhi           ###   ########.fr       */
+/*   Updated: 2023/05/11 15:33:33 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,17 @@
 int	exit_window(t_game *game)
 {
 	(void)game;
-//	mlx_destroy_image(game->win->mlx_ptr, game->win->img.img);
-//	mlx_destroy_window(game->win->mlx_ptr, game->win->win_ptr);
 	exit(0);
 }
 
-int	key_press_handler(int key, t_game *game)
+int	key_handler(int key, t_game *game)
 {
 	if (key == 65307)
 		exit_window(game);
 	else if (key == 'w')
-		forward(game->player, 1);
+		forward(game->player, 1, game->map);
 	else if (key == 's')
-		forward(game->player, -1);
+		forward(game->player, -1, game->map);
 	else if (key == 'a')
 		rotate_left(game->player);
 	else if (key == 'd')
@@ -42,10 +40,8 @@ void	put_pxl_img(t_img *img, int x, int y, int color)
 {
 	char	*dst;
 
-	if (x < 1910 && y < 1070) {
-		dst = img->addr + (y * img->line_length + x * (img->bpp / 8));
-		*(unsigned int *) dst = color;
-	}
+	dst = img->addr + (y * img->line_length + x * (img->bpp / 8));
+	*(unsigned int *) dst = color;
 }
 
 void	init_img(t_window *window)
@@ -76,8 +72,7 @@ t_game	*init_game(t_map *map)
 	game->win = window;
 	init_img(window);
 	draw_lines(game, window, game->player, game->map);
-	mlx_hook(window->win_ptr, 2, 1L << 0, key_press_handler, game);
-	mlx_loop_hook(window->win_ptr, key_press_handler, game);
+	mlx_hook(window->win_ptr, 2, 1L << 0, key_handler, game);
 	mlx_hook(window->win_ptr, 17, 1L << 2, exit_window, &window);
 	return (game);
 }
