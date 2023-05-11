@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 10:31:19 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/11 11:16:52 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:42:12 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,12 @@ void	draw_map(t_window *win, t_player *player, t_map *map)
 				j == (int)floor(player->pos.y * 10))
 				put_pxl_img(&win->img, i, j, 0x55FF0000);
 			else if (ft_isalpha(map->map[j * map->height / (map->height * 10)] \
-					[i * (map->width - 1) / (map->width * 10)]) || \
+					[i * (map->width) / (map->width * 10)]) || \
 					map->map[j * map->height / (map->height * 10)] \
-					[i * (map->width - 1) / (map->width * 10)] == '0')
+					[i * (map->width) / (map->width * 10)] == '0')
 				put_pxl_img(&win->img, i, j, 0x55FFFFFF);
 			else if (map->map[j * map->height / (map->height * 10)] \
-					[i * (map->width - 1) / (map->width * 10)] == '1')
+					[i * (map->width) / (map->width * 10)] == '1')
 				put_pxl_img(&win->img, i, j, 0x55000000);
 			j++;
 		}
