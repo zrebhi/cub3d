@@ -41,13 +41,13 @@ void	get_map_height(t_map *map_data, int *fd)
 	char	*str;
 
 	get_to_the_map(map_data, fd);
-	map_data->map_height = 1;
+	map_data->height = 1;
 	while (1)
 	{
 		str = get_next_line(*fd);
 		if (!str || !ft_strcmp("\n", str))
 			break ;
-		map_data->map_height++;
+		map_data->height++;
 	}
 	close(*fd);
 }
@@ -58,12 +58,12 @@ void	get_map(t_map *map_data)
 	int		fd;
 
 	get_map_height(map_data, &fd);
-	map_data->map = ft_calloc(sizeof(char *), map_data->map_height + 1);
+	map_data->map = ft_calloc(sizeof(char *), map_data->height + 1);
 	if (!map_data->map)
 		exit (1);
 	map_data->map[0] = get_to_the_map(map_data, &fd);
 	i = 0;
-	while (++i < map_data->map_height)
+	while (++i < map_data->height)
 	{
 		map_data->map[i] = get_next_line(fd);
 		if (!map_data->map[i])

@@ -24,15 +24,15 @@
 
 #include "../../includes/cub3d.h"
 
-void	get_map_width(t_map *map_data)
+void	get_width(t_map *map_data)
 {
 	int	y;
 
-	map_data->map_width = 0;
+	map_data->width = 0;
 	y = -1;
 	while (map_data->map[++y])
-		if ((int)ft_strlen(map_data->map[y]) - 1 > map_data->map_width)
-			map_data->map_width = ft_strlen(map_data->map[y]) - 1;
+		if ((int)ft_strlen(map_data->map[y]) - 1 > map_data->width)
+			map_data->width = ft_strlen(map_data->map[y]) - 1;
 }
 
 char	*string_filler(t_map *map_data, char *string)
@@ -40,7 +40,7 @@ char	*string_filler(t_map *map_data, char *string)
 	char	*filled_string;
 	int		i;
 
-	filled_string = ft_calloc(sizeof(char), map_data->map_width + 1);
+	filled_string = ft_calloc(sizeof(char), map_data->width + 1);
 	if (!filled_string)
 		exit (1);
 	i = 0;
@@ -49,7 +49,7 @@ char	*string_filler(t_map *map_data, char *string)
 		filled_string[i] = string[i];
 		i++;
 	}
-	while (i < map_data->map_width)
+	while (i < map_data->width)
 	{
 		filled_string[i] = ' ';
 		i++;
@@ -61,7 +61,7 @@ void	fill_map(t_map *map_data)
 {
 	int	y;
 
-	get_map_width(map_data);
+	get_width(map_data);
 	y = -1;
 	while (map_data->map[++y])
 		map_data->map[y] = string_filler(map_data, map_data->map[y]);

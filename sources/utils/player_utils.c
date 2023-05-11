@@ -96,7 +96,7 @@ t_player	*init_player(t_map *map)
 		x = 0;
 		while (x < map->width)
 		{
-			if (x < ft_strlen(map->map[y]) && ft_isalpha(map->map[y][x]))
+			if (x < (int)ft_strlen(map->map[y]) && ft_isalpha(map->map[y][x]))
 			{
 				player->pos.x = x + .5;
 				player->pos.y = y + .5;

@@ -10,7 +10,7 @@ SRC_FILES		:=	main.c \
 					parsing/map_parsing.c \
 					parsing/map_check.c \
 					parsing/map_borders_check.c \
-					parsing/map_fillers.c
+					parsing/map_fillers.c \
 					utils/window_utils.c \
 					utils/utils.c \
 					utils/player_utils.c \

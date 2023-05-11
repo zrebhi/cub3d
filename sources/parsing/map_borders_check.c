@@ -14,9 +14,9 @@
 
 int	map_is_open(t_map *map_data, int x, int y)
 {
-	if (y == 0 || y == map_data->map_height - 1)
+	if (y == 0 || y == map_data->height - 1)
 		return (1);
-	if (x == 0 || x == map_data->map_width - 1)
+	if (x == 0 || x == map_data->width - 1)
 		return (1);
 	if (map_data->map[y + 1][x] == ' ' || map_data->map[y - 1][x] == ' ' \
 	|| map_data->map[y][x + 1] == ' ' || map_data->map[y][x - 1] == ' ')

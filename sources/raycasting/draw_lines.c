@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 16:19:50 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/11 10:55:50 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/11 11:16:22 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static double	get_height(t_vectord *delta_dist, t_vectori *box_map, \
 
 	step.x = get_ray_x(ray, &side_dist, game->player, box_map);
 	step.y = get_ray_y(ray, &side_dist, game->player, box_map);
+	side = 0;
 	while (in_range((int)box_map->x, 1, game->map->width) && \
 		in_range((int)box_map->y, 1, game->map->height) && \
 		game->map->map[(int)box_map->y][(int)box_map->x] != '1')

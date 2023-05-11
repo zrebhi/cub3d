@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zrebhi <zrebhi@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 13:49:58 by zrebhi            #+#    #+#             */
-/*   Updated: 2023/05/03 13:49:58 by zrebhi           ###   ########.fr       */
+/*   Updated: 2023/05/11 11:13:03 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,6 @@
 # define PARSING_H
 
 # include "cub3d.h"
-
-typedef struct s_parsing
-{
-	char	**map;
-	char	*file;
-	int		map_height;
-	int 	map_width;
-}			t_map;
 
 int		parse_map(char **argv, t_map *parse_data);
 void	get_map(t_map *data);

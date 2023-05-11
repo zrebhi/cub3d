@@ -37,7 +37,7 @@ static void	draw_vector(t_window *win, t_vectord position, t_vectord direction)
 	}
 }
 
-void	draw_fov_map(t_window *win, t_player *player, t_map *map)
+void	draw_fov_map(t_window *win, t_player *player)
 {
 	int			i;
 	t_vectord	ray;
@@ -78,5 +78,5 @@ void	draw_map(t_window *win, t_player *player, t_map *map)
 		}
 		i++;
 	}
-	draw_fov_map(win, player, map);
+	draw_fov_map(win, player);
 }
