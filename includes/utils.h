@@ -18,5 +18,6 @@
 
 int			in_range(int value, int start, int end);
 t_vectord	rotate(t_vectord vector, double angle);
+int			get_color_side(t_dda *dda);
 
 #endif //UTILS_H

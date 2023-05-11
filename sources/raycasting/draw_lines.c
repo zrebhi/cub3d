@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 16:19:50 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/11 14:10:14 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:30:58 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,13 @@ void	draw_ray(t_game *game, t_player *player, t_dda *dda, int x)
 	if (dda->ray.y != 0)
 		dda->delta_dist.y = fabs(1 / dda->ray.y);
 	height = get_height(dda, game);
-	y = -1;
-	while (++y <= (W_HEIGHT - height) / 2 && y < W_HEIGHT)
-		put_pxl_img(&game->win->img, x, y, game->map->ceil);
-	while (++y <= (W_HEIGHT + height) / 2 && y < W_HEIGHT)
-		put_pxl_img(&game->win->img, x, y, 0x4aa162);
-	while (++y < W_HEIGHT && y < W_HEIGHT)
-		put_pxl_img(&game->win->img, x, y, game->map->floor);
+	y = 0;
+	while (y <= (W_HEIGHT - height) / 2 && y < W_HEIGHT)
+		put_pxl_img(&game->win->img, x, y++, game->map->ceil);
+	while (y <= (W_HEIGHT + height) / 2 && y < W_HEIGHT)
+		put_pxl_img(&game->win->img, x, y++, get_color_side(dda));
+	while (y < W_HEIGHT)
+		put_pxl_img(&game->win->img, x, y++, game->map->floor);
 }
 
 void	draw_lines(t_game *game, t_window *win, t_player *player, t_map *map)
