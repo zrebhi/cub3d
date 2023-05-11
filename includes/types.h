@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 17:13:31 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/11 14:10:14 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/11 17:14:37 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ typedef struct s_img
 
 typedef struct s_window
 {
-	void		*mlx_ptr;
-	void		*win_ptr;
-	t_img		img;
+	void	*mlx_ptr;
+	void	*win_ptr;
+	t_img	img;
+	t_img	m_map;
 }	t_window;
 
 typedef struct s_vectord

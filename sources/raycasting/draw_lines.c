@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 16:19:50 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/11 14:32:47 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/11 18:14:52 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,14 @@ static double	get_height(t_dda *dda, t_game *game)
 		}
 	}
 	if (dda->side)
-		return (W_HEIGHT / ((dda->side_dist.y - dda->delta_dist.y)));
-	return (W_HEIGHT / ((dda->side_dist.x - dda->delta_dist.x)));
+		return (W_HEIGHT / (dda->side_dist.y - dda->delta_dist.y));
+	return (W_HEIGHT / (dda->side_dist.x - dda->delta_dist.x));
 }
 
 void	draw_ray(t_game *game, t_player *player, t_dda *dda, int x)
 {
-	double		height;
-	int			y;
+	double	height;
+	int		y;
 
 	dda->box_map.x = floor(player->pos.x);
 	dda->box_map.y = floor(player->pos.y);
@@ -103,17 +103,19 @@ void	draw_ray(t_game *game, t_player *player, t_dda *dda, int x)
 
 void	draw_lines(t_game *game, t_window *win, t_player *player, t_map *map)
 {
-	int			i;
-	t_dda		dda;
+	int		i;
+	t_dda	dda;
 
+	draw_map(&win->m_map, player, map);
 	i = 0;
 	dda.ray = rotate(player->dir, -FOV / 2);
 	while (i < W_WIDTH)
 	{
 		dda.ray = rotate(dda.ray, (FOV / W_WIDTH));
 		draw_ray(game, player, &dda, i);
+		draw_vector(&win->m_map, player->pos, dda.box_map, map);
 		i++;
 	}
-	draw_map(win, player, map);
 	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img.img, 0, 0);
+	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->m_map.img, 0, 0);
 }

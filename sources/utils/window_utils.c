@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 15:08:18 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/11 15:42:13 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/11 17:10:38 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,20 @@ void	put_pxl_img(t_img *img, int x, int y, int color)
 	*(unsigned int *) dst = color;
 }
 
-void	init_img(t_window *window)
+void	init_img(t_window *window, t_map *map)
 {
 	window->img.img = mlx_new_image(window->mlx_ptr, W_WIDTH, W_HEIGHT);
-	if (!window->img.img)
+	window->m_map.img = mlx_new_image(window->mlx_ptr, \
+									map->width * 10, map->height * 10);
+	if (!window->img.img || !window->m_map.img)
 		exit(printf("mlx error\n"));
 	window->img.addr = mlx_get_data_addr(window->img.img, \
 		&window->img.bpp, &window->img.line_length, \
 		&window->img.endian);
-	if (!window->img.addr)
+	window->m_map.addr = mlx_get_data_addr(window->m_map.img, \
+		&window->m_map.bpp, &window->m_map.line_length, \
+		&window->m_map.endian);
+	if (!window->img.addr || !window->m_map.addr)
 		exit(1);
 }
 
@@ -76,7 +81,7 @@ t_game	*init_game(t_map *map)
 	game->map->floor = 0x797c7d;
 	game->map->ceil = 0x38a5c7;
 	game->win = window;
-	init_img(window);
+	init_img(window, map);
 	draw_lines(game, window, game->player, game->map);
 	mlx_hook(window->win_ptr, 2, 1L << 0, key_handler, game);
 	mlx_hook(window->win_ptr, 17, 1L << 2, exit_window, &window);

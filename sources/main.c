@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 13:47:07 by zrebhi            #+#    #+#             */
-/*   Updated: 2023/05/11 11:20:23 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:12:19 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,26 @@
 int	main(int argc, char **argv)
 {
 	t_map	data;
-	int		i;
 	t_game	*game;
 
 	if (argc != 2)
 		return (ft_putstr_fd("Invalid number of arguments.\n", 2), 1);
 	if (parse_map(argv, &data))
 		return (1);
-	i = -1;
-	printf("\nheight: %d\nmax width: %d\n", data.height, data.width);
-	while (data.map[++i])
-		printf("%s\n", data.map[i]);
+	printf("\nheight:\t%d\nwidth:\t%d\n", data.height, data.width);
+	for (int i = 0; i < data.height; ++i)
+	{
+		for (int j = 0; j < data.width; ++j)
+		{
+			if (data.map[i][j] == '1')
+				printf("█");
+			else if (ft_isalpha(data.map[i][j]))
+				printf("x");
+			else
+				printf(" ");
+		}
+		printf("\n");
+	}
 	game = init_game(&data);
 	mlx_loop(game->win->mlx_ptr);
 }
