@@ -15,7 +15,7 @@ SRC_FILES		:=	main.c \
 					utils/utils.c \
 					utils/player_utils.c \
 					raycasting/draw_lines.c \
-					raycasting/map.c
+					raycasting/mini_map.c
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 

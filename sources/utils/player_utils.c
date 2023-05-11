@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:59:58 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/11 10:35:49 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/11 11:15:59 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,6 @@ void	rotate_right(t_player *player)
 	new_y = sin(ROTATE) * player->dir.x + cos(ROTATE) * player->dir.y;
 	player->dir.x = new_x;
 	player->dir.y = new_y;
-	new_x = cos(ROTATE) * player->cam.x - sin(ROTATE) * player->cam.y;
-	new_y = sin(ROTATE) * player->cam.x + cos(ROTATE) * player->cam.y;
-	player->cam.x = new_x;
-	player->cam.y = new_y;
 }
 
 void	rotate_left(t_player *player)
@@ -36,10 +32,6 @@ void	rotate_left(t_player *player)
 	new_y = sin(-ROTATE) * player->dir.x + cos(-ROTATE) * player->dir.y;
 	player->dir.x = new_x;
 	player->dir.y = new_y;
-	new_x = cos(-ROTATE) * player->cam.x - sin(-ROTATE) * player->cam.y;
-	new_y = sin(-ROTATE) * player->cam.x + cos(-ROTATE) * player->cam.y;
-	player->cam.x = new_x;
-	player->cam.y = new_y;
 }
 
 /*
@@ -57,28 +49,14 @@ static void	set_dir(t_player *player, char pos)
 {
 	player->dir.x = 0;
 	player->dir.y = 0;
-	player->cam.x = 0;
-	player->cam.y = 0;
 	if (pos == 'N')
-	{
 		player->dir.y = -SPEED;
-		player->cam.x = 0.66;
-	}
 	else if (pos == 'S')
-	{
 		player->dir.y = SPEED;
-		player->cam.x = -0.66;
-	}
 	else if (pos == 'E')
-	{
 		player->dir.x = SPEED;
-		player->cam.y = -0.66;
-	}
 	else if (pos == 'W')
-	{
 		player->dir.x = -SPEED;
-		player->cam.y = 0.66;
-	}
 }
 
 t_player	*init_player(t_map *map)

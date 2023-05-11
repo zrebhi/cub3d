@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 17:13:31 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/11 11:14:24 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:10:14 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct s_player
 {
 	t_vectord	pos;
 	t_vectord	dir;
-	t_vectord	cam;
 }	t_player;
 
 enum e_dir
@@ -74,5 +73,15 @@ typedef struct s_game
 	t_window	*win;
 	t_player	*player;
 }	t_game;
+
+typedef struct s_dda
+{
+	t_vectord	side_dist;
+	t_vectori	step;
+	t_vectori	box_map;
+	t_vectord	delta_dist;
+	t_vectord	ray;
+	int			side;
+}	t_dda;
 
 #endif //TYPES_H
