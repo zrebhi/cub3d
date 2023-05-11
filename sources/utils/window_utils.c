@@ -6,13 +6,11 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 15:08:18 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/09 17:18:37 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/11 10:52:27 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "window_utils.h"
-
-static int	fill_window(t_window *win, t_map *map, t_player *player);
 
 int	exit_window(t_game *game)
 {
@@ -27,9 +25,9 @@ int	key_handler(int key, t_game *game)
 	if (key == 65307)
 		exit_window(game);
 	else if (key == 'w')
-		forward(game->player);
+		forward(game->player, 1);
 	else if (key == 's')
-		backward(game->player);
+		forward(game->player, -1);
 	else if (key == 'a')
 		rotate_left(game->player);
 	else if (key == 'd')
@@ -37,7 +35,6 @@ int	key_handler(int key, t_game *game)
 	else
 		printf("%c\n", key);
 	draw_lines(game, game->win, game->player, game->map);
-//	fill_window(game->win, game->map, game->player);
 	return (1);
 }
 
@@ -47,60 +44,6 @@ void	put_pxl_img(t_img *img, int x, int y, int color)
 
 	dst = img->addr + (y * img->line_length + x * (img->bpp / 8));
 	*(unsigned int *) dst = color;
-}
-
-static void	draw_vector(t_window *win, t_vector position, t_vector direction)
-{
-	t_vector	diff;
-	t_vector	step;
-	double		steps;
-
-	direction.x = position.x + (direction.x * 10);
-	direction.y = position.y + (direction.y * 10);
-	diff.x = direction.x - position.x;
-	diff.y = direction.y - position.y;
-	steps = fmax(fabs(diff.x), fabs(diff.y));
-	step.x = diff.x / steps;
-	step.y = diff.y / steps;
-	while (steps >= 0)
-	{
-		if ((int)(position.x + (step.x * steps)) < W_WIDTH && \
-			(int)(position.y + (step.y * steps)) < W_HEIGHT)
-			put_pxl_img(&win->img, (int)position.x + (int)(step.x * steps), \
-				(int)position.y + (int)(step.y * steps), 0x00FF0000);
-		steps--;
-	}
-}
-
-static int	fill_window(t_window *win, t_map *map, t_player *player)
-{
-	int	x;
-	int	y;
-	int	map_x;
-	int	map_y;
-
-	y = 0;
-	while (y < W_HEIGHT)
-	{
-		map_y = y * (map->height - 1) / W_HEIGHT;
-		x = 0;
-		while (x < W_WIDTH)
-		{
-			map_x = x * (map->width - 1) / W_WIDTH;
-			if (in_range(player->pos.x, x - 10, x + 10) && in_range(player->pos.y, y - 10, y + 10))
-				put_pxl_img(&win->img, x, y, COL_PLAYER);
-			else if ((int)ft_strlen(map->map[map_y]) - 1 <= map_x || \
-				ft_strchr(" 1", map->map[map_y][map_x]))
-				put_pxl_img(&win->img, x, y, COL_WALL);
-			else
-				put_pxl_img(&win->img, x, y, COL_EMPTY);
-			x++;
-		}
-		y++;
-	}
-	draw_vector(win, player->pos, player->dir);
-	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img.img, 0, 0);
-	return (1);
 }
 
 void	init_img(t_window *window)
@@ -126,20 +69,12 @@ t_game	*init_game(t_map *map)
 	window->win_ptr = mlx_new_window(window->mlx_ptr, W_WIDTH, W_HEIGHT, TITLE);
 	game->player = init_player(map);
 	game->map = map;
-	game->map->floor = 0x00FF0000;
-	game->map->ceil = 0x0000FF00;
+	game->map->floor = 0x797c7d;
+	game->map->ceil = 0x38a5c7;
 	game->win = window;
 	init_img(window);
-//	fill_window(game->win, game->map, game->player);
 	draw_lines(game, window, game->player, game->map);
-//	mlx_hook(window->win_ptr, 02, 1L << 1, key_handler, &window); //TODO utiliser un tableau de bool pour avec un event keypress et keyrelease
 	mlx_key_hook(window->win_ptr, key_handler, game);
 	mlx_hook(window->win_ptr, 17, 1L << 2, exit_window, &window);
 	return (game);
-}
-
-int	game_loop(t_game *game)
-{
-	mlx_loop(game->win->mlx_ptr);
-	return (1);
 }
