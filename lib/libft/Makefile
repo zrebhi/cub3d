@@ -48,7 +48,6 @@ SRC			:= 	checker/ft_isalpha.c \
  			   	mem/ft_memmove.c \
  			   	mem/ft_memchr.c \
  			   	mem/ft_memcmp.c \
-				mem/ft_free.c \
 				mem/ft_free_split.c \
  			   	io/ft_putchar_fd.c \
  			   	io/ft_putstr_fd.c \
@@ -74,7 +73,13 @@ SRC			:= 	checker/ft_isalpha.c \
  			   	lst/ft_lstdelone.c \
  			   	lst/ft_lstiter.c \
  			   	lst/ft_lstmap.c \
-				lst/ft_lstsort.c
+				lst/ft_lstsort.c \
+				ft_free/ft_free.c \
+				ft_free/ft_free_add.c \
+				ft_free/ft_free_init.c \
+				ft_free/ft_free_malloc.c \
+				ft_free/ft_free_remove.c \
+				ft_free/ft_free_size.c \
 
 OBJ_DIR		:=	.build/
 OBJ			:=	$(SRC:%.c=$(OBJ_DIR)%.o)

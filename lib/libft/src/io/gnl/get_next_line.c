@@ -18,10 +18,10 @@
 
 static char	*read_file(int fd, char *buffer, size_t i);
 static char	*ft_join_to_buffer(char *buffer, char *read);
-static char	*ft_get_line(char *buffer);
-static char	*ft_remove_current_line(char *buffer);
+static char	*ft_get_line(char *buffer, t_m_free *m_free);
+static char	*ft_remove_current_line(char *buffer, t_m_free *m_free);
 
-char	*get_next_line(int fd)
+char	*get_next_line(int fd, t_m_free *m_free)
 {
 	static char	*buffer;
 	char		*line;
@@ -31,8 +31,8 @@ char	*get_next_line(int fd)
 	buffer = read_file(fd, buffer, 0);
 	if (buffer == NULL)
 		return (NULL);
-	line = ft_get_line(buffer);
-	buffer = ft_remove_current_line(buffer);
+	line = ft_get_line(buffer, m_free);
+	buffer = ft_remove_current_line(buffer, m_free);
 	return (line);
 }
 
@@ -70,11 +70,10 @@ static char	*ft_join_to_buffer(char *buffer, char *read)
 	char	*join;
 
 	join = ft_strjoin(buffer, read);
-	free(buffer);
 	return (join);
 }
 
-static char	*ft_get_line(char *buffer)
+static char	*ft_get_line(char *buffer, t_m_free *m_free)
 {
 	char	*line;
 	size_t	i;
@@ -84,13 +83,13 @@ static char	*ft_get_line(char *buffer)
 		return (NULL);
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	line = ft_substr(buffer, 0, i + 1);
+	line = ft_substr(buffer, 0, i + 1, m_free);
 	if (line == NULL)
 		return (NULL);
 	return (line);
 }
 
-static char	*ft_remove_current_line(char *buffer)
+static char	*ft_remove_current_line(char *buffer, t_m_free *m_free)
 {
 	size_t	i;
 	char	*remaining;
@@ -103,7 +102,7 @@ static char	*ft_remove_current_line(char *buffer)
 		free(buffer);
 		return (NULL);
 	}
-	remaining = ft_substr(buffer, i + 1, ft_strlen(buffer) - i);
+	remaining = ft_substr(buffer, i + 1, ft_strlen(buffer) - i, m_free);
 	if (remaining == NULL)
 		return (NULL);
 	free(buffer);

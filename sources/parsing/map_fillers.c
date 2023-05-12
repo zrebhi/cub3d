@@ -32,15 +32,16 @@ void	get_width(t_map *map_data)
 	y = -1;
 	while (map_data->map[++y])
 		if ((int)ft_strlen(map_data->map[y]) - 1 > map_data->width)
-			map_data->width = ft_strlen(map_data->map[y]) - 1;
+			map_data->width = (int)ft_strlen(map_data->map[y]) - 1;
 }
 
-char	*string_filler(t_map *map_data, char *string)
+char	*string_filler(t_map *map_data, char const *string)
 {
 	char	*filled_string;
 	int		i;
 
-	filled_string = ft_calloc(sizeof(char), map_data->width + 1);
+	filled_string = ft_calloc(sizeof(char), map_data->width + 1, \
+	map_data->parse_data->m_free);
 	if (!filled_string)
 		exit (1);
 	i = 0;
@@ -67,12 +68,13 @@ void	fill_map(t_map *map_data)
 		map_data->map[y] = string_filler(map_data, map_data->map[y]);
 }
 
-char	*replace_str_spaces(char *str)
+char	*replace_str_spaces(char *str, t_map *map_data)
 {
 	char	*new_string;
 	int		i;
 
-	new_string = ft_calloc(sizeof(char), ft_strlen(str) + 1);
+	new_string = ft_calloc(sizeof(char), ft_strlen(str) + 1, \
+	map_data->parse_data->m_free);
 	if (!new_string)
 		return (0);
 	i = -1;
@@ -92,5 +94,5 @@ void	replace_map_spaces(t_map *map_data)
 
 	y = -1;
 	while (map_data->map[++y])
-		map_data->map[y] = replace_str_spaces(map_data->map[y]);
+		map_data->map[y] = replace_str_spaces(map_data->map[y], map_data);
 }

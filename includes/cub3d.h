@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marobert <marobert@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: zrebhi <zrebhi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 13:37:20 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/04 13:37:20 by marobert         ###   ########.fr       */
+/*   Created: 2023/05/05 18:52:33 by zrebhi            #+#    #+#             */
+/*   Updated: 2023/05/05 18:52:33 by zrebhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <math.h>
 
 # define FOV 1.0472
 # define STEP_Y 10

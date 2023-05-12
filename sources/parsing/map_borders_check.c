@@ -35,8 +35,8 @@ int	check_closed_map(t_map *map_data)
 		x = -1;
 		while (map_data->map[y][++x])
 		{
-			if ((map_data->map[y][x] == '0' \
-			|| is_player(map_data->map[y][x])) && map_is_open(map_data, x, y))
+			if ((map_data->map[y][x] == '0' || is_player(map_data->map[y][x])) \
+			&& map_is_open(map_data, x, y))
 				return (1);
 		}
 	}

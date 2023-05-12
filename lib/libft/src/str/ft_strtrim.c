@@ -15,7 +15,7 @@
 static size_t	ft_get_start(char const *s1, char const *set);
 static size_t	ft_get_end(char const *s1, char const *set);
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set, t_m_free *m_free)
 {
 	size_t	start;
 	size_t	end;
@@ -26,7 +26,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 		return (ft_strdup(s1));
 	start = ft_get_start(s1, set);
 	end = ft_get_end(s1, set);
-	return (ft_substr(s1, start, end - start + 1));
+	return (ft_substr(s1, start, end - start + 1, m_free));
 }
 
 static size_t	ft_get_start(char const *s1, char const *set)

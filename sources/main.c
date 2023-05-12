@@ -37,4 +37,6 @@ int	main(int argc, char **argv)
 	}
 	game = init_game(&data);
 	mlx_loop(game->win->mlx_ptr);
+	return (ft_free(parse_data.m_free), \
+	close_fds(&parse_data.colors_data, 4), 0);
 }

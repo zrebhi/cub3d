@@ -13,17 +13,18 @@
 #include "libft.h"
 
 static size_t	ft_count_words(char const *s, char c);
-static char		**ft_split_strings(char const *s, char c, size_t count);
+static char		**ft_split_strings(char const *s, char c, \
+				size_t count, t_m_free *m_free);
 static char		**ft_freeall(char **s);
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c, t_m_free *m_free)
 {
 	size_t	strings_count;
 
 	if (s == NULL)
 		return (NULL);
 	strings_count = ft_count_words(s, c);
-	return (ft_split_strings(s, c, strings_count));
+	return (ft_split_strings(s, c, strings_count, m_free));
 }
 
 static size_t	ft_count_words(char const *s, char c)
@@ -47,14 +48,15 @@ static size_t	ft_count_words(char const *s, char c)
 	return (count);
 }
 
-static char	**ft_split_strings(char const *s, char c, size_t count)
+static char	**ft_split_strings(char const *s, char c, size_t count, \
+			t_m_free *m_free)
 {
 	char	**split;
 	size_t	i;
 	size_t	j;
 	size_t	len;
 
-	split = (char **) ft_calloc(count + 1, sizeof(char *));
+	split = (char **) ft_calloc(count + 1, sizeof(char *), m_free);
 	if (split == NULL)
 		return (NULL);
 	i = 0;
@@ -66,7 +68,7 @@ static char	**ft_split_strings(char const *s, char c, size_t count)
 		{
 			while (s[i + len] && s[i + len] != c)
 				len++;
-			split[j++] = ft_substr(s, i, len);
+			split[j++] = ft_substr(s, i, len, m_free);
 			if (split[j - 1] == NULL)
 				return (ft_freeall(split));
 		}
