@@ -19,6 +19,7 @@ int	main(int argc, char **argv)
 
 	if (parsing(argc, argv, &parse_data))
 		return (1);
+	graphics_data.parse_data = &parse_data;
 	if (graphics(&graphics_data))
 		return (2);
 	return (ft_free(parse_data.m_free), \

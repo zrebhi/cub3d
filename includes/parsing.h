@@ -23,7 +23,7 @@ typedef struct s_map
 	int			map_height;
 	int			map_width;
 	t_parsing	*parse_data;
-}			t_map;
+}				t_map;
 
 typedef struct s_colors
 {

@@ -13,6 +13,7 @@
 #ifndef GRAPHICS_H
 # define GRAPHICS_H
 
+# include "cub3d.h"
 # include <mlx.h>
 
 typedef struct	s_img
@@ -26,11 +27,14 @@ typedef struct	s_img
 
 typedef struct s_graphics
 {
-	t_img	img_data;
-	void	*mlx;
-	void	*mlx_win;
-}			t_graphics;
+	t_img		img_data;
+	void		*mlx;
+	void		*mlx_win;
+	t_parsing	*parse_data;
+}				t_graphics;
 
-int	graphics(t_graphics *graphics_data);
+int		graphics(t_graphics *graphics_data);
+void	my_mlx_pixel_put(t_img *img_data, int x, int y, int color);
+void	draw_mini_map(t_img *img, t_map *map_data);
 
 #endif

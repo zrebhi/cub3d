@@ -9,7 +9,7 @@ SRC_DIR			:=	sources
 SRC_FILES		:=	main.c \
 					parsing/map_parsing.c parsing/map_check.c parsing/map_borders_check.c \
 					parsing/map_fillers.c parsing/colors_parsing.c parsing/parsing.c \
-					graphics/graphics.c
+					graphics/graphics.c graphics/mini_map.c
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 

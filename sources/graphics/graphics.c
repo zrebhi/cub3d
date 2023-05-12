@@ -34,26 +34,28 @@ void	my_mlx_pixel_put(t_img *img_data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	draw(t_graphics *graphics_data)
+int	exit_window(t_graphics *graphics_data)
 {
-	int	x;
-	int	y;
+	ft_free(graphics_data->parse_data->m_free);
+	exit (0);
+}
 
-	x = -1;
-	while (++x < 1920)
-	{
-		y = -1;
-		while (++y < 1080)
-			my_mlx_pixel_put(&graphics_data->img_data, x, y, 0x00FFFFFF);
-	}
+int	key_handler(int key, t_graphics *graphics_data)
+{
+	printf("%c\n", key);
+	if (key == 65307)
+		exit_window(graphics_data);
+	return (1);
 }
 
 int	graphics(t_graphics *graphics_data)
 {
 	graphics_init(graphics_data);
-	draw(graphics_data);
+	draw_mini_map(&graphics_data->img_data, &graphics_data->parse_data->map_data);
 	mlx_put_image_to_window(graphics_data->mlx, graphics_data->mlx_win, \
 	graphics_data->img_data.img, 0, 0);
+	mlx_hook(graphics_data->mlx_win, 2, 1L << 0, key_handler, graphics_data);
+	mlx_hook(graphics_data->mlx_win, 17, 1L << 2, exit_window, graphics_data);
 	mlx_loop(graphics_data->mlx);
 	return (0);
 }
