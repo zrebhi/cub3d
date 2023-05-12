@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 16:19:50 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/11 18:14:52 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/12 16:47:00 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	draw_ray(t_game *game, t_player *player, t_dda *dda, int x)
 	dda->delta_dist.y = 1e30;
 	if (dda->ray.y != 0)
 		dda->delta_dist.y = fabs(1 / dda->ray.y);
-	height = get_height(dda, game);
+	height = get_height(dda, game) / cosf((FOV / W_WIDTH) * x - (FOV / 2));
 	y = 0;
 	while (y <= (W_HEIGHT - height) / 2 && y < W_HEIGHT)
 		put_pxl_img(&game->win->img, x, y++, game->map->ceil);
