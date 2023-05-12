@@ -15,6 +15,7 @@
 
 # include "../lib/libft/inc/libft.h"
 # include "parsing.h"
+# include "graphics.h"
 # include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>
