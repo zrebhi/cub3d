@@ -15,7 +15,7 @@
 int	main(int argc, char **argv)
 {
 	t_parsing	parse_data;
-	t_graphics graphics_data
+	t_graphics	graphics_data;
 
 	if (parsing(argc, argv, &parse_data))
 		return (1);
