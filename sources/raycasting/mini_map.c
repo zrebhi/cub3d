@@ -12,50 +12,33 @@
 
 #include "window_utils.h"
 
-void	draw_vector(t_img *img, t_vectord position, t_vectori direction, \
-					t_map *map)
+void	draw_vector(t_game *game, t_vectord start, double len, t_vectord *ray)
 {
+	t_vectord	end;
 	t_vectord	diff;
 	t_vectord	step;
 	double		steps;
 
-	position.x *= 10;
-	position.y *= 10;
-	direction.x = (int)(direction.x * (9.5 + (position.x > direction.x)));
-	direction.y = (int)(direction.y * (8.5 + (position.y > direction.y)));
-	diff.x = direction.x - position.x;
-	diff.y = direction.y - position.y;
+	start.x *= 10;
+	start.y *= 10;
+	end.x = start.x + len * ray->x / sqrt(ray->x * ray->x + ray->y * ray->y);
+	end.y = start.y + len * ray->y / sqrt(ray->x * ray->x + ray->y * ray->y);
+	diff.x = end.x - start.x;
+	diff.y = end.y - start.y;
 	steps = fmax(fabs(diff.x), fabs(diff.y));
-	if (steps > 1e5)
-		steps = fmin(fabs(diff.x), fabs(diff.y));
 	step.x = diff.x / steps;
 	step.y = diff.y / steps;
 	while (steps >= 0)
 	{
-		if (in_range((int)(position.x + (step.x * steps)), \
-				0, map->width * 10) && \
-			in_range((int)(position.y + (step.y * steps)), \
-				0, map->height * 10))
-			put_pxl_img(img, (int) position.x + (int)(step.x * steps), \
-				(int) position.y + (int)(step.y * steps), 0x00FF0000);
+		if (in_range((int)(start.x + (step.x * steps)), \
+				0, game->map->width * 10) && \
+			in_range((int)(start.y + (step.y * steps)), \
+				0, game->map->height * 10))
+			put_pxl_img(&game->win->m_map, (int)start.x + (int)(step.x * \
+				steps), (int) start.y + (int)(step.y * steps), 0x00FF0000);
 		steps--;
 	}
 }
-
-/*void	draw_fov_map(t_window *win, t_player *player)
-{
-	int			i;
-	t_vectord	ray;
-
-	i = 0;
-	ray = rotate(player->dir, -FOV / 2);
-	while (i < W_WIDTH)
-	{
-		ray = rotate(ray, (FOV / W_WIDTH));
-		draw_vector(win, player->pos, ray);
-		i++;
-	}
-}*/
 
 void	draw_map(t_img *img, t_player *player, t_map *map)
 {
@@ -83,5 +66,4 @@ void	draw_map(t_img *img, t_player *player, t_map *map)
 		}
 		i++;
 	}
-//	draw_fov_map(win, player);
 }

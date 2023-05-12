@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 16:19:50 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/12 16:47:00 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/12 18:15:40 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,10 @@ static double	get_height(t_dda *dda, t_game *game)
 			dda->side = 1;
 		}
 	}
+	dda->hit_dist = (dda->side_dist.x - dda->delta_dist.x);
 	if (dda->side)
-		return (W_HEIGHT / (dda->side_dist.y - dda->delta_dist.y));
-	return (W_HEIGHT / (dda->side_dist.x - dda->delta_dist.x));
+		dda->hit_dist = (dda->side_dist.y - dda->delta_dist.y);
+	return (W_WIDTH / dda->hit_dist);
 }
 
 void	draw_ray(t_game *game, t_player *player, t_dda *dda, int x)
@@ -113,7 +114,7 @@ void	draw_lines(t_game *game, t_window *win, t_player *player, t_map *map)
 	{
 		dda.ray = rotate(dda.ray, (FOV / W_WIDTH));
 		draw_ray(game, player, &dda, i);
-		draw_vector(&win->m_map, player->pos, dda.box_map, map);
+		draw_vector(game, player->pos, dda.hit_dist * 10, &dda.ray);
 		i++;
 	}
 	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img.img, 0, 0);

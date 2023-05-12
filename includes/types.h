@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 17:13:31 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/12 16:00:09 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/12 17:07:28 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_dda
 	t_vectori	box_map;
 	t_vectord	delta_dist;
 	t_vectord	ray;
+	double		hit_dist;
 	int			side;
 }	t_dda;
 

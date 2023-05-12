@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 18:56:35 by mg                #+#    #+#             */
-/*   Updated: 2023/05/11 18:14:52 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/12 17:59:47 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 void	put_pxl_img(t_img *img, int x, int y, int color);
 void	draw_lines(t_game *game, t_window *win, t_player *player, t_map *map);
 void	draw_map(t_img *img, t_player *player, t_map *map);
-void	draw_vector(t_img *img, t_vectord position, t_vectori direction, \
-					t_map *map);
+void	draw_vector(t_game *game, t_vectord start, double len, t_vectord *ray);
 
 #endif //WINDOW_UTILS_H
