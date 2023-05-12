@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 13:47:07 by zrebhi            #+#    #+#             */
-/*   Updated: 2023/05/11 16:12:19 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/12 16:12:27 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,33 @@
 
 int	main(int argc, char **argv)
 {
-	t_map	data;
-	t_game	*game;
+	t_map		map;
+	t_game		*game;
+	t_parsing	parse_data;
 
 	if (argc != 2)
 		return (ft_putstr_fd("Invalid number of arguments.\n", 2), 1);
-	if (parse_map(argv, &data))
+	if (parsing(argc, argv, &parse_data))
 		return (1);
-	printf("\nheight:\t%d\nwidth:\t%d\n", data.height, data.width);
-	for (int i = 0; i < data.height; ++i)
+	map = parse_data.map_data;
+	map.ceil = parse_data.colors_data.ceiling_color;
+	map.floor = parse_data.colors_data.floor_color;
+	printf("\nheight:\t%d\nwidth:\t%d\n", map.height, map.width);
+	for (int i = 0; i < map.height; ++i)
 	{
-		for (int j = 0; j < data.width; ++j)
+		for (int j = 0; j < map.width; ++j)
 		{
-			if (data.map[i][j] == '1')
+			if (map.map[i][j] == '1')
 				printf("█");
-			else if (ft_isalpha(data.map[i][j]))
+			else if (ft_isalpha(map.map[i][j]))
 				printf("x");
 			else
 				printf(" ");
 		}
 		printf("\n");
 	}
-	game = init_game(&data);
+	game = init_game(&map);
 	mlx_loop(game->win->mlx_ptr);
 	return (ft_free(parse_data.m_free), \
-	close_fds(&parse_data.colors_data, 4), 0);
+			close_fds(&parse_data.colors_data, 4), 0);
 }

@@ -6,12 +6,14 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 17:13:31 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/11 17:14:37 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/12 16:00:09 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPES_H
 # define TYPES_H
+
+# include "libft.h"
 
 typedef struct s_img
 {
@@ -56,16 +58,19 @@ enum e_dir
 	WEST = 3
 };
 
+typedef struct s_parsing	t_parsing;
+
 typedef struct s_map
 {
 	t_img		textures[4];
-	int			floor;
-	int			ceil;
+	long		floor;
+	long		ceil;
 	char		**map;
 	char		*file;
 	int			height;
 	int			width;
 	enum e_dir	player_dir;
+	t_parsing	*parse_data;
 }	t_map;
 
 typedef struct s_game
@@ -84,5 +89,24 @@ typedef struct s_dda
 	t_vectord	ray;
 	int			side;
 }	t_dda;
+
+typedef struct s_colors
+{
+	int			north_texture;
+	int			south_texture;
+	int			west_texture;
+	int			east_texture;
+	long		floor_color;
+	long		ceiling_color;
+	t_parsing	*parse_data;
+}	t_colors;
+
+typedef struct s_parsing
+{
+	char		*file;
+	t_m_free	*m_free;
+	t_map		map_data;
+	t_colors	colors_data;
+}	t_parsing;
 
 #endif //TYPES_H

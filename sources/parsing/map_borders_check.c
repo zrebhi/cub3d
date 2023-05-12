@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map_borders_check.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zrebhi <zrebhi@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:28:07 by zrebhi            #+#    #+#             */
-/*   Updated: 2023/05/03 12:28:07 by zrebhi           ###   ########.fr       */
+/*   Updated: 2023/05/12 15:52:18 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 int	map_is_open(t_map *map_data, int x, int y)
 {
