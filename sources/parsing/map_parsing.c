@@ -6,11 +6,11 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:32:06 by zrebhi            #+#    #+#             */
-/*   Updated: 2023/05/12 15:48:47 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/12 15:52:25 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 char	*get_to_the_map(t_map *map_data, int *fd)
 {
@@ -50,7 +50,8 @@ void	get_map(t_map *map_data)
 	int	fd;
 
 	get_map_height(map_data, &fd);
-	map_data->map = ft_calloc(sizeof(char *), map_data->height + 1);
+	map_data->map = ft_calloc(sizeof(char *), \
+			map_data->height + 1, map_data->parse_data->m_free);
 	map_data->map = ft_calloc(sizeof(char *), \
 	map_data->height + 1, map_data->parse_data->m_free);
 	if (!map_data->map)
@@ -76,7 +77,7 @@ int	map_is_last(t_map *map_data)
 	fd = open(map_data->parse_data->file, O_RDONLY);
 	str = get_to_the_map(map_data, &fd);
 	i = 0;
-	while (++i < map_data->map_height)
+	while (++i < map_data->height)
 	{
 		str = get_next_line((fd), map_data->parse_data->m_free);
 		if (!str)

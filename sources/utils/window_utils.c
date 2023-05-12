@@ -6,7 +6,7 @@
 /*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 15:08:18 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/11 17:10:38 by marobert         ###   ########.fr       */
+/*   Updated: 2023/05/12 16:09:53 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ t_game	*init_game(t_map *map)
 		exit(printf("mlx error\n"));
 	game->player = init_player(map);
 	game->map = map;
-	game->map->floor = 0x797c7d;
-	game->map->ceil = 0x38a5c7;
 	game->win = window;
 	init_img(window, map);
 	draw_lines(game, window, game->player, game->map);

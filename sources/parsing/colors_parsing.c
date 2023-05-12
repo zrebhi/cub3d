@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   texture_parsing.c                                  :+:      :+:    :+:   */
+/*   colors_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zrebhi <zrebhi@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:52:51 by zrebhi            #+#    #+#             */
-/*   Updated: 2023/05/04 13:52:51 by zrebhi           ###   ########.fr       */
+/*   Updated: 2023/05/12 16:33:23 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 char	*ft_remove_backslashn(char *str, t_colors *colors_data)
 {
@@ -71,7 +71,6 @@ long	find_color(char *id, char *file, t_colors *colors_data)
 	char	*str;
 	int		i;
 	int		colors[3];
-	long	color;
 
 	str = find_texture(id, file, colors_data);
 	if (!str)
@@ -86,9 +85,7 @@ long	find_color(char *id, char *file, t_colors *colors_data)
 	}
 	if (i != 3)
 		return (-1);
-	color = colors[0] * 255 + colors[1] * (long)pow(255, 2) + \
-			colors[2] * (long)pow(255, 3);
-	return (color);
+	return (colors[0] * 65536 + colors[1] * 256 + colors[2]);
 }
 
 int	get_colors(t_colors *colors_data, char *file)
