@@ -18,16 +18,16 @@ void	draw_mini_map(t_img *img, t_map *map_data)
 	int	j;
 
 	i = 0;
-	while (i < (map_data->map_width * 50))
+	while (i < (map_data->map_width * 10))
 	{
 		j = 0;
-		while (j < (map_data->map_height * 50))
+		while (j < (map_data->map_height * 10))
 		{
-			if (map_data->map[j * map_data->map_height / (map_data->map_height * 50)] \
-			[i * (map_data->map_width) / (map_data->map_width * 50)] == '0')
+			if (map_data->map[j * map_data->map_height / (map_data->map_height * 10)] \
+			[i * (map_data->map_width) / (map_data->map_width * 10)] == '0')
 				my_mlx_pixel_put(img, i, j, 0x55FFFFFF);
-			else if (map_data->map[j * map_data->map_height / (map_data->map_height * 50)] \
-					[i * (map_data->map_width) / (map_data->map_width * 50)] == '1')
+			else if (map_data->map[j * map_data->map_height / (map_data->map_height * 10)] \
+					[i * (map_data->map_width) / (map_data->map_width * 10)] == '1')
 				my_mlx_pixel_put(img, i, j, 0x55000000);
 			j++;
 		}
