@@ -25,14 +25,6 @@ typedef struct	s_img
 	int		endian;
 }			t_img;
 
-typedef struct s_graphics
-{
-	t_img		img_data;
-	void		*mlx;
-	void		*mlx_win;
-	t_parsing	*parse_data;
-}				t_graphics;
-
 typedef struct s_vectord
 {
 	double	x;
@@ -45,8 +37,19 @@ typedef struct s_player
 	t_vectord	dir;
 }				t_player;
 
+typedef struct s_graphics
+{
+	t_img		img_data;
+	void		*mlx;
+	void		*mlx_win;
+
+	t_player	player_data;
+	t_parsing	*parse_data;
+}				t_graphics;
+
 int		graphics(t_graphics *graphics_data);
 void	my_mlx_pixel_put(t_img *img_data, int x, int y, int color);
-void	mini_map(t_img *img, t_map *map_data);
+void	mini_map(t_img *img, t_map *map_data, t_player *player_data);
+void	init_player(char **map, t_player *player_data);
 
 #endif

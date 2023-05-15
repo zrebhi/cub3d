@@ -22,6 +22,8 @@ int	graphics_init(t_graphics *graphics_data)
 	graphics_data->img_data.addr = mlx_get_data_addr \
 	(graphics_data->img_data.img, &graphics_data->img_data.bits_per_pixel, \
 	&graphics_data->img_data.line_length, &graphics_data->img_data.endian);
+	init_player(graphics_data->parse_data->map_data.map, \
+	&graphics_data->player_data);
 	return (0);
 }
 
@@ -29,9 +31,12 @@ void	my_mlx_pixel_put(t_img *img_data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = img_data->addr + \
-	(y * img_data->line_length + x * (img_data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
+	if (1)
+	{
+		dst = img_data->addr + \
+    (y * img_data->line_length + x * (img_data->bits_per_pixel / 8));
+		*(unsigned int *) dst = color;
+	}
 }
 
 int	exit_window(t_graphics *graphics_data)
@@ -51,7 +56,8 @@ int	key_handler(int key, t_graphics *graphics_data)
 int	graphics(t_graphics *graphics_data)
 {
 	graphics_init(graphics_data);
-	mini_map(&graphics_data->img_data, &graphics_data->parse_data->map_data);
+	mini_map(&graphics_data->img_data, \
+	&graphics_data->parse_data->map_data, &graphics_data->player_data);
 	mlx_put_image_to_window(graphics_data->mlx, graphics_data->mlx_win, \
 	graphics_data->img_data.img, 0, 0);
 	mlx_hook(graphics_data->mlx_win, 2, 1L << 0, key_handler, graphics_data);
