@@ -51,7 +51,7 @@ int	key_handler(int key, t_graphics *graphics_data)
 int	graphics(t_graphics *graphics_data)
 {
 	graphics_init(graphics_data);
-	draw_mini_map(&graphics_data->img_data, &graphics_data->parse_data->map_data);
+	mini_map(&graphics_data->img_data, &graphics_data->parse_data->map_data);
 	mlx_put_image_to_window(graphics_data->mlx, graphics_data->mlx_win, \
 	graphics_data->img_data.img, 0, 0);
 	mlx_hook(graphics_data->mlx_win, 2, 1L << 0, key_handler, graphics_data);

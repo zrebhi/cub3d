@@ -33,8 +33,20 @@ typedef struct s_graphics
 	t_parsing	*parse_data;
 }				t_graphics;
 
+typedef struct s_vectord
+{
+	double	x;
+	double	y;
+}			t_vectord;
+
+typedef struct s_player
+{
+	t_vectord	pos;
+	t_vectord	dir;
+}				t_player;
+
 int		graphics(t_graphics *graphics_data);
 void	my_mlx_pixel_put(t_img *img_data, int x, int y, int color);
-void	draw_mini_map(t_img *img, t_map *map_data);
+void	mini_map(t_img *img, t_map *map_data);
 
 #endif
