@@ -49,7 +49,12 @@ typedef struct s_graphics
 
 int		graphics(t_graphics *graphics_data);
 void	my_mlx_pixel_put(t_img *img_data, int x, int y, int color);
-void	mini_map(t_img *img, t_map *map_data, t_player *player_data);
-void	init_player(char **map, t_player *player_data);
+void	mini_map(t_img *img, t_map *map_data, t_graphics *graphics_data);
+
+/* Player */
+
+void	init_player(char ***map, t_player *player_data);
+void	move_forward(t_player *player, int dir, char **map);
+void	move_aside(t_player *player, int dir, char **map);
 
 #endif

@@ -12,67 +12,102 @@
 
 #include "../../includes/cub3d.h"
 
-void	find_player(char **map, t_player *player_data)
+void draw_line(t_img *img, int x0, int y0, int x1, int y1, int color, char **map)
 {
-	int	x;
-	int	y;
+	int dx;
+	int dy;
+	int sx;
+	int sy;
+	int err;
 
-	y = -1;
-	while (map[++y])
+	dx = abs(x1 - x0);
+	dy = abs(y1 - y0);
+	err = dx - dy;
+	if (x0 < x1)
+		sx = 1;
+	else
+		sx = -1;
+	if (y0 < y1)
+		sy = 1;
+	else
+		sy = -1;
+	while (1)
 	{
-		x = -1;
-		while (map[y][++x])
+		my_mlx_pixel_put(img, x0, y0, color);
+		if (map[y0][x0] == '1')
+			break;
+		if (2 * err > -dy)
 		{
-			if (is_player(map[y][x]))
-			{
-				player_data->pos.x = x;
-				player_data->pos.y = y;
-				break ;
-			}
+			err -= dy;
+			x0 += sx;
+		}
+		if (2 * err < dx)
+		{
+			err += dx;
+			y0 += sy;
 		}
 	}
 }
 
-void	init_player(char **map, t_player *player_data)
+void	mini_map(t_img *img, t_map *map_data, t_graphics *graphics_data)
 {
-	char	dir;
+	int i, j;
 
-	find_player(map, player_data);
-	dir = map[(int)(player_data->pos.y)][(int)(player_data->pos.x)];
-	player_data->dir.x = 0;
-	player_data->dir.y = 0;
-	if (dir == 'N')
-		player_data->dir.y = 1;
-	if (dir == 'S')
-		player_data->dir.y = -1;
-	if (dir == 'E')
-		player_data->dir.x = 1;
-	if (dir == 'W')
-		player_data->dir.x = -1;
-}
-
-void	mini_map(t_img *img, t_map *map_data, t_player *player_data)
-{
-	int	i;
-	int	j;
+	int squareSize = 40; // Size of each square (10 by 10 pixels)
 
 	i = 0;
-	while (i < (map_data->map_width * 50))
+	while (i < (map_data->map_width * squareSize))
 	{
 		j = 0;
-		while (j < (map_data->map_height * 50))
+		while (j < (map_data->map_height * squareSize) && j < 1080)
 		{
-			if (j == (int)floor(player_data->pos.y * 50) && i == (int)floor(player_data->pos.x * 50)) {
-				printf("%d\n", j);
-				printf("%d\n", i);
-				my_mlx_pixel_put(img, i, j, 0xFFFF0000);
+			int mapX = i / squareSize;
+			int mapY = j / squareSize;
+
+			if (map_data->map[mapY][mapX] == '1')
+			{
+				// Draw a filled square with the desired color
+				for (int dx = 0; dx < squareSize; dx++)
+				{
+					for (int dy = 0; dy < squareSize; dy++)
+					{
+						int pixelX = i + dx;
+						int pixelY = j + dy;
+						my_mlx_pixel_put(img, pixelX, pixelY, 0xFF000000);
+					}
+				}
 			}
-			else if (map_data->map[j / 50][i / 50] == '0')
-				my_mlx_pixel_put(img, i, j, 0x55FFFFFF);
-			else if (map_data->map[j / 50][i / 50] == '1')
-				my_mlx_pixel_put(img, i, j, 0x55000000);
-			j++;
+			if (map_data->map[mapY][mapX] == '0')
+			{
+				// Draw a filled square with a different color for the player position
+				for (int dx = 0; dx < squareSize; dx++)
+				{
+					for (int dy = 0; dy < squareSize; dy++)
+					{
+						int pixelX = i + dx;
+						int pixelY = j + dy;
+						my_mlx_pixel_put(img, pixelX, pixelY, 0xFFFFFFFF);
+					}
+				}
+			}
+			if (i / squareSize == (int)(graphics_data->player_data.pos.x) && \
+			j /squareSize == (int)(graphics_data->player_data.pos.y))
+			{
+				// Draw a filled square with a different color for the player position
+				for (int dx = 0; dx < squareSize; dx++)
+				{
+					for (int dy = 0; dy < squareSize; dy++)
+					{
+						int pixelX = i + dx;
+						int pixelY = j + dy;
+						my_mlx_pixel_put(img, pixelX, pixelY, 0xFFFF0000);
+					}
+				}
+			}
+			j += squareSize;
 		}
-		i++;
+		i += squareSize;
 	}
+
+	mlx_put_image_to_window(graphics_data->mlx, graphics_data->mlx_win, graphics_data->img_data.img, 0, 0);
 }

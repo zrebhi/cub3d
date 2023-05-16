@@ -22,7 +22,7 @@ int	graphics_init(t_graphics *graphics_data)
 	graphics_data->img_data.addr = mlx_get_data_addr \
 	(graphics_data->img_data.img, &graphics_data->img_data.bits_per_pixel, \
 	&graphics_data->img_data.line_length, &graphics_data->img_data.endian);
-	init_player(graphics_data->parse_data->map_data.map, \
+	init_player(&graphics_data->parse_data->map_data.map, \
 	&graphics_data->player_data);
 	return (0);
 }
@@ -47,9 +47,24 @@ int	exit_window(t_graphics *graphics_data)
 
 int	key_handler(int key, t_graphics *graphics_data)
 {
-	printf("%c\n", key);
 	if (key == 65307)
 		exit_window(graphics_data);
+	else if (key == 'w')
+		move_forward(&graphics_data->player_data, 1, graphics_data->parse_data->map_data.map);
+	else if (key == 's')
+		move_forward(&graphics_data->player_data, -1, graphics_data->parse_data->map_data.map);
+	else if (key == 'a')
+		move_aside(&graphics_data->player_data, -1, graphics_data->parse_data->map_data.map);
+	else if (key == 'd')
+		move_aside(&graphics_data->player_data, 1, graphics_data->parse_data->map_data.map);
+//	else if (key == 'a')
+//		rotate_left(game->player);
+//	else if (key == 'd')
+//		rotate_right(game->player);
+	else
+		printf("%d\n", key);
+	mini_map(&graphics_data->img_data, \
+	&graphics_data->parse_data->map_data, graphics_data);
 	return (1);
 }
 
@@ -57,9 +72,7 @@ int	graphics(t_graphics *graphics_data)
 {
 	graphics_init(graphics_data);
 	mini_map(&graphics_data->img_data, \
-	&graphics_data->parse_data->map_data, &graphics_data->player_data);
-	mlx_put_image_to_window(graphics_data->mlx, graphics_data->mlx_win, \
-	graphics_data->img_data.img, 0, 0);
+	&graphics_data->parse_data->map_data, graphics_data);
 	mlx_hook(graphics_data->mlx_win, 2, 1L << 0, key_handler, graphics_data);
 	mlx_hook(graphics_data->mlx_win, 17, 1L << 2, exit_window, graphics_data);
 	mlx_loop(graphics_data->mlx);
