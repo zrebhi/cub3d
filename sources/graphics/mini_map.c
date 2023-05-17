@@ -10,104 +10,54 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
-void draw_line(t_img *img, int x0, int y0, int x1, int y1, int color, char **map)
+
+void	draw_vector(t_graphics *graphics_data, \
+ t_vectord start, double len, t_vectord *ray)
 {
-	int dx;
-	int dy;
-	int sx;
-	int sy;
-	int err;
+	t_vectord	end;
+	t_vectord	diff;
+	t_vectord	step;
+	double		steps;
 
-	dx = abs(x1 - x0);
-	dy = abs(y1 - y0);
-	err = dx - dy;
-	if (x0 < x1)
-		sx = 1;
-	else
-		sx = -1;
-	if (y0 < y1)
-		sy = 1;
-	else
-		sy = -1;
-	while (1)
+	start.x *= 10;
+	start.y *= 10;
+	end.x = start.x + len * ray->x / sqrt(ray->x * ray->x + ray->y * ray->y);
+	end.y = start.y + len * ray->y / sqrt(ray->x * ray->x + ray->y * ray->y);
+	diff.x = end.x - start.x;
+	diff.y = end.y - start.y;
+	steps = fmax(fabs(diff.x), fabs(diff.y));
+	step.x = diff.x / steps;
+	step.y = diff.y / steps;
+	while (steps >= 0)
 	{
-		my_mlx_pixel_put(img, x0, y0, color);
-		if (map[y0][x0] == '1')
-			break;
-		if (2 * err > -dy)
-		{
-			err -= dy;
-			x0 += sx;
-		}
-		if (2 * err < dx)
-		{
-			err += dx;
-			y0 += sy;
-		}
+		my_mlx_pixel_put(&graphics_data->img_data, (int)start.x + (int)(step.x *
+																		steps), (int) start.y + (int)(step.y * steps), 0x00FF0000);
+		steps--;
 	}
 }
 
-void	mini_map(t_img *img, t_map *map_data, t_graphics *graphics_data)
+void	mini_map(t_img *img, t_map *map_data, t_player *player_data, t_graphics *graphics_data)
 {
-	int i, j;
-
-	int squareSize = 40; // Size of each square (10 by 10 pixels)
+	int	i;
+	int	j;
 
 	i = 0;
-	while (i < (map_data->map_width * squareSize))
+	while (i < (map_data->map_width * 10))
 	{
 		j = 0;
-		while (j < (map_data->map_height * squareSize) && j < 1080)
+		while (j < (map_data->map_height * 10))
 		{
-			int mapX = i / squareSize;
-			int mapY = j / squareSize;
-
-			if (map_data->map[mapY][mapX] == '1')
-			{
-				// Draw a filled square with the desired color
-				for (int dx = 0; dx < squareSize; dx++)
-				{
-					for (int dy = 0; dy < squareSize; dy++)
-					{
-						int pixelX = i + dx;
-						int pixelY = j + dy;
-						my_mlx_pixel_put(img, pixelX, pixelY, 0xFF000000);
-					}
-				}
-			}
-			if (map_data->map[mapY][mapX] == '0')
-			{
-				// Draw a filled square with a different color for the player position
-				for (int dx = 0; dx < squareSize; dx++)
-				{
-					for (int dy = 0; dy < squareSize; dy++)
-					{
-						int pixelX = i + dx;
-						int pixelY = j + dy;
-						my_mlx_pixel_put(img, pixelX, pixelY, 0xFFFFFFFF);
-					}
-				}
-			}
-			if (i / squareSize == (int)(graphics_data->player_data.pos.x) && \
-			j /squareSize == (int)(graphics_data->player_data.pos.y))
-			{
-				// Draw a filled square with a different color for the player position
-				for (int dx = 0; dx < squareSize; dx++)
-				{
-					for (int dy = 0; dy < squareSize; dy++)
-					{
-						int pixelX = i + dx;
-						int pixelY = j + dy;
-						my_mlx_pixel_put(img, pixelX, pixelY, 0xFFFF0000);
-					}
-				}
-			}
-			j += squareSize;
+			if (j == (int)floor(player_data->pos.y * 10) && \
+			i == (int)floor(player_data->pos.x * 10))
+				my_mlx_pixel_put(img, i, j, 0x55FF0000);
+			else if (map_data->map[j / 10][i / 10] == '0')
+				my_mlx_pixel_put(img, i, j, 0x55FFFFFF);
+			else if (map_data->map[j / 10][i / 10] == '1')
+				my_mlx_pixel_put(img, i, j, 0x55000000);
+			j++;
 		}
-		i += squareSize;
+		i++;
 	}
-
-	mlx_put_image_to_window(graphics_data->mlx, graphics_data->mlx_win, graphics_data->img_data.img, 0, 0);
 }

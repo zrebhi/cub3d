@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 void	find_player(char **map, t_player *player_data)
 {
@@ -78,4 +78,15 @@ void move_aside(t_player *player, int dir, char **map)
 	tmp = player->pos.y + ((lateralDirY / 10) * dir);
 	if (map[(int)tmp][(int)player->pos.x] != '1')
 		player->pos.y = tmp;
+}
+
+void	rotate_side(t_player *player, int dir)
+{
+	double	new_x;
+	double	new_y;
+
+	new_x = cos(dir * 0.05) * player->dir.x - sin(dir * 0.05) * player->dir.y;
+	new_y = sin(dir * 0.05) * player->dir.x + cos(dir * 0.05) * player->dir.y;
+	player->dir.x = new_x;
+	player->dir.y = new_y;
 }
