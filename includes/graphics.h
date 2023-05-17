@@ -16,7 +16,7 @@
 # include "cub3d.h"
 # include <mlx.h>
 
-# define FOV 90
+# define FOV 1.0472
 # define W_WIDTH 1920
 # define W_HEIGHT 1080
 

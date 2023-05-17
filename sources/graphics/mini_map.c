@@ -32,8 +32,7 @@ void	draw_vector(t_graphics *graphics_data, \
 	step.y = diff.y / steps;
 	while (steps >= 0)
 	{
-		my_mlx_pixel_put(&graphics_data->img_data, (int)start.x + (int)(step.x *
-																		steps), (int) start.y + (int)(step.y * steps), 0x00FF0000);
+		my_mlx_pixel_put(&graphics_data->img_data, (int)start.x + (int)(step.x * steps), (int) start.y + (int)(step.y * steps), 0x00FF0000);
 		steps--;
 	}
 }
@@ -49,8 +48,7 @@ void	mini_map(t_img *img, t_map *map_data, t_player *player_data, t_graphics *gr
 		j = 0;
 		while (j < (map_data->map_height * 10))
 		{
-			if (j == (int)floor(player_data->pos.y * 10) && \
-			i == (int)floor(player_data->pos.x * 10))
+			if (j == (int)floor(player_data->pos.y * 10) && i == (int)floor(player_data->pos.x * 10))
 				my_mlx_pixel_put(img, i, j, 0x55FF0000);
 			else if (map_data->map[j / 10][i / 10] == '0')
 				my_mlx_pixel_put(img, i, j, 0x55FFFFFF);

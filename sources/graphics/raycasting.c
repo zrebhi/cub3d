@@ -90,7 +90,7 @@ void	draw_ray(t_graphics *graphics_data, t_player *player, t_dda *dda, int x)
 	dda->delta_dist.y = 1e30;
 	if (dda->ray.y != 0)
 		dda->delta_dist.y = fabs(1 / dda->ray.y);
-	height = get_height(dda, graphics_data, graphics_data->parse_data->map_data.map) / cosf((FOV / W_WIDTH) * x - (FOV / 2));
+	height = get_height(dda, graphics_data, graphics_data->parse_data->map_data.map);
 	printf("%f\n", height);
 	y = 0;
 	while (y <= (W_HEIGHT - height) / 2 && y < W_HEIGHT)
@@ -115,19 +115,18 @@ void	draw_lines(t_graphics *graphics_data, t_player *player)
 	int		i;
 	t_dda	dda;
 
-//	mini_map(&graphics_data->map_img_data, &graphics_data->parse_data->map_data, \
-//	&graphics_data->player_data, graphics_data);
+	//mini_map(&graphics_data->:qwimg_data, &graphics_data->parse_data->map_data, \
+	//&graphics_data->player_data, graphics_data);
 	i = 0;
 	dda.ray = rotate(player->dir, -FOV / 2);
 	while (i < W_WIDTH)
 	{
-		dda.ray = rotate(dda.ray, (FOV / W_WIDTH));
+		dda.ray = rotate(dda.ray, ((double) FOV / (double) W_WIDTH));
 		draw_ray(graphics_data, player, &dda, i);
 //		draw_vector(graphics_data, player->pos, dda.hit_dist * 10, &dda.ray);
 		i++;
 	}
-	mlx_put_image_to_window(graphics_data->mlx, \
-	graphics_data->mlx_win, graphics_data->img_data.img, 0, 0);
+	mlx_put_image_to_window(graphics_data->mlx, graphics_data->mlx_win, graphics_data->img_data.img, 0, 0);
 //	mlx_put_image_to_window(graphics_data->mlx, \
 //	graphics_data->mlx_win, graphics_data->map_img_data.img, 0, 0);
 }

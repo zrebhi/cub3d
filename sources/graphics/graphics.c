@@ -14,21 +14,14 @@
 
 int	graphics_init(t_graphics *graphics_data)
 {
+	init_player(&graphics_data->parse_data->map_data.map, &graphics_data->player_data);
 	graphics_data->mlx = mlx_init();
-	graphics_data->mlx_win = mlx_new_window(graphics_data->mlx, \
-	1920, 1080, "Hello world!");
-	graphics_data->img_data.img = mlx_new_image(graphics_data->mlx, \
-	1920, 1080);
-	graphics_data->img_data.addr = mlx_get_data_addr \
-	(graphics_data->img_data.img, &graphics_data->img_data.bits_per_pixel, \
+	graphics_data->mlx_win = mlx_new_window(graphics_data->mlx, 1920, 1080, "Hello world!");
+	graphics_data->img_data.img = mlx_new_image(graphics_data->mlx, 1920, 1080);
+	graphics_data->img_data.addr = mlx_get_data_addr (graphics_data->img_data.img, &graphics_data->img_data.bits_per_pixel, \
 	&graphics_data->img_data.line_length, &graphics_data->img_data.endian);
-	graphics_data->map_img_data.img = mlx_new_image(graphics_data->mlx, \
-	1920, 1080);
-	graphics_data->map_img_data.addr = mlx_get_data_addr \
-	(graphics_data->map_img_data.img, &graphics_data->map_img_data.bits_per_pixel, \
-	&graphics_data->map_img_data.line_length, &graphics_data->map_img_data.endian);
-	init_player(&graphics_data->parse_data->map_data.map, \
-	&graphics_data->player_data);
+	graphics_data->map_img_data.img = mlx_new_image(graphics_data->mlx, 1920, 1080);
+	graphics_data->map_img_data.addr = mlx_get_data_addr (graphics_data->map_img_data.img, &graphics_data->map_img_data.bits_per_pixel, &graphics_data->map_img_data.line_length, &graphics_data->map_img_data.endian);
 	return (0);
 }
 
