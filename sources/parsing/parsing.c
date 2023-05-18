@@ -26,6 +26,7 @@ int	check_file(char *file)
 	{
 		ft_putstr_fd(file, 2);
 		ft_putstr_fd(" is a directory.\n", 2);
+		close(fd);
 		return (1);
 	}
 	fd = open(file, O_RDONLY);

@@ -25,6 +25,5 @@ int	main(int argc, char **argv)
 	if (graphics(&graphics_data)) {
 		return (2);
 	}
-	return (ft_free(parse_data.m_free), \
-	close_fds(&parse_data.colors_data, 4), 0);
+	return (ft_free(parse_data.m_free), close_fds(&parse_data.colors_data, 4), 0);
 }

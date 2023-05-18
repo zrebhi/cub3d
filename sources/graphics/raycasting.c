@@ -71,34 +71,47 @@ static double	get_height(t_dda *dda, t_graphics *graphics_data, char **map)
 		}
 	}
 	if (!dda->side)
-		dda->hit_dist = (dda->side_dist.y - dda->delta_dist.y);
-	else
 		dda->hit_dist = (dda->side_dist.x - dda->delta_dist.x);
+	else
+		dda->hit_dist = (dda->side_dist.y - dda->delta_dist.y);
 	return (W_WIDTH / dda->hit_dist);
 }
 
-void	draw_ray(t_graphics *graphics_data, t_player *player, t_dda *dda, int x)
+void	draw_ray_init(t_dda *dda, t_player *player_data)
 {
-	double	height;
-	int		y;
-
-	dda->box_map.x = floor(player->pos.x);
-	dda->box_map.y = floor(player->pos.y);
+	dda->box_map.x = floor(player_data->pos.x);
+	dda->box_map.y = floor(player_data->pos.y);
 	dda->delta_dist.x = 1e30;
 	if (dda->ray.x != 0)
 		dda->delta_dist.x = fabs(1 / dda->ray.x);
 	dda->delta_dist.y = 1e30;
 	if (dda->ray.y != 0)
 		dda->delta_dist.y = fabs(1 / dda->ray.y);
-	height = get_height(dda, graphics_data, graphics_data->parse_data->map_data.map);
-	printf("%f\n", height);
+}
+
+void	draw_ray(t_graphics *graphics_data, t_player *player, t_dda *dda, int x)
+{
+	double	wall_height;
+	int		y;
+	t_vectori coordinates_in_texture;
+
+	wall_height = get_height(dda, graphics_data, graphics_data->parse_data->map_data.map) \
+	/ (double)cosf((FOV / W_WIDTH) * x - (FOV / 2));
 	y = 0;
-	while (y <= (W_HEIGHT - height) / 2 && y < W_HEIGHT)
-		my_mlx_pixel_put(&graphics_data->img_data, x, y++, 0x550000FF);
-	while (y <= (W_HEIGHT + height) / 2 && y < W_HEIGHT)
-		my_mlx_pixel_put(&graphics_data->img_data, x, y++, 0x5500FF00);
-	while (y < W_HEIGHT)
-		my_mlx_pixel_put(&graphics_data->img_data, x, y++, 0x55FF0000);
+	while (y <= (W_HEIGHT - wall_height) / 2 && y < W_HEIGHT) {
+		my_mlx_pixel_put(&graphics_data->img_data, x, y++, \
+		graphics_data->parse_data->colors_data.ceiling_color);
+	}
+	while (y <= (W_HEIGHT + wall_height) / 2 && y < W_HEIGHT) {
+		coordinates_in_texture = pixel_coordinates_in_texture(wall_height, graphics_data->textures[0], x, y);
+		my_mlx_pixel_put(&graphics_data->img_data, x, y, \
+		get_pixel_value(&graphics_data->textures[0], coordinates_in_texture.x, coordinates_in_texture.y));
+		y++;
+	}
+	while (y < W_HEIGHT) {
+		my_mlx_pixel_put(&graphics_data->img_data, x, y++, \
+		graphics_data->parse_data->colors_data.floor_color);
+	}
 }
 
 t_vectord	rotate(t_vectord vector, double angle)
@@ -115,18 +128,18 @@ void	draw_lines(t_graphics *graphics_data, t_player *player)
 	int		i;
 	t_dda	dda;
 
-	//mini_map(&graphics_data->:qwimg_data, &graphics_data->parse_data->map_data, \
-	//&graphics_data->player_data, graphics_data);
+	mini_map(&graphics_data->map_img_data, &graphics_data->parse_data->map_data, \
+	&graphics_data->player_data, graphics_data);
 	i = 0;
 	dda.ray = rotate(player->dir, -FOV / 2);
 	while (i < W_WIDTH)
 	{
 		dda.ray = rotate(dda.ray, ((double) FOV / (double) W_WIDTH));
 		draw_ray(graphics_data, player, &dda, i);
-//		draw_vector(graphics_data, player->pos, dda.hit_dist * 10, &dda.ray);
+		draw_line(floor(player->pos.x * 10), floor(player->pos.y * 10), dda.box_map.x * 10, dda.box_map.y * 10, &graphics_data->map_img_data, 0xFF0000);
+//				draw_vector(graphics_data, player->pos, dda.hit_dist * 10, &dda.ray);
 		i++;
 	}
 	mlx_put_image_to_window(graphics_data->mlx, graphics_data->mlx_win, graphics_data->img_data.img, 0, 0);
-//	mlx_put_image_to_window(graphics_data->mlx, \
-//	graphics_data->mlx_win, graphics_data->map_img_data.img, 0, 0);
+	mlx_put_image_to_window(graphics_data->mlx, graphics_data->mlx_win, graphics_data->map_img_data.img, 0, 0);
 }

@@ -61,6 +61,14 @@ int	open_texture(char *id, char *file, t_colors *colors_data)
 	str = find_texture(id, file, colors_data);
 	if (!str)
 		return (-1);
+	if (!ft_strcmp("NO", id))
+		colors_data->north_texture_filename = str;
+	if (!ft_strcmp("SO", id))
+		colors_data->north_texture_filename = str;
+	if (!ft_strcmp("EA", id))
+		colors_data->east_texture_filename = str;
+	if (!ft_strcmp("WE", id))
+		colors_data->west_texture_filename = str;
 	fd = open(str, O_RDONLY);
 	return (fd);
 }
@@ -71,7 +79,6 @@ long	find_color(char *id, char *file, t_colors *colors_data)
 	char	*str;
 	int		i;
 	int		colors[3];
-	long	color;
 
 	str = find_texture(id, file, colors_data);
 	if (!str)
@@ -86,9 +93,7 @@ long	find_color(char *id, char *file, t_colors *colors_data)
 	}
 	if (i != 3)
 		return (-1);
-	color = colors[0] * 255 + colors[1] * (long)pow(255, 2) + \
-			colors[2] * (long)pow(255, 3);
-	return (color);
+	return (colors[0] * 65536 + colors[1] * 256 + colors[2]);
 }
 
 int	get_colors(t_colors *colors_data, char *file)

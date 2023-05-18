@@ -21,7 +21,10 @@ char	*get_to_the_map(t_map *map_data, int *fd)
 	{
 		str = get_next_line(*fd, map_data->parse_data->m_free);
 		if (!str)
+		{
+			close(*fd);
 			return (0);
+		}
 		if (space_digits_only(str) && ft_strcmp("\n", str))
 			break ;
 	}
@@ -74,6 +77,8 @@ int	map_is_last(t_map *map_data)
 
 	fd = open(map_data->parse_data->file, O_RDONLY);
 	str = get_to_the_map(map_data, &fd);
+	if (!str)
+		return (close(fd), 0);
 	i = 0;
 	while (++i < map_data->map_height)
 	{
@@ -85,7 +90,10 @@ int	map_is_last(t_map *map_data)
 	{
 		str = get_next_line((fd), map_data->parse_data->m_free);
 		if (!str)
-			return (close(fd), 1);
+		{
+			close(fd);
+			return (1);
+		}
 		if (ft_strcmp(str, "\n"))
 			return (close(fd), 0);
 	}

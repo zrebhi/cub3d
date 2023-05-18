@@ -1,13 +1,13 @@
-NO textures/north_texture
+NO textures/greystone.xpm
 
-SO textures/south_texture
+SO textures/greystone.xpm
 
-EA textures/west_texture
+EA textures/greystone.xpm
 
-WE textures/east_texture
+WE textures/greystone.xpm
 
-F 255,255,255
-C 225,30,0
+F 65,152,10
+C 191,221,221
 
 1111111111111111111111111
 1000000000110000000000001

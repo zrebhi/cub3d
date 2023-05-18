@@ -28,11 +28,15 @@ typedef struct s_map
 typedef struct s_colors
 {
 	int			north_texture;
+	char		*north_texture_filename;
 	int			south_texture;
+	char		*south_texture_filename;
 	int			west_texture;
+	char		*west_texture_filename;
 	int			east_texture;
-	long		floor_color;
-	long		ceiling_color;
+	char		*east_texture_filename;
+	int 		floor_color;
+	int 		ceiling_color;
 	t_parsing	*parse_data;
 }				t_colors;
 

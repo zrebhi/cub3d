@@ -20,8 +20,9 @@ int	graphics_init(t_graphics *graphics_data)
 	graphics_data->img_data.img = mlx_new_image(graphics_data->mlx, 1920, 1080);
 	graphics_data->img_data.addr = mlx_get_data_addr (graphics_data->img_data.img, &graphics_data->img_data.bits_per_pixel, \
 	&graphics_data->img_data.line_length, &graphics_data->img_data.endian);
-	graphics_data->map_img_data.img = mlx_new_image(graphics_data->mlx, 1920, 1080);
+	graphics_data->map_img_data.img = mlx_new_image(graphics_data->mlx, graphics_data->parse_data->map_data.map_width * 10, graphics_data->parse_data->map_data.map_height * 10);
 	graphics_data->map_img_data.addr = mlx_get_data_addr (graphics_data->map_img_data.img, &graphics_data->map_img_data.bits_per_pixel, &graphics_data->map_img_data.line_length, &graphics_data->map_img_data.endian);
+	get_textures(graphics_data, &graphics_data->parse_data->colors_data);
 	return (0);
 }
 
@@ -36,6 +37,7 @@ void	my_mlx_pixel_put(t_img *img_data, int x, int y, int color)
 
 int	exit_window(t_graphics *graphics_data)
 {
+	close_fds(&graphics_data->parse_data->colors_data, 4);
 	ft_free(graphics_data->parse_data->m_free);
 	exit (0);
 }

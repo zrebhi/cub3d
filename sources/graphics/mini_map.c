@@ -37,6 +37,33 @@ void	draw_vector(t_graphics *graphics_data, \
 	}
 }
 
+void draw_line(int x0, int y0, int x1, int y1, t_img *img, int color)
+{
+	int dx = abs(x1 - x0);
+	int dy = abs(y1 - y0);
+	int sx = (x0 < x1) ? 1 : -1;
+	int sy = (y0 < y1) ? 1 : -1;
+	int err = dx - dy;
+
+	while (x0 != x1 || y0 != y1)
+	{
+		my_mlx_pixel_put(img, x0, y0, color);
+		int err2 = 2 * err;
+
+		if (err2 > -dy)
+		{
+			err -= dy;
+			x0 += sx;
+		}
+
+		if (err2 < dx)
+		{
+			err += dx;
+			y0 += sy;
+		}
+	}
+}
+
 void	mini_map(t_img *img, t_map *map_data, t_player *player_data, t_graphics *graphics_data)
 {
 	int	i;
@@ -48,7 +75,7 @@ void	mini_map(t_img *img, t_map *map_data, t_player *player_data, t_graphics *gr
 		j = 0;
 		while (j < (map_data->map_height * 10))
 		{
-			if (j == (int)floor(player_data->pos.y * 10) && i == (int)floor(player_data->pos.x * 10))
+			if (j == floor(player_data->pos.y * 10) && i == (int)floor(player_data->pos.x * 10))
 				my_mlx_pixel_put(img, i, j, 0x55FF0000);
 			else if (map_data->map[j / 10][i / 10] == '0')
 				my_mlx_pixel_put(img, i, j, 0x55FFFFFF);
