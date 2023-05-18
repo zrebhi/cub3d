@@ -89,12 +89,13 @@ void	draw_ray_init(t_dda *dda, t_player *player_data)
 		dda->delta_dist.y = fabs(1 / dda->ray.y);
 }
 
-void	draw_ray(t_graphics *graphics_data, t_player *player, t_dda *dda, int x)
+void	draw_ray(t_graphics *graphics_data, t_player *player_data, t_dda *dda, int x)
 {
 	double	wall_height;
 	int		y;
 	t_vectori coordinates_in_texture;
 
+	draw_ray_init(dda, player_data);
 	wall_height = get_height(dda, graphics_data, graphics_data->parse_data->map_data.map) \
 	/ (double)cosf((FOV / W_WIDTH) * x - (FOV / 2));
 	y = 0;
