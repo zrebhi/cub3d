@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zrebhi <zrebhi@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: zak <zak@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 15:40:22 by zrebhi            #+#    #+#             */
-/*   Updated: 2023/05/16 15:40:22 by zrebhi           ###   ########.fr       */
+/*   Updated: 2023/05/18 19:18:46 by zak              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	draw_ray(t_graphics *graphics_data, t_player *player_data, t_dda *dda, int 
 {
 	double	wall_height;
 	int		y;
+	int		color;
 	t_vectori coordinates_in_texture;
 
 	draw_ray_init(dda, player_data);
@@ -104,9 +105,9 @@ void	draw_ray(t_graphics *graphics_data, t_player *player_data, t_dda *dda, int 
 		graphics_data->parse_data->colors_data.ceiling_color);
 	}
 	while (y <= (W_HEIGHT + wall_height) / 2 && y < W_HEIGHT) {
-		coordinates_in_texture = pixel_coordinates_in_texture(wall_height, graphics_data->textures[0], x, y);
-		my_mlx_pixel_put(&graphics_data->img_data, x, y, \
-		get_pixel_value(&graphics_data->textures[0], coordinates_in_texture.x, coordinates_in_texture.y));
+		coordinates_in_texture = pixel_coordinates_in_texture(wall_height, &graphics_data->textures[0], x, y, dda, player_data);
+		color = get_pixel_value(&graphics_data->textures[0], coordinates_in_texture.x, coordinates_in_texture.y);
+		my_mlx_pixel_put(&graphics_data->img_data, x, y, color);
 		y++;
 	}
 	while (y < W_HEIGHT) {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zrebhi <zrebhi@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: zak <zak@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:55:43 by zrebhi            #+#    #+#             */
-/*   Updated: 2023/05/12 18:55:43 by zrebhi           ###   ########.fr       */
+/*   Updated: 2023/05/18 19:18:26 by zak              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	draw_lines(t_graphics *graphics_data, t_player *player);
 void	draw_line(int x0, int y0, int x1, int y1, t_img *img, int color);
 int		side_color(t_dda *dda);
 int			get_pixel_value(t_img *img, int x, int y);
-t_vectori	pixel_coordinates_in_texture(double wall_height, t_img texture, int x, int y);
+t_vectori pixel_coordinates_in_texture(double wall_height, t_img *texture, int x, int y, t_dda *dda, t_player *player_data);
 
 /* Player */
 
