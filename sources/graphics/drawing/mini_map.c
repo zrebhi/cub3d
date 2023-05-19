@@ -32,14 +32,14 @@ void	draw_vector(t_graphics *graphics_data, \
 	step.y = diff.y / steps;
 	while (steps >= 0)
 	{
-		my_mlx_pixel_put(&graphics_data->img_data, (int)start.x + \
+		my_mlx_pixel_put(&graphics_data->map_img_data, (int)start.x + \
 		(int)(step.x * steps), (int) start.y + (int)(step.y * steps), \
 		0x00FF0000);
 		steps--;
 	}
 }
 
-void	mini_map(t_img *img, t_map *map_data, t_player *player_data, t_graphics *graphics_data)
+void	mini_map(t_img *img, t_map *map_data, t_player *player_data)
 {
 	int	i;
 	int	j;

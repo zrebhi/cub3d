@@ -64,7 +64,7 @@ int	open_texture(char *id, char *file, t_colors *colors_data)
 	if (!ft_strcmp("NO", id))
 		colors_data->north_texture_filename = str;
 	if (!ft_strcmp("SO", id))
-		colors_data->north_texture_filename = str;
+		colors_data->south_texture_filename = str;
 	if (!ft_strcmp("EA", id))
 		colors_data->east_texture_filename = str;
 	if (!ft_strcmp("WE", id))

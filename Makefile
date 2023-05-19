@@ -9,8 +9,9 @@ SRC_DIR			:=	sources
 SRC_FILES		:=	main.c \
 					parsing/map_parsing.c parsing/map_check.c parsing/map_borders_check.c \
 					parsing/map_fillers.c parsing/colors_parsing.c parsing/parsing.c \
-					graphics/graphics.c graphics/mini_map.c graphics/player.c \
-					graphics/raycasting.c graphics/textures.c \
+					graphics/graphics.c graphics/player.c \
+					graphics/drawing/raycasting.c graphics/drawing/drawing.c graphics/drawing/mini_map.c \
+					graphics/textures/textures.c graphics/textures/get_texture_pixel.c \
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
@@ -33,7 +34,7 @@ CCDEPS			:=	NAME=\"$(NAME)\"
 # Compiler options
 CC				:=	cc
 DEBUG_FLAG		:=	-g3 #-fsanitize=address
-CC_FLAGS		:=	#-Wextra -Werror -Wall -O3 $(DEBUG_FLAG)
+CC_FLAGS		:=	-Wextra -Werror -Wall -O3 #$(DEBUG_FLAG)
 CC_DEPS_FLAGS	:=	-MP -MMD
 CC_DEFS_FLAGS	:=	$(foreach def,$(CCDEPS),-D $(def))
 

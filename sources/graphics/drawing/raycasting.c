@@ -33,8 +33,7 @@ double	get_wall_height(t_dda *dda, t_graphics *graphics_data, \
 
 	get_hit_dist(dda, graphics_data, map);
 	fisheye_fix = 1 / ((double)cosf((FOV / W_WIDTH) * x - (FOV / 2)));
-	wall_height = dda->hit_dist * fisheye_fix;
-
+	wall_height = (W_WIDTH / dda->hit_dist) * fisheye_fix;
 	return (wall_height);
 }
 

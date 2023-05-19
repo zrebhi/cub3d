@@ -1,10 +1,10 @@
-NO textures/greystone.xpm
+NO textures/eagle.xpm
 
 SO textures/greystone.xpm
 
-EA textures/greystone.xpm
+EA textures/purplestone.xpm
 
-WE textures/greystone.xpm
+WE textures/red.xpm
 
 F 65,152,10
 C 191,221,221

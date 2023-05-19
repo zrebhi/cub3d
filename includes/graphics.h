@@ -35,7 +35,7 @@ typedef struct s_img
 	int			endian;
 	int			width;
 	int 		height;
-}			t_img;
+}				t_img;
 
 typedef struct s_vectori
 {
@@ -58,7 +58,7 @@ typedef struct s_dda
 	t_vectord	ray;
 	double		hit_dist;
 	int			side;
-}	t_dda;
+}				t_dda;
 
 typedef struct s_graphics
 {
@@ -73,16 +73,29 @@ typedef struct s_graphics
 	t_parsing	*parse_data;
 }				t_graphics;
 
+/* Drawing */
+
 int		graphics(t_graphics *graphics_data);
 void	my_mlx_pixel_put(t_img *img_data, int x, int y, int color);
-void	get_textures(t_graphics *graphics_data, t_colors *colors_data);
-void	mini_map(t_img *img, t_map *map_data, \
-		t_player *player_data, t_graphics *graphics_data);
+void	mini_map(t_img *img, t_map *map_data, t_player *player_data);
 void	draw_lines(t_graphics *graphics_data, t_player *player);
-void	draw_line(int x0, int y0, int x1, int y1, t_img *img, int color);
-int		side_color(t_dda *dda);
+void	draw_vector(t_graphics *graphics_data, \
+		t_vectord start, double len, t_vectord *ray);
+
+
+/* Textures */
+
+t_img		wall_orientation_texture(t_dda *dda, t_graphics *graphics_data);
+void		get_textures(t_graphics *graphics_data, t_colors *colors_data);
 int			get_pixel_value(t_img *img, int x, int y);
-t_vectori pixel_coordinates_in_texture(double wall_height, t_img *texture, int x, int y, t_dda *dda, t_player *player_data);
+t_vectori	pixel_coordinates_in_texture(double wall_height, t_img *texture, \
+			int y, t_graphics *graphics_data);
+
+/* Raycasting */
+
+t_vectord	rotate_vector(t_vectord vector, double angle);
+double		get_wall_height(t_dda *dda, t_graphics *graphics_data, \
+			char **map, int x);
 
 /* Player */
 
