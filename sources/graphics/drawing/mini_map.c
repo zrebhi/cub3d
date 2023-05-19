@@ -14,7 +14,7 @@
 
 
 void	draw_vector(t_graphics *graphics_data, \
- t_vectord start, double len, t_vectord *ray)
+		t_vectord start, double len, t_vectord *ray)
 {
 	t_vectord	end;
 	t_vectord	diff;
@@ -32,35 +32,10 @@ void	draw_vector(t_graphics *graphics_data, \
 	step.y = diff.y / steps;
 	while (steps >= 0)
 	{
-		my_mlx_pixel_put(&graphics_data->img_data, (int)start.x + (int)(step.x * steps), (int) start.y + (int)(step.y * steps), 0x00FF0000);
+		my_mlx_pixel_put(&graphics_data->img_data, (int)start.x + \
+		(int)(step.x * steps), (int) start.y + (int)(step.y * steps), \
+		0x00FF0000);
 		steps--;
-	}
-}
-
-void draw_line(int x0, int y0, int x1, int y1, t_img *img, int color)
-{
-	int dx = abs(x1 - x0);
-	int dy = abs(y1 - y0);
-	int sx = (x0 < x1) ? 1 : -1;
-	int sy = (y0 < y1) ? 1 : -1;
-	int err = dx - dy;
-
-	while (x0 != x1 || y0 != y1)
-	{
-		my_mlx_pixel_put(img, x0, y0, color);
-		int err2 = 2 * err;
-
-		if (err2 > -dy)
-		{
-			err -= dy;
-			x0 += sx;
-		}
-
-		if (err2 < dx)
-		{
-			err += dx;
-			y0 += sy;
-		}
 	}
 }
 

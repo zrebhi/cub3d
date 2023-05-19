@@ -44,52 +44,58 @@ int		side_color(t_dda *dda)
 		return (0x00FFFF);
 }
 
-int		get_pixel_value(t_img *img, int x, int y)
+int		get_pixel_value(t_img *img, int tex_x, int tex_y)
 {
 	char	*ptr;
 	int		value;
 
-	ptr = img->addr + (y * img->line_length) + (x << 2);
+	ptr = img->addr + (tex_y * img->line_length) + (tex_x << 2);
 	value = (*(int *)ptr);
 	return (value);
 }
 
-
-double	perpwall_dist(t_dda *dda, t_player *player_data)
+t_vectori pixel_coordinates_in_texture(double wall_height, t_img *texture, int x, int y, t_dda *dda, t_player *player_data)
 {
-	double	angle = atan2(dda->ray.y, dda->ray.x);
-	double	player_angle = atan2(player_data->dir.y, player_data->dir.x);
+	t_vectori coordinates;
 
-	return (dda->hit_dist * cos(angle - player_angle));
+	coordinates.y = y * 256 - W_HEIGHT * 128 + wall_height * 128;
+	coordinates.y = ((coordinates.y * texture->height) / wall_height) / 256;
+	coordinates.x = get_tex_x(dda, player_data, x, y, texture);
+
+	return (coordinates);
 }
 
 int	get_tex_x(t_dda *dda, t_player *player_data, int x, int y, t_img *texture)
- {
+{
 	double	wallX;
-	double	perpwall;
+	double	perpwallDist;
 	int		tex_x;
-	
-	perpwall = perpwall_dist(dda, player_data);
-	if (!dda->side)
-		wallX = y + perpwall * dda->ray.y;
-	else
-		wallX = y + perpwall * dda->ray.x;
-	wallX -= floor((wallX));
+
 	tex_x = (int)(wallX * (double)texture->width);
 	if (!dda->side && dda->ray.x > 0)
 		tex_x = texture->width - tex_x - 1;
 	if (dda->side && dda->ray.y < 0)
 		tex_x = texture->width - tex_x - 1;
 	return (tex_x);
- }
- 
-t_vectori pixel_coordinates_in_texture(double wall_height, t_img *texture, int x, int y, t_dda *dda, t_player *player_data)
+}
+
+double	get_wallX(t_dda *dda, int x, int y)
 {
-    t_vectori coordinates;
+	double	wallX;
+	double	perpwallDist;
 
-    coordinates.y = y * 256 - W_HEIGHT * 128 + wall_height * 128;
-    coordinates.y = ((coordinates.y * texture->height) / wall_height) / 256;
-	coordinates.x = get_tex_x(dda, player_data, x, y, texture);
+	perpwallDist = get_perpwallDist(dda, player_data);
+	if (!dda->side)
+		wallX = y + perpwallDist * dda->ray.y;
+	else
+		wallX = y + perpwallDist * dda->ray.x;
+	wallX -= floor((wallX));
+}
 
-    return (coordinates);
+double	get_perpwallDdist(t_dda *dda, t_player *player_data)
+{
+	double	angle = atan2(dda->ray.y, dda->ray.x);
+	double	player_angle = atan2(player_data->dir.y, player_data->dir.x);
+
+	return (dda->hit_dist * cos(angle - player_angle));
 }
