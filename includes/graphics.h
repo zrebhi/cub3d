@@ -89,7 +89,7 @@ t_img		wall_orientation_texture(t_dda *dda, t_graphics *graphics_data);
 void		get_textures(t_graphics *graphics_data, t_colors *colors_data);
 int			get_pixel_value(t_img *img, int x, int y);
 t_vectori	pixel_coordinates_in_texture(double wall_height, t_img *texture, \
-			int y, t_graphics *graphics_data);
+			int x, int y, t_graphics *graphics_data);
 
 /* Raycasting */
 
