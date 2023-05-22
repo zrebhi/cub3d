@@ -13,7 +13,7 @@
 #include "cub3d.h"
 
 int		get_pixel_color(t_graphics *graphics_data, t_dda *dda, \
-		double wall_height, int x, int y);
+		double wall_height, int y);
 void	draw_ray_init(t_dda *dda, t_player *player_data);
 void	draw_ray(t_graphics *graphics_data, \
 		t_player *player_data, t_dda *dda, int x);
@@ -31,7 +31,7 @@ void	draw_lines(t_graphics *graphics_data, t_player *player)
 		graphics_data->dda.ray = rotate_vector \
 		(graphics_data->dda.ray, ((double) FOV / (double) W_WIDTH));
 		draw_ray(graphics_data, player, &graphics_data->dda, x);
-		draw_vector (graphics_data, player->pos, \
+		draw_vector(graphics_data, player->pos, \
 		graphics_data->dda.hit_dist * 10, &graphics_data->dda.ray);
 		x++;
 	}
@@ -57,7 +57,7 @@ void	draw_ray(t_graphics *graphics_data, \
 		graphics_data->parse_data->colors_data.ceiling_color);
 	while (y <= (W_HEIGHT + wall_height) / 2 && y < W_HEIGHT)
 	{
-		color = get_pixel_color(graphics_data, dda, wall_height, x, y);
+		color = get_pixel_color(graphics_data, dda, wall_height, y);
 		my_mlx_pixel_put(&graphics_data->img_data, x, y, color);
 		y++;
 	}
@@ -79,7 +79,7 @@ void	draw_ray_init(t_dda *dda, t_player *player_data)
 }
 
 int	get_pixel_color(t_graphics *graphics_data, t_dda *dda, \
-	double wall_height, int x, int y)
+	double wall_height, int y)
 {
 	t_img		texture;
 	t_vectori	coordinates_in_texture;
@@ -87,7 +87,7 @@ int	get_pixel_color(t_graphics *graphics_data, t_dda *dda, \
 
 	texture = wall_orientation_texture(dda, graphics_data);
 	coordinates_in_texture = pixel_coordinates_in_texture \
-		(wall_height, &texture, x, y, graphics_data);
+		(wall_height, &texture, y, graphics_data);
 	color = get_pixel_value(&texture, \
 		coordinates_in_texture.x, coordinates_in_texture.y);
 	return (color);

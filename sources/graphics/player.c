@@ -56,28 +56,28 @@ void	move_forward(t_player *player, int dir, char **map)
 {
 	double	tmp;
 
-	tmp = player->pos.y + ((player->dir.y / 10) * dir);
+	tmp = player->pos.y + ((player->dir.y) * dir);
 	if (map[(int)tmp][(int)player->pos.x] != '1')
-		player->pos.y = tmp;
-	tmp = player->pos.x + ((player->dir.x / 10) * dir);
+		player->pos.y = player->pos.y + ((player->dir.y / 10) * dir);
+	tmp = player->pos.x + ((player->dir.x) * dir);
 	if (map[(int)player->pos.y][(int)tmp] != '1')
-		player->pos.x = tmp;
+		player->pos.x = player->pos.x + ((player->dir.x / 10) * dir);
 }
 
-void move_aside(t_player *player, int dir, char **map)
+void	move_aside(t_player *player, int dir, char **map)
 {
-	double tmp;
-	double lateralDirX;
-	double lateralDirY;
+	double	tmp;
+	double	lateraldirx;
+	double	lateraldiry;
 
-	lateralDirX = -player->dir.y;
-	lateralDirY = player->dir.x;
-	tmp = player->pos.x + ((lateralDirX / 10) * dir);
+	lateraldirx = -player->dir.y;
+	lateraldiry = player->dir.x;
+	tmp = player->pos.x + ((lateraldirx) * dir);
 	if (map[(int)player->pos.y][(int)tmp] != '1')
-		player->pos.x = tmp;
-	tmp = player->pos.y + ((lateralDirY / 10) * dir);
+		player->pos.x = player->pos.x + ((lateraldirx / 10) * dir);
+	tmp = player->pos.y + ((lateraldiry) * dir);
 	if (map[(int)tmp][(int)player->pos.x] != '1')
-		player->pos.y = tmp;
+		player->pos.y = player->pos.y + ((lateraldiry / 10) * dir);
 }
 
 void	rotate_side(t_player *player, int dir)

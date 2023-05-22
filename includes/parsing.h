@@ -35,8 +35,8 @@ typedef struct s_colors
 	char		*west_texture_filename;
 	int			east_texture;
 	char		*east_texture_filename;
-	int 		floor_color;
-	int 		ceiling_color;
+	int			floor_color;
+	int			ceiling_color;
 	t_parsing	*parse_data;
 }				t_colors;
 

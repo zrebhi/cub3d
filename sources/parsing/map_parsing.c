@@ -76,7 +76,7 @@ int	map_is_last(t_map *map_data)
 	int		fd;
 
 	fd = open(map_data->parse_data->file, O_RDONLY);
-	str = get_to_the_map(map_data, &fd);
+	str = get_to_the_map(map_data, fd);
 	if (!str)
 		return (close(fd), 0);
 	i = 0;
@@ -90,10 +90,7 @@ int	map_is_last(t_map *map_data)
 	{
 		str = get_next_line((fd), map_data->parse_data->m_free);
 		if (!str)
-		{
-			close(fd);
-			return (1);
-		}
+			return (close(fd), 1);
 		if (ft_strcmp(str, "\n"))
 			return (close(fd), 0);
 	}

@@ -19,11 +19,9 @@ int	main(int argc, char **argv)
 
 	if (parsing(argc, argv, &parse_data))
 		return (1);
-	for (int i = 0; parse_data.map_data.map[i]; i++)
-		printf("%s\n", parse_data.map_data.map[i]);
 	graphics_data.parse_data = &parse_data;
-	if (graphics(&graphics_data)) {
+	if (graphics(&graphics_data))
 		return (2);
-	}
-	return (ft_free(parse_data.m_free), close_fds(&parse_data.colors_data, 4), 0);
+	return (ft_free(parse_data.m_free), \
+	close_fds(&parse_data.colors_data, 4), 0);
 }
