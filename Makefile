@@ -9,6 +9,7 @@ SRC_DIR			:=	sources
 SRC_FILES		:=	main.c \
 					parsing/map_parsing.c parsing/map_check.c parsing/map_borders_check.c \
 					parsing/map_fillers.c parsing/colors_parsing.c parsing/parsing.c \
+					parsing/parsing_utils.c \
 					graphics/graphics.c graphics/player.c \
 					graphics/drawing/raycasting.c graphics/drawing/drawing.c graphics/drawing/mini_map.c \
 					graphics/textures/textures.c graphics/textures/get_texture_pixel.c \

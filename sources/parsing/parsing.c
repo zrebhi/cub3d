@@ -14,6 +14,7 @@
 
 int	check_file(char *file);
 int	get_colors(t_colors *colors_data, char *file);
+int	unknown_texture(char *file, t_colors *colors_data);
 
 int	parsing(int argc, char **argv, t_parsing *parse_data)
 {
@@ -27,9 +28,33 @@ int	parsing(int argc, char **argv, t_parsing *parse_data)
 		return (ft_free(parse_data->m_free), 1);
 	if (parse_map(&parse_data->map_data))
 		return (ft_free(parse_data->m_free), 2);
+	if (unknown_texture(parse_data->file, &parse_data->colors_data))
+		return (ft_putstr_fd("Error\nUnknown texure in file.\n", 2), \
+		ft_free(parse_data->m_free), 3);
 	if (get_colors(&parse_data->colors_data, parse_data->file))
-		return (ft_free(parse_data->m_free), 3);
+		return (ft_free(parse_data->m_free), 4);
 	return (0);
+}
+
+int	unknown_texture(char *file, t_colors *colors_data)
+{
+	char	*str;
+	int		fd;
+
+	fd = open(file, O_RDONLY);
+	while (1)
+	{
+		str = get_next_line(fd, colors_data->parse_data->m_free);
+		if (!str)
+			return (close(fd), 1);
+		if (space_digits_only(str) && ft_strcmp("\n", str))
+			return (close(fd), 0);
+		if (ft_strcmp(str, "\n") && ft_strncmp(str, "NO", 2) && \
+		ft_strncmp(str, "SO", 2) && ft_strncmp(str, "EA", 2) && \
+		ft_strncmp(str, "WE", 2) && ft_strncmp(str, "F", 1) && \
+		ft_strncmp(str, "C", 1))
+			return (close(fd), 1);
+	}
 }
 
 int	check_file(char *file)
@@ -60,35 +85,6 @@ int	check_file(char *file)
 	return (0);
 }
 
-int	get_colors(t_colors *colors_data, char *file)
-{
-	colors_data->north_texture = open_texture("NO", file, colors_data);
-	if (colors_data->north_texture < 0)
-		return (ft_putstr_fd("Error\nMissing or invalid north texture.\n", 2), 1);
-	colors_data->south_texture = open_texture("SO", file, colors_data);
-	if (colors_data->south_texture < 0)
-		return (close_fds(colors_data, 1), \
-		ft_putstr_fd("Error\nMissing or invalid south texture.\n", 2), 1);
-	colors_data->west_texture = open_texture("WE", \
-	colors_data->parse_data->file, colors_data);
-	if (colors_data->west_texture < 0)
-		return (close_fds(colors_data, 2), \
-		ft_putstr_fd("Error\nMissing or invalid west texture.\n", 2), 1);
-	colors_data->east_texture = open_texture("EA", file, colors_data);
-	if (colors_data->east_texture < 0)
-		return (close_fds(colors_data, 3), \
-		ft_putstr_fd("Error\nMissing or invalid east texture.\n", 2), 1);
-	colors_data->floor_color = find_color("F", file, colors_data);
-	if (colors_data->floor_color < 0)
-		return (close_fds(colors_data, 4), \
-		ft_putstr_fd("Error\nMissing or incorrect floor color.\n", 2), 1);
-	colors_data->ceiling_color = find_color("C", file, colors_data);
-	if (colors_data->ceiling_color < 0)
-		return (close_fds(colors_data, 4), \
-		ft_putstr_fd("Error\nMissing or incorrect ceiling color.\n", 2), 1);
-	return (0);
-}
-
 void	close_fds(t_colors *colors_data, int mode)
 {
 	if (mode == 1)
@@ -111,17 +107,4 @@ void	close_fds(t_colors *colors_data, int mode)
 		close(colors_data->west_texture);
 		close(colors_data->east_texture);
 	}
-}
-
-int	space_digits_only(char *str)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-	{
-		if (!ft_isdigit(str[i]) && str[i] != ' ' && str[i] != '\n')
-			return (0);
-	}
-	return (1);
 }

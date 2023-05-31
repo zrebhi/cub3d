@@ -66,7 +66,6 @@ void	replace_map_spaces(t_map *data);
 
 /* Textures and colors */
 
-int		open_texture(char *id, char *file, t_colors *colors_data);
-long	find_color(char *id, char *file, t_colors *colors_data);
+char	*ft_remove_backslashn(char *str, t_colors *colors_data);
 
 #endif

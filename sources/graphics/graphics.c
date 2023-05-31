@@ -15,6 +15,8 @@
 int	graphics_init(t_graphics *graphics_data)
 {
 	graphics_data->mlx = mlx_init();
+	if (!graphics_data->mlx)
+		return (1);
 	graphics_data->mlx_win = mlx_new_window \
 	(graphics_data->mlx, 1920, 1080, "Hello world!");
 	graphics_data->img_data.img = mlx_new_image \
@@ -48,6 +50,16 @@ void	my_mlx_pixel_put(t_img *img_data, int x, int y, int color)
 
 int	exit_window(t_graphics *graphics_data)
 {
+	int	i;
+
+	i = -1;
+	while (++i < 4)
+		mlx_destroy_image(graphics_data->mlx, graphics_data->textures[i].img);
+	mlx_destroy_image(graphics_data->mlx, graphics_data->img_data.img);
+	mlx_destroy_image(graphics_data->mlx, graphics_data->map_img_data.img);
+	mlx_destroy_window(graphics_data->mlx, graphics_data->mlx_win);
+	mlx_destroy_display(graphics_data->mlx);
+	free(graphics_data->mlx);
 	close_fds(&graphics_data->parse_data->colors_data, 4);
 	ft_free(graphics_data->parse_data->m_free);
 	exit (0);
