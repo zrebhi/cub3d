@@ -22,6 +22,7 @@ typedef struct s_map
 	char		**map;
 	int			map_height;
 	int			map_width;
+	int			fd;
 	t_parsing	*parse_data;
 }				t_map;
 
@@ -54,7 +55,7 @@ void	close_fds(t_colors *colors_data, int mode);
 /* Map Parsing */
 
 int		parse_map(t_map *map_data);
-void	get_map(t_map *data);
+int		get_map(t_map *map_data);
 void	fill_map(t_map *data);
 int		is_player(char c);
 int		space_digits_only(char *str);
