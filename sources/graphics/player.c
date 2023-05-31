@@ -6,7 +6,7 @@
 /*   By: zrebhi <zrebhi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:51:10 by zrebhi            #+#    #+#             */
-/*   Updated: 2023/05/15 15:51:10 by zrebhi           ###   ########.fr       */
+/*   Updated: 2023/05/22 17:14:32 by zrebhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ void	move_forward(t_player *player, int dir, char **map)
 {
 	double	tmp;
 
-	tmp = player->pos.y + ((player->dir.y) * dir);
+	tmp = player->pos.y + ((player->dir.y / 1.5) * dir);
 	if (map[(int)tmp][(int)player->pos.x] != '1')
 		player->pos.y = player->pos.y + ((player->dir.y / 10) * dir);
-	tmp = player->pos.x + ((player->dir.x) * dir);
+	tmp = player->pos.x + ((player->dir.x / 1.5) * dir);
 	if (map[(int)player->pos.y][(int)tmp] != '1')
 		player->pos.x = player->pos.x + ((player->dir.x / 10) * dir);
 }
@@ -72,10 +72,10 @@ void	move_aside(t_player *player, int dir, char **map)
 
 	lateraldirx = -player->dir.y;
 	lateraldiry = player->dir.x;
-	tmp = player->pos.x + ((lateraldirx) * dir);
+	tmp = player->pos.x + ((lateraldirx / 1.5) * dir);
 	if (map[(int)player->pos.y][(int)tmp] != '1')
 		player->pos.x = player->pos.x + ((lateraldirx / 10) * dir);
-	tmp = player->pos.y + ((lateraldiry) * dir);
+	tmp = player->pos.y + ((lateraldiry / 1.5) * dir);
 	if (map[(int)tmp][(int)player->pos.x] != '1')
 		player->pos.y = player->pos.y + ((lateraldiry / 10) * dir);
 }

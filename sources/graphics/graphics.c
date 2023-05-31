@@ -69,9 +69,9 @@ int	key_handler(int key, t_graphics *graphics_data)
 	else if (key == 'd')
 		move_aside(&graphics_data->player_data, 1, \
 		graphics_data->parse_data->map_data.map);
-	else if (key == 'q')
+	else if (key == 65361)
 		rotate_side(&graphics_data->player_data, -1);
-	else if (key == 'e')
+	else if (key == 65363)
 		rotate_side(&graphics_data->player_data, 1);
 	else
 		printf("%d\n", key);

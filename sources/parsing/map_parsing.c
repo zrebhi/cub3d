@@ -12,7 +12,6 @@
 
 #include "../../includes/cub3d.h"
 
-int		get_map(t_map *map_data);
 void	get_map_height(t_map *map_data);
 char	*get_to_the_map(t_map *map_data);
 int		map_is_last(t_map *map_data);
@@ -20,17 +19,17 @@ int		map_is_last(t_map *map_data);
 int	parse_map(t_map *map_data)
 {
 	if (get_map(map_data))
-		return (ft_putstr_fd("Invalid map.\n", 2), 1);
+		return (ft_putstr_fd("Error\nInvalid map.\n", 2), 1);
 	fill_map(map_data);
 	if (check_forbidden_char(map_data))
-		return (ft_putstr_fd("Invalid map (forbidden char).\n", 2), 1);
+		return (ft_putstr_fd("Error\nInvalid map (forbidden char).\n", 2), 1);
 	if (check_player_count(map_data))
-		return (ft_putstr_fd("Invalid map (player count).\n", 2), 1);
+		return (ft_putstr_fd("Error\nInvalid map (player count).\n", 2), 1);
 	if (check_closed_map(map_data))
-		return (ft_putstr_fd("Invalid map (not closed).\n", 2), 1);
+		return (ft_putstr_fd("Error\nInvalid map (not closed).\n", 2), 1);
 	if (!map_is_last(map_data))
 		return (ft_putstr_fd \
-		("Map must not be split and appear last in the file.\n", 2), 1);
+		("Error\nMap must not be split and appear last in the file.\n", 2), 1);
 	replace_map_spaces(map_data);
 	return (0);
 }

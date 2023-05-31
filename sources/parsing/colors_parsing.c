@@ -12,6 +12,8 @@
 
 #include "../../includes/cub3d.h"
 
+int	check_texture(char *id, int fd, t_colors *colors_data);
+
 char	*ft_remove_backslashn(char *str, t_colors *colors_data)
 {
 	char	*new_str;
@@ -49,6 +51,8 @@ char	*find_texture(char *id, char *file, t_colors *colors_data)
 	i = (int)ft_strlen(id);
 	while (str[i] == ' ')
 		i++;
+	if (check_texture(id, fd, colors_data))
+		return (close(fd), NULL);
 	close(fd);
 	return (ft_remove_backslashn(str + i, colors_data));
 }
@@ -73,6 +77,20 @@ int	open_texture(char *id, char *file, t_colors *colors_data)
 	return (fd);
 }
 
+int	check_texture(char *id, int fd, t_colors *colors_data)
+{
+	char	*str;
+
+	while (1)
+	{
+		str = get_next_line(fd, colors_data->parse_data->m_free);
+		if (!str)
+			return (0);
+		if (!ft_strncmp(str, id, ft_strlen(id)))
+			return (1);
+	}
+}
+
 long	find_color(char *id, char *file, t_colors *colors_data)
 {
 	char	**strs;
@@ -94,33 +112,4 @@ long	find_color(char *id, char *file, t_colors *colors_data)
 	if (i != 3)
 		return (-1);
 	return (colors[0] * 65536 + colors[1] * 256 + colors[2]);
-}
-
-int	get_colors(t_colors *colors_data, char *file)
-{
-	colors_data->north_texture = open_texture("NO", file, colors_data);
-	if (colors_data->north_texture < 0)
-		return (ft_putstr_fd("Missing or invalid north texture.\n", 2), 1);
-	colors_data->south_texture = open_texture("SO", file, colors_data);
-	if (colors_data->south_texture < 0)
-		return (close_fds(colors_data, 1), \
-		ft_putstr_fd("Missing or invalid south texture.\n", 2), 1);
-	colors_data->west_texture = open_texture("WE", \
-	colors_data->parse_data->file, colors_data);
-	if (colors_data->west_texture < 0)
-		return (close_fds(colors_data, 2), \
-		ft_putstr_fd("Missing or invalid west texture.\n", 2), 1);
-	colors_data->east_texture = open_texture("EA", file, colors_data);
-	if (colors_data->east_texture < 0)
-		return (close_fds(colors_data, 3), \
-		ft_putstr_fd("Missing or invalid east texture.\n", 2), 1);
-	colors_data->floor_color = find_color("F", file, colors_data);
-	if (colors_data->floor_color < 0)
-		return (close_fds(colors_data, 4), \
-		ft_putstr_fd("Missing or incorrect floor color.\n", 2), 1);
-	colors_data->ceiling_color = find_color("C", file, colors_data);
-	if (colors_data->ceiling_color < 0)
-		return (close_fds(colors_data, 4), \
-		ft_putstr_fd("Missing or incorrect ceiling color.\n", 2), 1);
-	return (0);
 }
