@@ -28,11 +28,11 @@ int	parsing(int argc, char **argv, t_parsing *parse_data)
 		return (ft_free(parse_data->m_free), 1);
 	if (parse_map(&parse_data->map_data))
 		return (ft_free(parse_data->m_free), 2);
+	if (get_colors(&parse_data->colors_data, parse_data->file))
+		return (ft_free(parse_data->m_free), 4);
 	if (unknown_texture(parse_data->file, &parse_data->colors_data))
 		return (ft_putstr_fd("Error\nUnknown texure in file.\n", 2), \
 		ft_free(parse_data->m_free), 3);
-	if (get_colors(&parse_data->colors_data, parse_data->file))
-		return (ft_free(parse_data->m_free), 4);
 	return (0);
 }
 
@@ -46,7 +46,7 @@ int	unknown_texture(char *file, t_colors *colors_data)
 	{
 		str = get_next_line(fd, colors_data->parse_data->m_free);
 		if (!str)
-			return (close(fd), 1);
+			return (close(fd), 0);
 		if (space_digits_only(str) && ft_strcmp("\n", str))
 			return (close(fd), 0);
 		if (ft_strcmp(str, "\n") && ft_strncmp(str, "NO", 2) && \

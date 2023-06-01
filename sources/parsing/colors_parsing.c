@@ -13,6 +13,7 @@
 #include "../../includes/cub3d.h"
 
 int		open_texture(char *id, char *file, t_colors *colors_data);
+char	*find_texture(char *id, char *file, t_colors *colors_data);
 int		duplicate_texture(char *id, int fd, t_colors *colors_data);
 long	find_color(char *id, char *file, t_colors *colors_data);
 
@@ -45,30 +46,6 @@ int	get_colors(t_colors *colors_data, char *file)
 	return (0);
 }
 
-char	*find_texture(char *id, char *file, t_colors *colors_data)
-{
-	char	*str;
-	int		fd;
-	int		i;
-
-	fd = open(file, O_RDONLY);
-	while (1)
-	{
-		str = get_next_line(fd, colors_data->parse_data->m_free);
-		if (!str)
-			return (0);
-		if (!ft_strncmp(str, id, ft_strlen(id)))
-			break ;
-	}
-	i = (int)ft_strlen(id);
-	while (str[i] == ' ')
-		i++;
-	if (duplicate_texture(id, fd, colors_data))
-		return (close(fd), NULL);
-	close(fd);
-	return (ft_remove_backslashn(str + i, colors_data));
-}
-
 int	open_texture(char *id, char *file, t_colors *colors_data)
 {
 	int		fd;
@@ -87,6 +64,30 @@ int	open_texture(char *id, char *file, t_colors *colors_data)
 		colors_data->west_texture_filename = str;
 	fd = open(str, O_RDONLY);
 	return (fd);
+}
+
+char	*find_texture(char *id, char *file, t_colors *colors_data)
+{
+	char	*str;
+	int		fd;
+	int		i;
+
+	fd = open(file, O_RDONLY);
+	while (1)
+	{
+		str = get_next_line(fd, colors_data->parse_data->m_free);
+		if (!str)
+			return (close(fd), NULL);
+		if (!ft_strncmp(str, id, ft_strlen(id)))
+			break ;
+	}
+	i = (int)ft_strlen(id);
+	while (str[i] == ' ')
+		i++;
+	if (duplicate_texture(id, fd, colors_data))
+		return (close(fd), NULL);
+	close(fd);
+	return (ft_remove_backslashn(str + i, colors_data));
 }
 
 int	duplicate_texture(char *id, int fd, t_colors *colors_data)

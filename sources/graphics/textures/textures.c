@@ -26,6 +26,11 @@ void	get_textures(t_graphics *graphics_data, t_colors *colors_data)
 		graphics_data->textures[i].img = mlx_xpm_file_to_image \
 		(graphics_data->mlx, texture_filename, \
 		&graphics_data->textures[i].width, &graphics_data->textures[i].height);
+		if (!graphics_data->textures[i].img)
+		{
+			ft_putstr_fd("Error\nInvalid Texture\n", 2);
+			exit (1);
+		};
 		graphics_data->textures[i].addr = mlx_get_data_addr \
 		(graphics_data->textures[i].img, \
 		&graphics_data->textures[i].bits_per_pixel, \
