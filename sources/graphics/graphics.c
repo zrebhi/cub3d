@@ -18,9 +18,9 @@ int	graphics_init(t_graphics *graphics_data)
 	if (!graphics_data->mlx)
 		return (1);
 	graphics_data->mlx_win = mlx_new_window \
-	(graphics_data->mlx, 1920, 1080, "Hello world!");
+	(graphics_data->mlx, W_WIDTH, W_HEIGHT, "Cub3D");
 	graphics_data->img_data.img = mlx_new_image \
-	(graphics_data->mlx, 1920, 1080);
+	(graphics_data->mlx, W_WIDTH, W_HEIGHT);
 	graphics_data->img_data.addr = mlx_get_data_addr \
 	(graphics_data->img_data.img, &graphics_data->img_data.bits_per_pixel, \
 	&graphics_data->img_data.line_length, &graphics_data->img_data.endian);
