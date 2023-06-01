@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zrebhi <zrebhi@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: marobert <marobert@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:59:06 by zrebhi            #+#    #+#             */
-/*   Updated: 2023/05/16 16:10:16 by zrebhi           ###   ########.fr       */
+/*   Updated: 2023/06/01 14:29:23 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,21 +69,21 @@ int	key_handler(int key, t_graphics *graphics_data)
 {
 	if (key == 65307)
 		exit_window(graphics_data);
-	else if (key == 'w')
+	else if (key == W)
 		move_forward(&graphics_data->player_data, 1, \
 		graphics_data->parse_data->map_data.map);
-	else if (key == 's')
+	else if (key == S)
 		move_forward(&graphics_data->player_data, -1, \
 		graphics_data->parse_data->map_data.map);
-	else if (key == 'a')
+	else if (key == A)
 		move_aside(&graphics_data->player_data, -1, \
 		graphics_data->parse_data->map_data.map);
-	else if (key == 'd')
+	else if (key == D)
 		move_aside(&graphics_data->player_data, 1, \
 		graphics_data->parse_data->map_data.map);
-	else if (key == 65361)
+	else if (key == ARROW_L || key == Q)
 		rotate_side(&graphics_data->player_data, -1);
-	else if (key == 65363)
+	else if (key == ARROW_R || key == E)
 		rotate_side(&graphics_data->player_data, 1);
 	else
 		printf("%d\n", key);

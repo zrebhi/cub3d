@@ -13,7 +13,7 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "../lib/libft/inc/libft.h"
+# include "libft.h"
 # include "parsing.h"
 # include "graphics.h"
 # include <fcntl.h>
