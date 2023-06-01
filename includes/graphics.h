@@ -73,6 +73,8 @@ typedef struct s_graphics
 	t_parsing	*parse_data;
 }				t_graphics;
 
+int	exit_window(t_graphics *graphics_data);
+
 /* Drawing */
 
 int			graphics(t_graphics *graphics_data);
