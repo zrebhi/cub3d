@@ -43,7 +43,7 @@ ifeq ($(OS), Darwin) # MACOS
 DIR_INCS	=	lib/minilibx-opengl
 MLX_DIR		=	lib/minilibx-opengl
 MLX			=	lib/minilibx-opengl/libmlx.a
-MLX_FLAGS	=	-framework OpenGL -framework AppKit -g -lmlx -Lmlx
+MLX_FLAGS	=	-framework OpenGL -framework AppKit
 CFLAGS		=	-D DARWIN=1
 
 endif

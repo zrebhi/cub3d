@@ -105,34 +105,4 @@ void		move_forward(t_player *player, int dir, char **map);
 void		move_aside(t_player *player, int dir, char **map);
 void		rotate_side(t_player *player, int dir);
 
-
-/* MLX */
-
-# ifdef DARWIN
-
-#  define W 1
-#  define S 1
-#  define A 1
-#  define D 1
-#  define Q 1
-#  define E 1
-#  define ARROW_L 65361
-#  define ARROW_R 65363
-
-# endif //DARWIN
-
-# ifdef LINUX
-
-#  define W 'w'
-#  define S 's'
-#  define A 'a'
-#  define D 'd'
-#  define Q 'q'
-#  define E 'e'
-#  define ARROW_L 65361
-#  define ARROW_R 65363
-
-# endif //LINUX
-
-
 #endif
