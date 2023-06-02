@@ -12,13 +12,13 @@
 
 #include "../../includes/cub3d.h"
 
-void	get_map_height(t_map *map_data);
-char	*get_to_the_map(t_map *map_data);
-int		map_is_last(t_map *map_data);
+int		get_map_height(char **file);
+int		get_map_first_line(char **file);
+int		map_is_last(t_map *map_data, char **file);
 
-int	parse_map(t_map *map_data)
+int	parse_map(t_map *map_data, char **file)
 {
-	if (get_map(map_data))
+	if (get_map(map_data, file))
 		return (ft_putstr_fd("Error\nInvalid map.\n", 2), 1);
 	fill_map(map_data);
 	if (check_forbidden_char(map_data))
@@ -27,94 +27,77 @@ int	parse_map(t_map *map_data)
 		return (ft_putstr_fd("Error\nInvalid map (player count).\n", 2), 1);
 	if (check_closed_map(map_data))
 		return (ft_putstr_fd("Error\nInvalid map (not closed).\n", 2), 1);
-	if (!map_is_last(map_data))
+	if (!map_is_last(map_data, file))
 		return (ft_putstr_fd \
 		("Error\nMap must not be split and appear last in the file.\n", 2), 1);
 	replace_map_spaces(map_data);
 	return (0);
 }
 
-int	get_map(t_map *map_data)
+int	get_map(t_map *map_data, char **file)
 {
 	int	i;
+	int	line;
 
-	get_map_height(map_data);
+	map_data->map_height = get_map_height(file);
+	if (map_data->map_height == -1)
+		return (1);
 	map_data->map = ft_calloc(sizeof(char *), \
 	map_data->map_height + 1, map_data->parse_data->m_free);
-	if (!map_data->map)
-		exit (1);
-	map_data->map[0] = get_to_the_map(map_data);
-	if (!map_data->map[0])
-		return (1);
+	line = get_map_first_line(file);
 	i = 0;
-	while (++i < map_data->map_height)
-	{
-		map_data->map[i] = get_next_line(map_data->fd, \
-		map_data->parse_data->m_free);
-		if (!map_data->map[i])
-			exit(1);
-	}
+	while (i < map_data->map_height)
+		map_data->map[i++] = file[line++];
 	map_data->map[i] = 0;
-	close (map_data->fd);
 	return (0);
 }
 
-void	get_map_height(t_map *map_data)
+int	get_map_height(char **file)
 {
-	char	*str;
+	int		line;
+	int		map_height;
 
-	get_to_the_map(map_data);
-	map_data->map_height = 1;
-	while (1)
+	line = get_map_first_line(file);
+	if (line == -1)
+		return (-1);
+	map_height = 0;
+	while (file[line])
 	{
-		str = get_next_line(map_data->fd, map_data->parse_data->m_free);
-		if (!str || !ft_strcmp("\n", str))
-			break ;
-		map_data->map_height++;
+		if (!ft_strcmp("\n", file[line]))
+			return (map_height);
+		map_height++;
+		line++;
 	}
-	close(map_data->fd);
+	return (map_height);
 }
 
-char	*get_to_the_map(t_map *map_data)
+int	get_map_first_line(char **file)
 {
-	char	*str;
+	int		line;
 
-	map_data->fd = open(map_data->parse_data->file, O_RDONLY);
-	while (1)
+	line = -1;
+	while (file[++line])
 	{
-		str = get_next_line(map_data->fd, map_data->parse_data->m_free);
-		if (!str)
-		{
-			close(map_data->fd);
+		if (space_digits_only(file[line]) && ft_strcmp("\n", file[line]))
+			return (line);
+	}
+	return (-1);
+}
+
+int	map_is_last(t_map *map_data, char **file)
+{
+	int		line;
+	int		map_last_line;
+
+	map_last_line = get_map_first_line(file) + map_data->map_height;
+	line = map_last_line;
+	if (!file[line])
+		return (1);
+	while (file[line])
+	{
+		if (ft_strcmp(file[line], "\n"))
 			return (0);
-		}
-		if (space_digits_only(str) && ft_strcmp("\n", str))
-			break ;
+		line++;
 	}
-	return (str);
-}
-
-int	map_is_last(t_map *map_data)
-{
-	char	*str;
-	int		i;
-
-	str = get_to_the_map(map_data);
-	if (!str)
-		return (close(map_data->fd), 0);
-	i = 0;
-	while (++i < map_data->map_height)
-	{
-		str = get_next_line((map_data->fd), map_data->parse_data->m_free);
-		if (!str)
-			return (close(map_data->fd), 0);
-	}
-	while (1)
-	{
-		str = get_next_line((map_data->fd), map_data->parse_data->m_free);
-		if (!str)
-			return (close(map_data->fd), 1);
-		if (ft_strcmp(str, "\n"))
-			return (close(map_data->fd), 0);
-	}
+	return (1);
 }

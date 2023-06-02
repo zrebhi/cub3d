@@ -12,113 +12,108 @@
 
 #include "../../includes/cub3d.h"
 
-int		open_texture(char *id, char *file, t_colors *colors_data);
-char	*find_texture(char *id, char *file, t_colors *colors_data);
-int		duplicate_texture(char *id, int fd, t_colors *colors_data);
-long	find_color(char *id, char *file, t_colors *colors_data);
+int		open_texture(char *id, char **file, t_colors *colors_data);
+char	*find_texture_filename(char *id, char **file, t_colors *colors_data);
+int		duplicate_texture(char *id, char **file, int line);
+int		find_color(char *id, char **file, t_colors *colors_data);
 
-int	get_colors(t_colors *colors_data, char *file)
+int	get_colors(t_colors *colors_data, char **file)
 {
-	colors_data->north_texture = open_texture("NO", file, colors_data);
+	colors_data->north_texture = open_texture("NO ", file, colors_data);
 	if (colors_data->north_texture < 0)
 		return (ft_putstr_fd("Error\nMissing or invalid north texture.\n", 2), 1);
-	colors_data->south_texture = open_texture("SO", file, colors_data);
+	colors_data->south_texture = open_texture("SO ", file, colors_data);
 	if (colors_data->south_texture < 0)
 		return (close_fds(colors_data, 1), \
 		ft_putstr_fd("Error\nMissing or invalid south texture.\n", 2), 1);
-	colors_data->west_texture = open_texture("WE", \
+	colors_data->west_texture = open_texture("WE ", \
 	colors_data->parse_data->file, colors_data);
 	if (colors_data->west_texture < 0)
 		return (close_fds(colors_data, 2), \
 		ft_putstr_fd("Error\nMissing or invalid west texture.\n", 2), 1);
-	colors_data->east_texture = open_texture("EA", file, colors_data);
+	colors_data->east_texture = open_texture("EA ", file, colors_data);
 	if (colors_data->east_texture < 0)
 		return (close_fds(colors_data, 3), \
 		ft_putstr_fd("Error\nMissing or invalid east texture.\n", 2), 1);
-	colors_data->floor_color = find_color("F", file, colors_data);
+	colors_data->floor_color = find_color("F ", file, colors_data);
 	if (colors_data->floor_color < 0)
 		return (close_fds(colors_data, 4), \
 		ft_putstr_fd("Error\nMissing or incorrect floor color.\n", 2), 1);
-	colors_data->ceiling_color = find_color("C", file, colors_data);
+	colors_data->ceiling_color = find_color("C ", file, colors_data);
 	if (colors_data->ceiling_color < 0)
 		return (close_fds(colors_data, 4), \
 		ft_putstr_fd("Error\nMissing or incorrect ceiling color.\n", 2), 1);
 	return (0);
 }
 
-int	open_texture(char *id, char *file, t_colors *colors_data)
+int	open_texture(char *id, char **file, t_colors *colors_data)
 {
 	int		fd;
-	char	*str;
+	char	*texture_filename;
 
-	str = find_texture(id, file, colors_data);
-	if (!str)
+	texture_filename = find_texture_filename(id, file, colors_data);
+	if (!texture_filename)
 		return (-1);
-	if (!ft_strcmp("NO", id))
-		colors_data->north_texture_filename = str;
-	if (!ft_strcmp("SO", id))
-		colors_data->south_texture_filename = str;
-	if (!ft_strcmp("EA", id))
-		colors_data->east_texture_filename = str;
-	if (!ft_strcmp("WE", id))
-		colors_data->west_texture_filename = str;
-	fd = open(str, O_RDONLY);
+	if (!ft_strcmp("NO ", id))
+		colors_data->north_texture_filename = texture_filename;
+	if (!ft_strcmp("SO ", id))
+		colors_data->south_texture_filename = texture_filename;
+	if (!ft_strcmp("EA ", id))
+		colors_data->east_texture_filename = texture_filename;
+	if (!ft_strcmp("WE ", id))
+		colors_data->west_texture_filename = texture_filename;
+	fd = open(texture_filename, O_RDONLY);
 	return (fd);
 }
 
-char	*find_texture(char *id, char *file, t_colors *colors_data)
+char	*find_texture_filename(char *id, char **file, t_colors *colors_data)
 {
-	char	*str;
-	int		fd;
+	int		line;
 	int		i;
 
-	fd = open(file, O_RDONLY);
-	while (1)
+	line = 0;
+	while (file[line])
 	{
-		str = get_next_line(fd, colors_data->parse_data->m_free);
-		if (!str)
-			return (close(fd), NULL);
-		if (!ft_strncmp(str, id, ft_strlen(id)))
+		if (!ft_strncmp(file[line], id, ft_strlen(id)))
 			break ;
+		line++;
 	}
+	if (!file[line])
+		return (NULL);
 	i = (int)ft_strlen(id);
-	while (str[i] == ' ')
+	while (file[line][i] == ' ')
 		i++;
-	if (duplicate_texture(id, fd, colors_data))
-		return (close(fd), NULL);
-	close(fd);
-	return (ft_remove_backslashn(str + i, colors_data));
+	if (duplicate_texture(id, file, line))
+		return (NULL);
+	return (ft_remove_backslashn(file[line] + i, colors_data));
 }
 
-int	duplicate_texture(char *id, int fd, t_colors *colors_data)
+int	duplicate_texture(char *id, char **file, int line)
 {
-	char	*str;
-
-	while (1)
+	while (file[++line])
 	{
-		str = get_next_line(fd, colors_data->parse_data->m_free);
-		if (!str)
-			return (0);
-		if (!ft_strncmp(str, id, ft_strlen(id)))
+		if (!ft_strncmp(file[line], id, ft_strlen(id)))
 			return (1);
 	}
+	return (0);
 }
 
-long	find_color(char *id, char *file, t_colors *colors_data)
+int	find_color(char *id, char **file, t_colors *colors_data)
 {
-	char	**strs;
-	char	*str;
+	char	**split_color_code;
+	char	*color_code;
 	int		i;
 	int		colors[3];
 
-	str = find_texture(id, file, colors_data);
-	if (!str)
+	color_code = find_texture_filename(id, file, colors_data);
+	if (!color_code)
 		return (-1);
-	strs = ft_split(str, ',', colors_data->parse_data->m_free);
+	split_color_code = \
+	ft_split(color_code, ',', colors_data->parse_data->m_free);
 	i = -1;
-	while (strs[++i])
+	while (split_color_code[++i])
 	{
-		colors[i] = ft_atoi(strs[i]);
+		colors[i] = ft_atoi(split_color_code[i]);
 		if (colors[i] < 0 || colors[i] > 255)
 			return (-1);
 	}

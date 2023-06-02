@@ -43,3 +43,27 @@ char	*ft_remove_backslashn(char *str, t_colors *colors_data)
 	new_str[i] = 0;
 	return (new_str);
 }
+
+void	close_fds(t_colors *colors_data, int mode)
+{
+	if (mode == 1)
+		close(colors_data->north_texture);
+	if (mode == 2)
+	{
+		close(colors_data->north_texture);
+		close(colors_data->south_texture);
+	}
+	if (mode == 3)
+	{
+		close(colors_data->north_texture);
+		close(colors_data->south_texture);
+		close(colors_data->west_texture);
+	}
+	if (mode == 4)
+	{
+		close(colors_data->north_texture);
+		close(colors_data->south_texture);
+		close(colors_data->west_texture);
+		close(colors_data->east_texture);
+	}
+}
