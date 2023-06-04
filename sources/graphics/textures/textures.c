@@ -13,6 +13,8 @@
 #include "cub3d.h"
 
 char	*texture_filename_library(t_colors *colors_data, int i);
+void	exit_texture_error(t_graphics *graphics_data, \
+		t_colors *colors_data, int i);
 
 void	get_textures(t_graphics *graphics_data, t_colors *colors_data)
 {
@@ -27,10 +29,7 @@ void	get_textures(t_graphics *graphics_data, t_colors *colors_data)
 		(graphics_data->mlx, texture_filename, \
 		&graphics_data->textures[i].width, &graphics_data->textures[i].height);
 		if (!graphics_data->textures[i].img)
-		{
-			ft_putstr_fd("Error\nInvalid Texture\n", 2);
-			exit (1);
-		};
+			exit_texture_error(graphics_data, colors_data, i);
 		graphics_data->textures[i].addr = mlx_get_data_addr \
 		(graphics_data->textures[i].img, \
 		&graphics_data->textures[i].bits_per_pixel, \
@@ -50,6 +49,21 @@ char	*texture_filename_library(t_colors *colors_data, int i)
 	else if (i == 3)
 		return (colors_data->west_texture_filename);
 	return (0);
+}
+
+void	exit_texture_error(t_graphics *graphics_data, \
+		t_colors *colors_data, int i)
+{
+	while (--i >= 0)
+		mlx_destroy_image(graphics_data->mlx, \
+					graphics_data->textures[i].img);
+	mlx_destroy_display(graphics_data->mlx);
+	close(colors_data->north_texture);
+	close(colors_data->south_texture);
+	close(colors_data->west_texture);
+	close(colors_data->east_texture);
+	ft_putstr_fd("Error\nInvalid Texture\n", 2);
+	exit (1);
 }
 
 t_img	wall_orientation_texture(t_dda *dda, t_graphics *graphics_data)

@@ -43,7 +43,7 @@ typedef struct s_colors
 
 typedef struct s_parsing
 {
-	char		*file;
+	char		**file;
 	t_m_free	*m_free;
 	t_map		map_data;
 	t_colors	colors_data;
@@ -51,11 +51,12 @@ typedef struct s_parsing
 
 int		parsing(int argc, char **argv, t_parsing *parse_data);
 void	close_fds(t_colors *colors_data, int mode);
+char	*ft_remove_backslashn(char *str, t_colors *colors_data);
 
 /* Map Parsing */
 
-int		parse_map(t_map *map_data);
-int		get_map(t_map *map_data);
+int		parse_map(t_map *map_data, char **file);
+int		get_map(t_map *map_data, char **file);
 void	fill_map(t_map *data);
 int		is_player(char c);
 int		space_digits_only(char *str);
@@ -66,6 +67,6 @@ void	replace_map_spaces(t_map *data);
 
 /* Textures and colors */
 
-char	*ft_remove_backslashn(char *str, t_colors *colors_data);
+int		get_colors(t_colors *colors_data, char **file);
 
 #endif
