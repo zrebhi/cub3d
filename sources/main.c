@@ -36,7 +36,7 @@ int	exit_window(t_graphics *graphics_data)
 	mlx_destroy_image(graphics_data->mlx, graphics_data->img_data.img);
 	mlx_destroy_image(graphics_data->mlx, graphics_data->map_img_data.img);
 	mlx_destroy_window(graphics_data->mlx, graphics_data->mlx_win);
-	mlx_destroy_display(graphics_data->mlx);
+//	mlx_destroy_display(graphics_data->mlx);
 	free(graphics_data->mlx);
 	close_fds(&graphics_data->parse_data->colors_data, 4);
 	ft_free(graphics_data->parse_data->m_free);
@@ -45,23 +45,23 @@ int	exit_window(t_graphics *graphics_data)
 
 int	key_handler(int key, t_graphics *graphics_data)
 {
-	if (key == 65307)
+	if (key == KEY_ESC)
 		exit_window(graphics_data);
-	else if (key == 'w')
+	else if (key == KEY_W)
 		move_forward(&graphics_data->player_data, 1, \
 		graphics_data->parse_data->map_data.map);
-	else if (key == 's')
+	else if (key == KEY_S)
 		move_forward(&graphics_data->player_data, -1, \
 		graphics_data->parse_data->map_data.map);
-	else if (key == 'a')
+	else if (key == KEY_A)
 		move_aside(&graphics_data->player_data, -1, \
 		graphics_data->parse_data->map_data.map);
-	else if (key == 'd')
+	else if (key == KEY_D)
 		move_aside(&graphics_data->player_data, 1, \
 		graphics_data->parse_data->map_data.map);
-	else if (key == 65361)
+	else if (key == KEY_ARROW_L || key == KEY_Q)
 		rotate_side(&graphics_data->player_data, -1);
-	else if (key == 65363)
+	else if (key == KEY_ARROW_R || key == KEY_E)
 		rotate_side(&graphics_data->player_data, 1);
 	else
 		printf("%d\n", key);

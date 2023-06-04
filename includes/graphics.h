@@ -16,9 +16,10 @@
 # include "cub3d.h"
 # include <mlx.h>
 
-# define FOV 1.0472
-# define W_WIDTH 1920
-# define W_HEIGHT 1080
+//# define FOV 1.0472
+# define FOV 1.5708
+# define W_WIDTH 1000
+# define W_HEIGHT 700
 
 typedef struct s_vectord
 {
