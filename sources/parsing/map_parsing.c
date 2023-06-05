@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 int		get_map_height(char **file);
 int		get_map_first_line(char **file);

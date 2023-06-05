@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 int		open_texture(char *id, char **file, t_colors *colors_data);
 char	*find_texture_filename(char *id, char **file, t_colors *colors_data);

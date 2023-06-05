@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marobert <marobert@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 15:08:18 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/12 16:09:53 by marobert         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:51:53 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	init_img(t_window *window, t_map *map)
 {
 	window->img.img = mlx_new_image(window->mlx_ptr, W_WIDTH, W_HEIGHT);
 	window->m_map.img = mlx_new_image(window->mlx_ptr, \
-									map->width * 10, map->height * 10);
+									map->map_width * 10, map->height * 10);
 	if (!window->img.img || !window->m_map.img)
 		exit(printf("mlx error\n"));
 	window->img.addr = mlx_get_data_addr(window->img.img, \

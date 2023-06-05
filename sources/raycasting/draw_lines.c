@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_lines.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marobert <marobert@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 16:19:50 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/12 18:15:40 by marobert         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:51:53 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static double	get_height(t_dda *dda, t_game *game)
 	dda->step.x = get_ray_x(game->player, dda);
 	dda->step.y = get_ray_y(game->player, dda);
 	dda->side = 0;
-	while (in_range(dda->box_map.x, 0, game->map->width) && \
+	while (in_range(dda->box_map.x, 0, game->map->map_width) && \
 		in_range(dda->box_map.y, 0, game->map->height) && \
 		game->map->map[dda->box_map.y][dda->box_map.x] != '1')
 	{

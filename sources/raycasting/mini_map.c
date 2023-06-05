@@ -31,7 +31,7 @@ void	draw_vector(t_game *game, t_vectord start, double len, t_vectord *ray)
 	while (steps >= 0)
 	{
 		if (in_range((int)(start.x + (step.x * steps)), \
-				0, game->map->width * 10) && \
+				0, game->map->map_width * 10) && \
 			in_range((int)(start.y + (step.y * steps)), \
 				0, game->map->height * 10))
 			put_pxl_img(&game->win->m_map, (int)start.x + (int)(step.x * \
@@ -46,7 +46,7 @@ void	draw_map(t_img *img, t_player *player, t_map *map)
 	int	j;
 
 	i = 0;
-	while (i < (map->width * 10))
+	while (i < (map->map_width * 10))
 	{
 		j = 0;
 		while (j < (map->height * 10))
@@ -55,12 +55,12 @@ void	draw_map(t_img *img, t_player *player, t_map *map)
 				j == (int)floor(player->pos.y * 10))
 				put_pxl_img(img, i, j, 0x55FF0000);
 			else if (ft_isalpha(map->map[j * map->height / (map->height * 10)] \
-					[i * (map->width) / (map->width * 10)]) || \
+					[i * (map->map_width) / (map->map_width * 10)]) || \
 					map->map[j * map->height / (map->height * 10)] \
-					[i * (map->width) / (map->width * 10)] == '0')
+					[i * (map->map_width) / (map->map_width * 10)] == '0')
 				put_pxl_img(img, i, j, 0x55FFFFFF);
 			else if (map->map[j * map->height / (map->height * 10)] \
-					[i * (map->width) / (map->width * 10)] == '1')
+					[i * (map->map_width) / (map->map_width * 10)] == '1')
 				put_pxl_img(img, i, j, 0x55000000);
 			j++;
 		}

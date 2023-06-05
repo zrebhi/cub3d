@@ -28,11 +28,11 @@ void	get_width(t_map *map_data)
 {
 	int	y;
 
-	map_data->width = 0;
+	map_data->map_width = 0;
 	y = -1;
 	while (map_data->map[++y])
-		if ((int)ft_strlen(map_data->map[y]) - 1 > map_data->width)
-			map_data->width = (int)ft_strlen(map_data->map[y]) - 1;
+		if ((int)ft_strlen(map_data->map[y]) - 1 > map_data->map_width)
+			map_data->map_width = (int)ft_strlen(map_data->map[y]) - 1;
 }
 
 char	*string_filler(t_map *map_data, char const *string)
@@ -40,7 +40,7 @@ char	*string_filler(t_map *map_data, char const *string)
 	char	*filled_string;
 	int		i;
 
-	filled_string = ft_calloc(sizeof(char), map_data->width + 1, \
+	filled_string = ft_calloc(sizeof(char), map_data->map_width + 1, \
 	map_data->parse_data->m_free);
 	if (!filled_string)
 		exit (1);
@@ -50,7 +50,7 @@ char	*string_filler(t_map *map_data, char const *string)
 		filled_string[i] = string[i];
 		i++;
 	}
-	while (i < map_data->width)
+	while (i < map_data->map_width)
 	{
 		filled_string[i] = ' ';
 		i++;

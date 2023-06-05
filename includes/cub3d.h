@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zrebhi <zrebhi@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: marobert <marobert@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 18:52:33 by zrebhi            #+#    #+#             */
-/*   Updated: 2023/05/05 18:52:33 by zrebhi           ###   ########.fr       */
+/*   Updated: 2023/06/05 16:54:28 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <math.h>
-
 
 /* OS Depending */
 
@@ -60,6 +59,5 @@
 #  define KEY_ESC 65307
 
 # endif //LINUX
-
 
 #endif

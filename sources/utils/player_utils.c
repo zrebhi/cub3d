@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marobert <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marobert <marobert@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:59:58 by marobert          #+#    #+#             */
-/*   Updated: 2023/05/11 15:32:56 by marobert         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:51:53 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_player	*init_player(t_map *map)
 	while (y < map->height)
 	{
 		x = 0;
-		while (x < map->width)
+		while (x < map->map_width)
 		{
 			if (x < (int)ft_strlen(map->map[y]) && ft_isalpha(map->map[y][x]))
 			{
