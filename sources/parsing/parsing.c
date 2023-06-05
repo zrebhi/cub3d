@@ -22,13 +22,13 @@ int	parsing(int argc, char **argv, t_parsing *parse_data)
 	if (argc != 2)
 		return (ft_putstr_fd("Error\nInvalid number of arguments.\n", 2), 1);
 	parse_data->m_free = ft_free_init();
+	if (check_file(argv[1]))
+		return (ft_free(parse_data->m_free), 1);
 	parse_data->file = parse_file(parse_data, argv[1]);
 	if (!parse_data->file)
-		return (ft_free(parse_data->m_free), 1);
+		return (ft_free(parse_data->m_free), 2);
 	parse_data->map_data.parse_data = parse_data;
 	parse_data->colors_data.parse_data = parse_data;
-	if (check_file(argv[1]))
-		return (ft_free(parse_data->m_free), 2);
 	if (unknown_texture(parse_data))
 		return (ft_putstr_fd("Error\nUnknown texure in file.\n", 2), \
 		ft_free(parse_data->m_free), 3);
