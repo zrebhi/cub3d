@@ -14,20 +14,52 @@
 # define CUB3D_H
 
 # include "libft.h"
-# include "types.h"
-# include "window_utils.h"
 # include "parsing.h"
+# include "graphics.h"
 # include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <math.h>
 
-# define FOV 1.0472
-# define STEP_Y 10
 
-//t_map	*parse_map(int argc, char **argv);
-t_game	*init_game(t_map *map);
-int		game_loop(t_game *game);
+/* OS Depending */
+
+# ifndef DARWIN
+#  define DARWIN 0
+# endif //DARWIN
+
+# ifndef LINUX
+#  define LINUX 0
+# endif //LINUX
+
+# if DARWIN == 1
+
+#  define KEY_Q 12
+#  define KEY_W 13
+#  define KEY_E 14
+#  define KEY_A 0
+#  define KEY_S 1
+#  define KEY_D 2
+#  define KEY_ARROW_L 123
+#  define KEY_ARROW_R 124
+#  define KEY_ESC 53
+
+# endif //DARWIN
+
+# if LINUX == 1
+
+#  define KEY_W 'w'
+#  define KEY_S 's'
+#  define KEY_A 'a'
+#  define KEY_D 'd'
+#  define KEY_Q 'q'
+#  define KEY_E 'e'
+#  define KEY_ARROW_L 65361
+#  define KEY_ARROW_R 65363
+#  define KEY_ESC 65307
+
+# endif //LINUX
+
 
 #endif
