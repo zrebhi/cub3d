@@ -63,8 +63,6 @@ int	key_handler(int key, t_graphics *graphics_data)
 		rotate_side(&graphics_data->player_data, -1);
 	else if (key == KEY_ARROW_R || key == KEY_E)
 		rotate_side(&graphics_data->player_data, 1);
-	else
-		printf("%d\n", key);
 	draw_lines(graphics_data, &graphics_data->player_data);
 	return (1);
 }
