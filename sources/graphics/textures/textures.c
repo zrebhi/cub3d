@@ -57,12 +57,15 @@ void	exit_texture_error(t_graphics *graphics_data, \
 	while (--i >= 0)
 		mlx_destroy_image(graphics_data->mlx, \
 					graphics_data->textures[i].img);
+	mlx_destroy_window(graphics_data->mlx, graphics_data->mlx_win);
 	mlx_destroy_display(graphics_data->mlx);
 	close(colors_data->north_texture);
 	close(colors_data->south_texture);
 	close(colors_data->west_texture);
 	close(colors_data->east_texture);
 	ft_putstr_fd("Error\nInvalid Texture\n", 2);
+	free(graphics_data->mlx);
+	ft_free(graphics_data->parse_data->m_free);
 	exit (1);
 }
 
