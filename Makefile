@@ -6,7 +6,7 @@
 #    By: marobert <marobert@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:31:07 by marobert          #+#    #+#              #
-#    Updated: 2023/06/01 14:31:07 by marobert         ###   ########.fr        #
+#    Updated: 2023/06/05 13:14:22 by marobert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,7 @@ ifeq ($(OS), Linux) #LINUX
 DIR_INCS	=	lib/minilibx-linux
 MLX_DIR		=	lib/minilibx-linux
 MLX			=	lib/minilibx-linux/libmlx.a
-MLX_FLAGS	=	-Llib/minilibx-linux -lmlx_Linux -lX11 -lXext -lz -lmlx -lm
+MLX_FLAGS	=	-Llib/minilibx-linux -lX11 -lXext -lz -lmlx -lm
 CFLAGS		=	-D LINUX=1
 
 endif

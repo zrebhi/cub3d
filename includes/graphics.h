@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zak <zak@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: marobert <marobert@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:55:43 by zrebhi            #+#    #+#             */
-/*   Updated: 2023/05/18 19:18:26 by zak              ###   ########.fr       */
+/*   Updated: 2023/06/05 13:15:37 by marobert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@
 # include "cub3d.h"
 # include <mlx.h>
 
-//# define FOV 1.0472
-# define FOV 1.5708
-# define W_WIDTH 1000
-# define W_HEIGHT 700
+# define FOV 1.0472
+# define W_WIDTH 1920
+# define W_HEIGHT 1080
 
 typedef struct s_vectord
 {
