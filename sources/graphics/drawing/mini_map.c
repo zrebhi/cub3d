@@ -51,11 +51,11 @@ void	mini_map(t_img *img, t_map *map_data, t_player *player_data)
 		{
 			if (j == floor(player_data->pos.y * 10) \
 			&& i == (int)floor(player_data->pos.x * 10))
-				my_mlx_pixel_put(img, i, j, 0x55FF0000);
+				my_mlx_pixel_put(img, i, j, 0x00FF0000);
 			else if (map_data->map[j / 10][i / 10] == '0')
-				my_mlx_pixel_put(img, i, j, 0x55FFFFFF);
+				my_mlx_pixel_put(img, i, j, 0x00FFFFFF);
 			else if (map_data->map[j / 10][i / 10] == '1')
-				my_mlx_pixel_put(img, i, j, 0x55000000);
+				my_mlx_pixel_put(img, i, j, 0x00000000);
 			j++;
 		}
 		i++;

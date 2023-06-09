@@ -58,7 +58,8 @@ void	exit_texture_error(t_graphics *graphics_data, \
 		mlx_destroy_image(graphics_data->mlx, \
 					graphics_data->textures[i].img);
 	mlx_destroy_window(graphics_data->mlx, graphics_data->mlx_win);
-	mlx_destroy_display(graphics_data->mlx);
+	if (LINUX)
+		mlx_destroy_display(graphics_data->mlx);
 	close(colors_data->north_texture);
 	close(colors_data->south_texture);
 	close(colors_data->west_texture);

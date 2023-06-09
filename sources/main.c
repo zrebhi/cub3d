@@ -36,7 +36,8 @@ int	exit_window(t_graphics *graphics_data)
 	mlx_destroy_image(graphics_data->mlx, graphics_data->img_data.img);
 	mlx_destroy_image(graphics_data->mlx, graphics_data->map_img_data.img);
 	mlx_destroy_window(graphics_data->mlx, graphics_data->mlx_win);
-	mlx_destroy_display(graphics_data->mlx);
+	if (LINUX)
+		mlx_destroy_display(graphics_data->mlx);
 	free(graphics_data->mlx);
 	close_fds(&graphics_data->parse_data->colors_data, 4);
 	ft_free(graphics_data->parse_data->m_free);

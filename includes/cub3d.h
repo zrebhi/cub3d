@@ -30,6 +30,9 @@
 
 # ifndef LINUX
 #  define LINUX 0
+//Non existing function on macOS
+//this prototype let the code compile for macOS
+int	mlx_destroy_display(void *mlx_ptr);
 # endif //LINUX
 
 # if DARWIN == 1
