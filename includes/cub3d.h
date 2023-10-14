@@ -16,6 +16,7 @@
 # include "libft.h"
 # include "parsing.h"
 # include "graphics.h"
+# include "events.h"
 # include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>

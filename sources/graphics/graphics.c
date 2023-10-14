@@ -48,12 +48,36 @@ void	my_mlx_pixel_put(t_img *img_data, int x, int y, int color)
 	*(unsigned int *) dst = color;
 }
 
+int	render(t_graphics *graphics_data)
+{
+	if (graphics_data->keys[KEY_W])
+		move_forward(&graphics_data->player_data, .5, \
+		graphics_data->parse_data->map_data.map);
+	if (graphics_data->keys[KEY_S])
+		move_forward(&graphics_data->player_data, -.5, \
+		graphics_data->parse_data->map_data.map);
+	if (graphics_data->keys[KEY_A])
+		move_aside(&graphics_data->player_data, -.5, \
+		graphics_data->parse_data->map_data.map);
+	if (graphics_data->keys[KEY_D])
+		move_aside(&graphics_data->player_data, .5, \
+		graphics_data->parse_data->map_data.map);
+	if (graphics_data->keys[KEY_ARROW_L] || graphics_data->keys[KEY_Q])
+		rotate_side(&graphics_data->player_data, -.5);
+	if (graphics_data->keys[KEY_ARROW_R] || graphics_data->keys[KEY_E])
+		rotate_side(&graphics_data->player_data, .5);
+	draw_lines(graphics_data, &graphics_data->player_data);
+	return (1);
+}
+
 int	graphics(t_graphics *graphics_data)
 {
 	graphics_init(graphics_data);
 	draw_lines(graphics_data, &graphics_data->player_data);
-	mlx_hook(graphics_data->mlx_win, 2, 1L << 0, key_handler, graphics_data);
+	mlx_hook(graphics_data->mlx_win, 2, 1L << 0, key_pressed, graphics_data);
+	mlx_hook(graphics_data->mlx_win, 3, 1L << 1, key_released, graphics_data);
 	mlx_hook(graphics_data->mlx_win, 17, 1L << 2, exit_window, graphics_data);
+	mlx_loop_hook(graphics_data->mlx, render, graphics_data);
 	mlx_loop(graphics_data->mlx);
 	return (0);
 }

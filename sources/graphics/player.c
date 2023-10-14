@@ -52,19 +52,19 @@ void	init_player(char ***map, t_player *player_data)
 	(*map)[(int)(player_data->pos.y)][(int)(player_data->pos.x)] = '0';
 }
 
-void	move_forward(t_player *player, int dir, char **map)
+void	move_forward(t_player *player, double dir, char **map)
 {
 	double	tmp;
 
 	tmp = player->pos.y + ((player->dir.y / 1.5) * dir);
 	if (map[(int)tmp][(int)player->pos.x] != '1')
-		player->pos.y = player->pos.y + ((player->dir.y / 10) * dir);
+		player->pos.y = player->pos.y + (player->dir.y / 10 * dir);
 	tmp = player->pos.x + ((player->dir.x / 1.5) * dir);
 	if (map[(int)player->pos.y][(int)tmp] != '1')
-		player->pos.x = player->pos.x + ((player->dir.x / 10) * dir);
+		player->pos.x = player->pos.x + (player->dir.x / 10 * dir);
 }
 
-void	move_aside(t_player *player, int dir, char **map)
+void	move_aside(t_player *player, double dir, char **map)
 {
 	double	tmp;
 	double	lateraldirx;
@@ -80,7 +80,7 @@ void	move_aside(t_player *player, int dir, char **map)
 		player->pos.y = player->pos.y + ((lateraldiry / 10) * dir);
 }
 
-void	rotate_side(t_player *player, int dir)
+void	rotate_side(t_player *player, double dir)
 {
 	double	new_x;
 	double	new_y;

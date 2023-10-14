@@ -17,6 +17,7 @@ int	main(int argc, char **argv)
 	t_parsing	parse_data;
 	t_graphics	graphics_data;
 
+	ft_bzero(graphics_data.keys, 70000);
 	if (parsing(argc, argv, &parse_data))
 		return (1);
 	graphics_data.parse_data = &parse_data;
@@ -42,28 +43,4 @@ int	exit_window(t_graphics *graphics_data)
 	close_fds(&graphics_data->parse_data->colors_data, 4);
 	ft_free(graphics_data->parse_data->m_free);
 	exit (0);
-}
-
-int	key_handler(int key, t_graphics *graphics_data)
-{
-	if (key == KEY_ESC)
-		exit_window(graphics_data);
-	else if (key == KEY_W)
-		move_forward(&graphics_data->player_data, 1, \
-		graphics_data->parse_data->map_data.map);
-	else if (key == KEY_S)
-		move_forward(&graphics_data->player_data, -1, \
-		graphics_data->parse_data->map_data.map);
-	else if (key == KEY_A)
-		move_aside(&graphics_data->player_data, -1, \
-		graphics_data->parse_data->map_data.map);
-	else if (key == KEY_D)
-		move_aside(&graphics_data->player_data, 1, \
-		graphics_data->parse_data->map_data.map);
-	else if (key == KEY_ARROW_L || key == KEY_Q)
-		rotate_side(&graphics_data->player_data, -1);
-	else if (key == KEY_ARROW_R || key == KEY_E)
-		rotate_side(&graphics_data->player_data, 1);
-	draw_lines(graphics_data, &graphics_data->player_data);
-	return (1);
 }

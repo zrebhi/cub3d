@@ -20,11 +20,6 @@ ERASE		=	\033[2K\r
 
 NAME			:=	cub3D
 
-HEADERS_DIR		:=	includes
-HEADERS_FILES	:=	cub3d.h
-
-HEADERS			:= $(addprefix $(HEADERS_DIR)/, $(HEADERS_FILES))
-
 SRC_DIR			:=	sources
 SRC_FILES		:=	main.c \
 					parsing/map_parsing.c parsing/map_check.c parsing/map_borders_check.c \
@@ -33,6 +28,7 @@ SRC_FILES		:=	main.c \
 					graphics/graphics.c graphics/player.c \
 					graphics/drawing/raycasting.c graphics/drawing/drawing.c graphics/drawing/mini_map.c \
 					graphics/textures/textures.c graphics/textures/get_texture_pixel.c \
+					events.c
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
@@ -58,8 +54,8 @@ CFLAGS		=	-D LINUX=1
 
 endif
 
-
-DIR_INCS	+=	lib/libft/inc includes
+MY_INCS		=	lib/libft/inc includes
+DIR_INCS	+=	$(MY_INCS)
 DIR_BUILD	=	.build/
 OBJS		=	$(patsubst %.c, $(DIR_BUILD)%.o, $(SRCS))
 DEPS		=	$(patsubst %.c, $(DIR_BUILD)%.d, $(SRCS))
@@ -78,6 +74,10 @@ $(NAME):	$(LIBFT) $(MLX) $(OBJS)
 			@printf "[$(CYAN)Compiling$(END)] % 25s" $(NAME)
 			@$(CC) $(CFLAGS) $(DIR_INCS:%=-I %) -o $(NAME) $(OBJS) $(LIBFT) $(MLX) $(MLX_FLAGS)
 			@printf "$(ERASE)[$(GREEN)Done$(END)] % 30s\n" $(NAME)
+
+.PHONY:		norme
+norme:
+			@norminette $(SRCS) $(MY_INCS) | grep -v 'OK!'
 
 .PHONY:		libft
 libft:

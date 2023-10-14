@@ -17,8 +17,8 @@
 # include <mlx.h>
 
 # define FOV 1.0472
-# define W_WIDTH 1920
-# define W_HEIGHT 1080
+# define W_WIDTH 700
+# define W_HEIGHT 700
 
 typedef struct s_vectord
 {
@@ -68,6 +68,8 @@ typedef struct s_graphics
 	void		*mlx;
 	void		*mlx_win;
 
+	char		keys[70000];
+
 	t_player	player_data;
 	t_dda		dda;
 	t_parsing	*parse_data;
@@ -102,8 +104,8 @@ double		get_wall_height(t_dda *dda, t_graphics *graphics_data, \
 /* Player */
 
 void		init_player(char ***map, t_player *player_data);
-void		move_forward(t_player *player, int dir, char **map);
-void		move_aside(t_player *player, int dir, char **map);
-void		rotate_side(t_player *player, int dir);
+void		move_forward(t_player *player, double dir, char **map);
+void		move_aside(t_player *player, double dir, char **map);
+void		rotate_side(t_player *player, double dir);
 
 #endif
