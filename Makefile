@@ -65,15 +65,18 @@ DEPS_FLAGS	=	-MMD -MP
 CC			=	cc
 RM			=	rm -rf
 CFLAGS		+=	-Wall -Wextra -Werror -g3 -O3 #-fsanitize=address
-CFLAGS		+=	#-I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -g3
 NAME		=	cub3D
 
+COLUMNS		=	$(shell tput cols)
+
+
 all:		libft mlx $(NAME)
+			@echo > /dev/null
 
 $(NAME):	$(LIBFT) $(MLX) $(OBJS)
-			@printf "[$(CYAN)Compiling$(END)] % 25s" $(NAME)
+			@printf "[$(CYAN)Compiling$(END)] % $$(($(COLUMNS) - 13))s" $(NAME)
 			@$(CC) $(CFLAGS) $(DIR_INCS:%=-I %) -o $(NAME) $(OBJS) $(LIBFT) $(MLX) $(MLX_FLAGS)
-			@printf "$(ERASE)[$(GREEN)Done$(END)] % 30s\n" $(NAME)
+			@printf "[$(GREEN)Done$(END)] % $$(($(COLUMNS) - 8))s\n" $(NAME)
 
 .PHONY:		norme
 norme:
@@ -85,23 +88,23 @@ libft:
 
 .PHONY:		mlx
 mlx:
-			@make -C $(MLX_DIR)
+			@make -C $(MLX_DIR) > /dev/null
 
 -include $(DEPS)
 
 $(DIR_BUILD)%.o : %.c
-			@printf "[$(CYAN)Compiling$(END)] % 25s" $(patsubst $(shell dirname $<)/%, %, $<)
+			@printf "[$(CYAN)Compiling$(END)] % $$(($(COLUMNS) - 13))s" $(patsubst $(shell dirname $<)/%, %, $<)
 			@mkdir -p $(shell dirname $@)
 			@$(CC) $(CFLAGS) $(DEPS_FLAGS) $(DIR_INCS:%=-I %) -c $< -o $@
-			@printf "$(ERASE)[$(GREEN)Done$(END)] % 30s\n" $(patsubst $(shell dirname $<)/%, %, $<)
+			@printf "$(ERASE)[$(GREEN)Done$(END)] % $$(($(COLUMNS) - 8))s\n" $(patsubst $(shell dirname $<)/%, %, $<)
 
 clean:
 			@$(RM) $(DIR_BUILD)
-			@printf "[$(RED)Deleted$(END)] % 27s\n" "$(NAME) objects"
+			@printf "[$(RED)Deleted$(END)] % $$(($(COLUMNS) - 11))s\n" "$(NAME) objects"
 
 fclean:		clean
 			@$(RM) $(NAME)
-			@printf "[$(RED)Deleted$(END)] % 27s\n" $(NAME)
+			@printf "[$(RED)Deleted$(END)] % $$(($(COLUMNS) - 11))s\n" $(NAME)
 
 re:			fclean
 			@make all
